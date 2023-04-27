@@ -1,0 +1,90 @@
+<!-- <?php
+    require('dbconnect.php');
+    require('common.php');
+    error_reporting(E_ALL & ~E_NOTICE);
+    if(!isset($_SESSION)){
+        session_start();
+    }
+
+    if($_COOKIE['email']!=''){
+        $_POST['email']=$_COOKIE['email'];
+        $_POST['password']=$_COOKIE['password'];
+        $_POST['save']='on';
+    }
+    if(!empty($_POST)){
+        if($_POST['email']!='' && $_POST['password']!=''){
+            $login=$db->prepare('SELECT * FROM user_info WHERE userMail=? AND userPassword=?');
+            $login->execute(array($_POST['email'],sha1($_POST['password'])));
+            $member=$login->fetch();
+            
+            if($member){
+                $_SESSION['id']=$member['userID'];
+                
+                $_SESSION['time']=time();
+                    if($_POST['save']=='on'){
+                        setcookie('email',$_POST['email'],time()+60*60*24*14);
+                        setcookie('password',$_POST['password'],time()+60*60*24*14);
+                    }
+                header('Location: home.php');
+                exit();
+            }else{
+                $error['login']='failed';
+            }
+        }else{
+            $error['login']='blank';
+        }
+    }
+?> -->
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ログイン</title>
+        <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+        <!-- <link rel="stylesheet" type="text/css" href="css/entrance.css"> -->
+    </head>
+    <body>
+        <div id="wrap">
+            <header>
+                <h5>
+                    ミールフレンド
+                </h5>
+            </header>
+
+            <main>
+                <form action="" method="post">
+                    <div>
+                        <p>メールアドレス</p>
+                        <input type="text" />
+                        <!-- <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($_POST['email']); ?>" />
+                        <?php if($error['login']=='blank'): ?>
+                            <p class="error">*メールアドレスとパスワードをご記入ください</p>
+                        <?php endif; ?>
+                        <?php if($error['login']=='failed'): ?>
+                            <p class="error">*ログインに失敗しました。正しくご記入ください</p>
+                        <?php endif; ?> -->
+                    </div>
+                    <div>
+                        <p>パスワード</p>
+                        <input type="text" />
+                        <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
+                    </div>
+                    <div>
+                        <!-- <input class="wid" type='submit' value="ログイン"> -->
+                    </div>
+                </form>
+                <div>
+                    <a href="">元の画面へ</a>
+                    <a href="">マイページへ</a>
+                </div>
+            </main>
+
+            <footer></footer>
+        </div>
+    </body>
+</html>
