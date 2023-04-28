@@ -5,34 +5,6 @@
         session_start();
     }
 
-    if($_COOKIE['email']!=''){
-        $_POST['email']=$_COOKIE['email'];
-        $_POST['password']=$_COOKIE['password'];
-        $_POST['save']='on';
-    }
-    if(!empty($_POST)){
-        if($_POST['email']!='' && $_POST['password']!=''){
-            $login=$db->prepare('SELECT * FROM user_info WHERE userMail=? AND userPassword=?');
-            $login->execute(array($_POST['email'],sha1($_POST['password'])));
-            $member=$login->fetch();
-            
-            if($member){
-                $_SESSION['id']=$member['userID'];
-                
-                $_SESSION['time']=time();
-                    if($_POST['save']=='on'){
-                        setcookie('email',$_POST['email'],time()+60*60*24*14);
-                        setcookie('password',$_POST['password'],time()+60*60*24*14);
-                    }
-                header('Location: home.php');
-                exit();
-            }else{
-                $error['login']='failed';
-            }
-        }else{
-            $error['login']='blank';
-        }
-    }
 ?> -->
 
 
@@ -42,7 +14,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ログイン</title>
+        <title>パスワード再設定</title>
         <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
     </head>
     <body>
@@ -72,15 +44,9 @@
                         <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
                     </div>
                     <div>
-                        <button>ログインする</button>
                         <!-- <input class="wid" type='submit' value="ログイン"> -->
                     </div>
                 </form>
-                <div>
-                    <p>
-                        パスワードをお忘れの方はこちら
-                    </p>
-                </div>
                 <div>
                     <a href="">元の画面へ</a>
                     <a href="">マイページへ</a>
