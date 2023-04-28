@@ -58,8 +58,26 @@
                 <h2>
                     ミールフレンド
                 </h2>
+
+                <!-- ログインしていない時 -->
                 <a href="login.html">ログイン</a>
                 <a href="regist.html">会員登録</a>
+
+                <!-- ログインしている時 -->
+                <!-- ユーザーメニュー -->
+                <div id="user">
+                    <label>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                        <span></span>
+                    </label>
+                    <div>
+                        <a href="my_page.html">ニックネーム</a>
+                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                    </div>
+                </div>
+
+
                 <!-- ハンバーガーメニュー -->
                 <!-- <div class="hamburger">
                     <span></span>
@@ -91,20 +109,6 @@
                     <a href="post.php">作品を投稿</a>
                 </div> -->
 
-                <!-- ユーザーメニュー -->
-                <!-- <div id="user">
-                    <label id="icon" onclick="display()">
-                        <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン">
-                        <span></span>
-                    </label>
-                    <div id="menu" style="display: none;">
-                        <ul>
-                            <li><a href="profile.php">プロフィール</a></li>
-                            <li><a class="here" href="my_works.php">投稿作品</a></li>
-                            <li><a href="logout_do.php">ログアウト</a></li>
-                        </ul>
-                    </div>
-                </div> -->
             </header>
 
             <main>
