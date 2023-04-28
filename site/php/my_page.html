@@ -1,5 +1,4 @@
 <!-- <?php
-    require('dbconnect.php');
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
     if(!isset($_SESSION)){
@@ -110,9 +109,35 @@
 
             <main>
 
-                <!-- 総合 -->
-                <div class="menu">
-                    
+                <div>
+
+                    <div>
+                        <a href="meal_record.html">
+                            <img alt="食事記録">
+                            <p>食事記録</p>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="meal_manage.html">
+                            <img alt="食事管理">
+                            <p>食事管理</p>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="meal_analize.html">
+                            <img alt="食事分析">
+                            <p>食事分析</p>
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="buy_history.html">あなたの購入履歴</a>
+                    </div>
+
+                    <div>
+                        <a href="delivery_situation.html">あなたの配送状況</a>
+                    </div>
+
                     <!-- <?php
                         $cs=$db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
                         $cs->execute(array($_SESSION['id']));
@@ -121,7 +146,7 @@
                             print('<p class="sl">あなたの投稿はこちら</p>');
                     ?> -->
 
-                    <table>
+                    <!-- <table> -->
                         <!-- <?php
 
                             $posts=$db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
@@ -146,7 +171,7 @@
                             <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
                         }
                         ?> -->
-                    </table>
+                    <!-- </table> -->
                 </div>
             </main>
 
@@ -156,7 +181,7 @@
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
-    <script src="js/main.js"></script>
+    <!-- <script src="js/main.js"></script> -->
 
     </body>
 
