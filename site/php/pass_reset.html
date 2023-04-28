@@ -26,6 +26,7 @@
             </header>
 
             <main>
+                <p>パスワード再設定</p>
                 <form action="" method="post">
                     <div>
                         <p>メールアドレス</p>
@@ -39,11 +40,17 @@
                         <?php endif; ?> -->
                     </div>
                     <div>
-                        <p>パスワード</p>
+                        <p>新しいパスワード</p>
                         <input type="text" />
                         <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
                     </div>
                     <div>
+                        <p>新しいパスワード（確認）</p>
+                        <input type="text" />
+                        <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
+                    </div>
+                    <div>
+                        <button>再設定する</button>
                         <!-- <input class="wid" type='submit' value="ログイン"> -->
                     </div>
                 </form>
