@@ -20,9 +20,31 @@
     <body>
         <div id="wrap">
             <header>
+
                 <h2>
                     ミールフレンド
                 </h2>
+                <div>
+                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                </div>
+
+                <!-- ログインしていない時 -->
+                <a href="login.html">ログイン</a>
+                <a href="regist.html">会員登録</a>
+
+                <!-- ログインしている時 -->
+                <!-- ユーザーメニュー -->
+                <div id="user">
+                    <label>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                    </label>
+                    <div>
+                        <a href="my_page.html">ニックネーム</a>
+                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                    </div>
+                </div>
+
             </header>
 
             <main>
