@@ -38,22 +38,24 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ログイン</title>
-        <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
-    </head>
-    <body>
-        <div id="wrap">
-            <header>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+</head>
+
+<body>
+    <div id="wrap">
+        <header>
 
                 <h2>
                     ミールフレンド
                 </h2>
                 <div>
-                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
                 <!-- ログインしていない時 -->
@@ -62,14 +64,14 @@
 
                 <!-- ログインしている時 -->
 
-            </header>
+        </header>
 
-            <main>
-                <form action="" method="post">
-                    <div>
-                        <p>メールアドレス</p>
-                        <input type="text" />
-                        <!-- <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($_POST['email']); ?>" />
+        <main>
+            <form action="" method="post">
+                <div>
+                    <p>メールアドレス</p>
+                    <input type="text" />
+                    <!-- <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($_POST['email']); ?>" />
                         <?php if($error['login']=='blank'): ?>
                             <p class="error">*メールアドレスとパスワードをご記入ください</p>
                         <?php endif; ?>
@@ -94,11 +96,12 @@
                 </div>
                 <div>
                     <a href="">元の画面へ</a>
-                    <a href="">マイページへ</a>
+                    <a href="my_page.html">マイページへ</a>
                 </div>
             </main>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
-        </div>
-    </body>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+    </div>
+</body>
+
 </html>
