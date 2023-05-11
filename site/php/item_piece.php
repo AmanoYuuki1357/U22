@@ -2,7 +2,6 @@
 <html lang="ja">
 
     <head>
-
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +9,6 @@
         <link rel="stylesheet" type="text/css" href="css/reset.css">
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link rel="stylesheet" type="text/css" href="css/works.css">
-
     </head>
 
     <body>
@@ -34,11 +32,11 @@
                 <div id="user">
                     <label>
                         <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                        <img src=icon_images/<?php //print(h($icon["userIcon"])) ?> alt="アイコン">
                     </label>
                     <div>
                         <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                        <a href="my_page.php"><?php //print(h($user["userNickName"])) ?></a>
                     </div>
                 </div>
 
@@ -54,31 +52,53 @@
                 </div>
 
                 <div>
+
+                    <?php
+                        require "db_access.php";
+
+                        $db = new Db();
+                        if($db->connect()){ $dbCon = $db->db; }
+                        $records = $dbCon->query('select * from t_items where f_item_id = 1;');
+                        $record = $records->fetch( PDO::FETCH_ASSOC )
+                    ?>
+
                     <h2>
-                        鮭の塩焼き
+                        <?php print $record['f_item_name']; ?>
                     </h2>
+
                     <p>
                         値段
                     </p>
+
+                    <p>
+                        <?php print "{$record['f_item_price']}円"; ?>
+                    </p>
+
                     <p>
                         商品説明
                     </p>
+
                     <p>
                         アレルゲン
                     </p>
+
                     <p>
                         |カロリー｜タンパク質｜脂質｜食物繊維｜塩分｜
                     </p>
+
                     <p>
                         原材料
                     </p>
+
                     <p>
                         保存方法
                     </p>
+
                     <p>
                         賞味期限
                     </p>
                 </div>
+
                 <div>
                     <button>
                         お気に入り

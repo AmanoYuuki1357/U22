@@ -1,5 +1,5 @@
 <?php
-class DbMagic{
+class Db{
 
 	// 変数宣言も不要になる(db変数はマジックメソッドで生成)
 	// 外部からアクセスさせたくない変数だけはprivate宣言
@@ -14,11 +14,11 @@ class DbMagic{
 					$port	= 3306){
 
 		$this->userid	= $id;
-		$this->pass	= $pass;
-		$this->host	= $host;
-		$this->dbname = $dbname;
-		$this->port	= $port;
-		$this->dsn	= "mysql:host={$this->host};dbname={$this->dbname};charset=utf8;port={$this->port}";
+		$this->pass		= $pass;
+		$this->host		= $host;
+		$this->dbname 	= $dbname;
+		$this->port		= $port;
+		$this->dsn		= "mysql:host={$this->host};dbname={$this->dbname};charset=utf8;port={$this->port}";
 	}
 
 	function __get($name){
@@ -29,7 +29,7 @@ class DbMagic{
 	}
 
 	// DB接続用の関数
-	function conn(){
+	function connect(){
 		$flg = true;
 
 		try{
@@ -42,6 +42,7 @@ class DbMagic{
 
 		return $flg;
 	}
+
 }
 
 ?>
