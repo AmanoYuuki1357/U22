@@ -1,10 +1,10 @@
 <?php
     // データベースに接続する
-    try{
-        $db=new PDO('mysql:dbname=mealfriend;host=127.0.0.1;charset=utf8','root','');
-    }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
-    }
+    // try{
+    //     $db=new PDO('mysql:dbname=mealfriend;host=127.0.0.1;charset=utf8','root','');
+    // }catch(PDOException $e){
+    //     echo 'DB接続エラー：'.$e->getMessage();
+    // }
 
     // htmlspecialcharsのショートカット
     function h($value){
