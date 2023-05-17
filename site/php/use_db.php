@@ -100,7 +100,8 @@ class UseDb{
     // 食品ジャンル情報取得(返り値:ジャンル情報)
     // ===================================================================================
     function showGenres($itemId){
-        return $this->showByItemId($this->sqlGenre, $itemId);
+        $contents = $this->showByItemId($this->sqlGenre, $itemId);
+        return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // ===================================================================================
@@ -115,7 +116,8 @@ class UseDb{
     // 食品レビュー情報取得(返り値:商品詳細画面用レビュー情報)
     // ===================================================================================
     function showReveiwLimit($itemId){
-        return $this->showByItemId($this->sqlReveiwLimit . '3;', $itemId);
+        $contents =  $this->showByItemId($this->sqlReveiwLimit . '3;', $itemId);
+        return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
