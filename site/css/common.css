@@ -112,3 +112,8 @@ header nav ul li {
 .content p {
   margin: 0;
 }
+
+footer{
+  position: absolute;
+  bottom: 0;
+}
