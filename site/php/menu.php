@@ -126,7 +126,7 @@
                                         print('<tr>');
                                     }
                                     print('<td>');
-                                    print('<a href="item_piece.php?='.$item[$i][0].'">');
+                                    print('<a href="item_piece.php?id='.$item[$i][0].'">');
                                     print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i][1].'>');
                                     print('<p>'.$item[$i][1].'</p>');
                                     print('<p>'.$item[$i][2].'円</p>');

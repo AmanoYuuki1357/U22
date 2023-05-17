@@ -1,35 +1,31 @@
 <?php
     require "common.php";
-    require "db_access.php";
+    require "use_db.php";
+    error_reporting(E_ALL & ~E_NOTICE);
 
     // ===================================================================================
-	// 食品IDの取得
-	// ===================================================================================
+    // 食品IDの取得
+    // ===================================================================================
     if(isset($_GET['id'])){
         $searchItemId = $_GET['id'];
     }
     else{
         // 商品のIDが取得できないときは商品一覧へ遷移する
-        header('Location: ./menu.html');
+        header('Location: ./menu.php');
     }
 
     // ===================================================================================
-	// DB検索
-	// ===================================================================================
-    $db = new Db();                                         // オブジェクト生成
+    // DB検索
+    // ===================================================================================
+    $db = new UseDb($db);                               // オブジェクト生成
+    $item       = $db->showItem($searchItemId);         // 食品詳細検索
+    $genres     = $db->showGenres($searchItemId);       // 食品ジャンル検索
+    $allergens  = $db->showAllergens($searchItemId);    // 食品アレルゲン検索
+    $reveiws    = $db->showReveiwLimit($searchItemId);  // 食品レビュー検索
 
-    if($db->connect()){
-        $item       = $db->showItem($searchItemId);         // 食品詳細検索
-        $genres     = $db->showGenres($searchItemId);       // 食品ジャンル検索
-        $allergens  = $db->showAllergens($searchItemId);    // 食品アレルゲン検索
-
-        if(empty($item)){
-            // 取得できないときは商品一覧へ遷移する
-            header('Location: ./menu.html');
-        }
-    }
-    else{
-        // TODO:DB接続失敗時の処理
+    if(empty($item)){
+        // 取得できないときは商品一覧へ遷移する
+        header('Location: ./menu.php');
     }
 
 ?>
@@ -64,18 +60,14 @@
             <a href="login.html">ログイン/会員登録</a>
 
             <!-- ログインしている時 -->
-
+            <!-- TODO: ユーザー名の表示など -->
     </nav>
 
         </header>
 
         <main>
             <div>
-                <a href="index.html">＜メニュー一覧</a>
-            </div>
-
-            <div>
-                <img src="images/salmon.jpg" alt="鮭">
+                <a href="./menu.php">＜メニュー一覧</a>
             </div>
 
             <div>
@@ -83,7 +75,7 @@
                 <p>食品ジャンル</p>
                 <ul>
                 <?php
-                    if(!empty($genre)){
+                    if(!empty($genres)){
                         foreach ($genres as $genre){
                             print "<li>{$genre['f_item_genre_name']}</li>";
                         }
@@ -142,7 +134,8 @@
                 <table>
                     <tr>
                         <th>カロリー</th>
-                        <th>タンパク質</th>
+                        <th>たんぱく質</th>
+                        <th>糖質</th>
                         <th>脂質</th>
                         <th>食物繊維</th>
                         <th>塩分</th>
@@ -150,11 +143,11 @@
                     <tr>
                         <td><?php print $item['f_item_calorie']; ?></td>
                         <td><?php print $item['f_item_protein_vol']; ?></td>
+                        <td><?php print $item['f_item_suger_vol']; ?></td>
                         <td><?php print $item['f_item_lipid_vol']; ?></td>
                         <td><?php print $item['f_item_dietary_fiber_vol']; ?></td>
                         <td><?php print $item['f_item_salt_vol']; ?></td>
                     </tr>
-
                 </table>
 
                 <dl>
@@ -183,19 +176,36 @@
             </div>
 
             <div>
-                <p>
-                    レビュー
-                </p>
-                <img src="images/icon.jpg" alt="nakaotoshiki">
-                <p>
-                    ユーザー名｜評価｜コメント｜
-                </p>
+                <h2>レビュー</h2>
 
-                <img src="images/icon.jpg" alt="nakaotoshiki">
-                <p>
-                    ユーザー名｜評価｜コメント｜
-                </p>
+                <div>
+                <?php
+                    if(empty($reveiws)){
+                        print "<p>まだレビューはありません</p>";
+                    }
+                    else{
+                        foreach ($reveiws as $reveiw){
+                            print "
+                                <div>
+                                    <dl>
+                                        <dt>日付</dt>
+                                            <dd>{$reveiw['f_reveiw_date']}</dd>
+                                        <dt>ユーザー名</dt>
+                                            <dd>{$reveiw['f_user_nick_name']}</dd>
+                                        <dt>評価</dt>
+                                            <dd>{$reveiw['f_reveiw_point']}</dd>
+                                        <dt>コメント</dt>
+                                            <dd>{$reveiw['f_reveiw']}</dd>
+                                    </dl>
+                                </div>";
+                        }
+
+                    }
+                ?>
+                </div>
+
                 <a href="review.html">レビューを見る</a>
+
             </div>
 
         </main>
