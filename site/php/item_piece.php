@@ -20,14 +20,13 @@
 
     if($db->connect()){
         $item       = $db->showItem($searchItemId);         // 食品詳細検索
-        $genres     = $db->showGenre($searchItemId);        // 食品ジャンル検索
+        $genres     = $db->showGenres($searchItemId);       // 食品ジャンル検索
         $allergens  = $db->showAllergens($searchItemId);    // 食品アレルゲン検索
 
-        if(!$item){
+        if(!empty($item)){
             // 取得できないときは商品一覧へ遷移する
             header('Location: ./menu.html');
         }
-
     }
     else{
         // TODO:DB接続失敗時の処理
@@ -84,9 +83,11 @@
                 <p>食品ジャンル</p>
                 <ul>
                 <?php
-                    foreach ($genres as $genre){
-                        print "<li>{$genre['f_item_genre_name']}</li>";
-                    }
+                    if(!empty($genre)){
+                        foreach ($genres as $genre){
+                            print "<li>{$genre['f_item_genre_name']}</li>";
+                        }
+                    }  
                 ?>
                 </ul>
 

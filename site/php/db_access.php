@@ -44,32 +44,17 @@ class Db{
 	}
 
 	// ===================================================================================
-	// 食品詳細情報取得(返り値:指定食品IDの商品情報)
+	// SQL
 	// ===================================================================================
-	function showItem($itemId){
-		$contents = $this->db->prepare('
+	private $sqlItem = '
 		select
 			*
 		from
 			t_items
 		where
-			f_item_id = ? ;');
-		$contents->bindparam(1, $itemId, PDO::PARAM_INT);
-		$contents->execute();
-
-		$count = $contents -> rowCount();
-		if($count == 0){
-			return false;
-		}
-
-		return $contents->fetch(PDO::FETCH_ASSOC);
-	}
-
-	// ===================================================================================
-	// 食品詳細情報取得(返り値:指定食品IDのジャンル情報)
-	// ===================================================================================
-	function showGenre($itemId){
-		$contents = $this->db->prepare('
+			f_item_id = ? ;';
+	
+	private $sqlGenre = '
 		select
 			type.f_item_genre_id,
 			genre.f_item_genre_name
@@ -80,7 +65,21 @@ class Db{
 		on
 			type.f_item_genre_id = genre.f_item_genre_id
 		where
-			type.f_item_id = ? ;');
+			type.f_item_id = ? ;';
+
+	private $sqlAllergens = '
+		select
+			*
+		from
+			t_item_allergens
+		where
+			f_item_id = ? ;';
+
+	// ===================================================================================
+	// 指定商品IDによるDB検索
+	// ===================================================================================
+	function showByItemId($sql, $itemId){
+		$contents = $this->db->prepare($sql);
 		$contents->bindparam(1, $itemId, PDO::PARAM_INT);
 		$contents->execute();
 
@@ -88,19 +87,25 @@ class Db{
 	}
 
 	// ===================================================================================
-	// 食品詳細情報取得(返り値:指定食品IDのジャンル情報)
+	// 食品詳細情報取得(返り値:指定食品IDの商品情報)
+	// ===================================================================================
+	function showItem($itemId){
+		$contents = $this->showByItemId($this->sqlItem, $itemId);
+		return $contents->fetch(PDO::FETCH_ASSOC);
+	}
+
+	// ===================================================================================
+	// 食品ジャンル情報取得(返り値:指定食品IDのジャンル情報)
+	// ===================================================================================
+	function showGenres($itemId){
+		return $this->showByItemId($this->sqlGenre, $itemId);
+	}
+
+	// ===================================================================================
+	// 食品アレルギーgi情報取得(返り値:指定食品IDのアレルギー情報)
 	// ===================================================================================
 	function showAllergens($itemId){
-		$contents = $this->db->prepare('
-		select
-			*
-		from
-			t_item_allergens
-		where
-			f_item_id = ? ;');
-		$contents->bindparam(1, $itemId, PDO::PARAM_INT);
-		$contents->execute();
-
+		$contents = $this->showByItemId($this->sqlAllergens, $itemId);
 		return $contents->fetch(PDO::FETCH_ASSOC);
 	}
 	
