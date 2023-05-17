@@ -130,8 +130,8 @@
                                     print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i][1].'>');
                                     print('<p>'.$item[$i][1].'</p>');
                                     print('<p>'.$item[$i][2].'円</p>');
-                                    print('<button>カートに入れる</button>');
                                     print('</a>');
+                                    print('<button>カートに入れる</button>');
                                     print('</td>');
                                     if($i%4==3){
                                         print('</tr>');
