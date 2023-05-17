@@ -4,6 +4,11 @@
     error_reporting(E_ALL & ~E_NOTICE);
 
     // ===================================================================================
+    // セッション開始
+    // ===================================================================================
+    if(!isset($_SESSION)){ session_start(); }
+
+    // ===================================================================================
     // 食品IDの取得
     // ===================================================================================
     if(isset($_GET['id'])){
@@ -17,11 +22,11 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    $db = new UseDb($db);                               // オブジェクト生成
-    $item       = $db->showItem($searchItemId);         // 食品詳細検索
-    $genres     = $db->showGenres($searchItemId);       // 食品ジャンル検索
-    $allergens  = $db->showAllergens($searchItemId);    // 食品アレルゲン検索
-    $reveiws    = $db->showReveiwLimit($searchItemId);  // 食品レビュー検索
+    $db = new UseDb($db);                                   // オブジェクト生成
+    $item       = $db->showItem($searchItemId);             // 食品詳細検索
+    $genres     = $db->showGenres($searchItemId);           // 食品ジャンル検索
+    $allergens  = $db->showAllergens($searchItemId);        // 食品アレルゲン検索
+    $reveiws    = $db->showReveiwLimit($searchItemId, 2);   // 食品レビュー検索
 
     if(empty($item)){
         // 取得できないときは商品一覧へ遷移する
@@ -53,15 +58,16 @@
             <h1>ミールフレンド</h1>
             <nav>
                 <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
+                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                </div>
 
-            <!-- ログインしていない時 -->
-            <a href="login.html">ログイン/会員登録</a>
-
-            <!-- ログインしている時 -->
-            <!-- TODO: ユーザー名の表示など -->
-    </nav>
+            <!-- マイページ/ログイン -->
+            <?php 
+                print isset($_SESSION['id'])? 
+                    "<a href='mypage.html'>{$_SESSION['name']}様</a>":
+                    "<a href='login.php'>ログイン/会員登録</a>";
+            ?>
+            </nav>
 
         </header>
 
@@ -76,6 +82,7 @@
                 <ul>
                 <?php
                     if(!empty($genres)){
+                        // ジャンル情報が取得できた場合
                         foreach ($genres as $genre){
                             print "<li>{$genre['f_item_genre_name']}</li>";
                         }
@@ -181,9 +188,11 @@
                 <div>
                 <?php
                     if(empty($reveiws)){
+                        // レビュー情報が取得できない場合
                         print "<p>まだレビューはありません</p>";
                     }
                     else{
+                        // レビュー情報が取得できた場合
                         foreach ($reveiws as $reveiw){
                             print "
                                 <div>

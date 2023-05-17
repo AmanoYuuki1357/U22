@@ -115,8 +115,8 @@ class UseDb{
     // ===================================================================================
     // 食品レビュー情報取得(返り値:商品詳細画面用レビュー情報)
     // ===================================================================================
-    function showReveiwLimit($itemId){
-        $contents =  $this->showByItemId($this->sqlReveiwLimit . '3;', $itemId);
+    function showReveiwLimit($itemId, $num){
+        $contents =  $this->showByItemId($this->sqlReveiwLimit . $num .';', $itemId);
         return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
 
