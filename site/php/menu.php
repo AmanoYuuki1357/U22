@@ -33,10 +33,9 @@
     // 商品情報を取り出す
     // 本当は販売履歴と結合してランキングにする
     // 画像も取り出す
-    $sql2='SELECT f_item_name FROM t_items';
+    $sql2='SELECT f_item_id,f_item_name,f_item_price FROM t_items';
     $items=$db->query($sql2);
     $item=$items->fetchAll();
-    print_r($item);
 
 ?>
 
@@ -49,7 +48,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>商品一覧</title>
-        <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/reset.css">
         <!-- <link rel="stylesheet" type="text/css" href="css/main.css"> -->
         <!-- <link rel="stylesheet" type="text/css" href="css/home.css"> -->
 
@@ -127,15 +126,14 @@
                                         print('<tr>');
                                     }
                                     print('<td>');
-                                    print('<a href="item_piece.php?='.$item[$i].'">');
-                                    print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i][0].'>');
-                                    print('<p>'.$item[$i][0].'</p>');
-                                    print('<p>x円</p>');
-                                    print('<p>-</p>');
-                                    print('<p>+</p>');
+                                    print('<a href="item_piece.php?='.$item[$i][0].'">');
+                                    print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i][1].'>');
+                                    print('<p>'.$item[$i][1].'</p>');
+                                    print('<p>'.$item[$i][2].'円</p>');
+                                    print('<button>カートに入れる</button>');
                                     print('</a>');
                                     print('</td>');
-                                    if($i%4==1){
+                                    if($i%4==3){
                                         print('</tr>');
                                     }
                                 }
