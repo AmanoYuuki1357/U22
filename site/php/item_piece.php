@@ -5,8 +5,8 @@
     // ===================================================================================
 	// 食品IDの取得
 	// ===================================================================================
-    if(isset($_GET['itemId'])){
-        $searchItemId = $_GET['itemId'];
+    if(isset($_GET['id'])){
+        $searchItemId = $_GET['id'];
     }
     else{
         // 商品のIDが取得できないときは商品一覧へ遷移する
@@ -23,7 +23,7 @@
         $genres     = $db->showGenres($searchItemId);       // 食品ジャンル検索
         $allergens  = $db->showAllergens($searchItemId);    // 食品アレルゲン検索
 
-        if(!empty($item)){
+        if(empty($item)){
             // 取得できないときは商品一覧へ遷移する
             header('Location: ./menu.html');
         }
