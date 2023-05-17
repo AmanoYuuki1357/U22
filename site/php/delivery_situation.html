@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>配送状況</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配送状況</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
-
-                <h2>
-                    ミールフレンド
-                </h2>
+<body>
+    <div id="wrap">
+        <header>
+            <h1>ミールフレンド</h1>
+            <nav>
                 <div>
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
                 <!-- ログインしていない時 -->
                 <a href="login.html">ログイン/会員登録</a>
-
                 <!-- ログインしている時 -->
                 <!-- ユーザーメニュー -->
                 <div id="user">
@@ -37,19 +35,19 @@
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
                 </div>
-
-            </header>
-
-            <main>
-                <div>
+                <div id="gomypage">
                     <a href="my_page.html">＜マイページ</a>
                 </div>
-                <div>
-                    <h2>配送状況</h2>
-                    <p>購入履歴:○○年○○月○○日</p>
+            </nav>
+        </header>
+
+        <main>
+            <h2>配送状況</h2>
+            <div class="situation">
+                <p>購入履歴:○○年○○月○○日</p>
+                <div class="info">
                     <p>商品：</p>
                     <ul>
-                        <li>商品名</li>
                         <li>商品名</li>
                         <li>商品名</li>
                     </ul>
@@ -57,11 +55,77 @@
                     <p>ステータス:配送済み</p>
                     <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
                 </div>
-            </main>
+            </div>
 
-            <footer></footer>
-        </div>
+            <div class="situation">
+                <p>購入履歴:○○年○○月○○日</p>
+                <div class="info">
+                    <p>商品：</p>
+                    <ul>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                    </ul>
+                    <p>配送予定：○○年○○月○○日</p>
+                    <p>ステータス:配送済み</p>
+                    <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
+                </div>
+            </div>
 
-    </body>
+            <div class="situation">
+                <p>購入履歴:○○年○○月○○日</p>
+                <div class="info">
+                    <p>商品：</p>
+                    <ul>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                    </ul>
+                    <p>配送予定：○○年○○月○○日</p>
+                    <p>ステータス:配送済み</p>
+                    <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+    </div>
+
+</body>
+<style>
+    * {
+        color: #000;
+        text-decoration: none;
+    }
+
+    #gomypage {
+        position: fixed;
+        left: 0;
+        top: 16vh;
+        width: 100%;
+        border-bottom: solid;
+        background-color: #fff;
+        opacity: 50%;
+        padding: 5px;
+    }
+
+    main {
+        position: relative;
+        top: 170px;
+    }
+
+    .situation {
+        background-color: #c8fac8;
+        width: 500px;
+        padding: 15px;
+        margin: 20px;
+        border-radius: 20px;
+        line-height: 18px;
+    }
+    .info{
+        font-size: 12px;
+    }
+    h2{
+        text-align: center;
+    }
+</style>
 
 </html>
