@@ -10,33 +10,33 @@ class UseDb{
     // ===================================================================================
     // SQL
     // ===================================================================================
-    private $sqlItem = '
-        select
+    private $sqlItemByItemId = '
+        SELECT
             *
-        from
+        FROM
             t_items
-        where
+        WHERE
             f_item_id = ? ;';
     
-    private $sqlGenre = '
-        select
+    private $sqlGenreByItemId = '
+        SELECT
             type.f_item_genre_id,
             genre.f_item_genre_name
-        from
+        FROM
             t_item_types    as type
-        join
+        JOIN
             t_item_genre    as genre
-        on
+        ON
             type.f_item_genre_id = genre.f_item_genre_id
-        where
+        WHERE
             type.f_item_id = ? ;';
 
-    private $sqlAllergens = '
-        select
+    private $sqlAllergensByItemId = '
+        SELECT
             *
-        from
+        FROM
             t_item_allergens
-        where
+        WHERE
             f_item_id = ? ;';
 
     private $sqlReveiwAll = '
@@ -59,7 +59,7 @@ class UseDb{
         where
             reveiw.f_item_id = ?;';
 
-    private $sqlReveiwLimit = '
+    private $sqlReveiwLimitByItemId = '
         SELECT
             f_reveiw_date,
             f_user_nick_name,
@@ -91,32 +91,32 @@ class UseDb{
     // ===================================================================================
     // 食品詳細情報取得(返り値:商品情報)
     // ===================================================================================
-    function showItem($itemId){
-        $contents = $this->showByItemId($this->sqlItem, $itemId);
+    function showItemByItemId($itemId){
+        $contents = $this->showByItemId($this->sqlItemByItemId, $itemId);
         return $contents->fetch(PDO::FETCH_ASSOC);
     }
 
     // ===================================================================================
     // 食品ジャンル情報取得(返り値:ジャンル情報)
     // ===================================================================================
-    function showGenres($itemId){
-        $contents = $this->showByItemId($this->sqlGenre, $itemId);
+    function showGenresByItemId($itemId){
+        $contents = $this->showByItemId($this->sqlGenreByItemId, $itemId);
         return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // ===================================================================================
     // 食品アレルギー情報取得(返り値:アレルギー情報)
     // ===================================================================================
-    function showAllergens($itemId){
-        $contents = $this->showByItemId($this->sqlAllergens, $itemId);
+    function showAllergensByItemId($itemId){
+        $contents = $this->showByItemId($this->sqlAllergensByItemId, $itemId);
         return $contents->fetch(PDO::FETCH_ASSOC);
     }
     
     // ===================================================================================
     // 食品レビュー情報取得(返り値:商品詳細画面用レビュー情報)
     // ===================================================================================
-    function showReveiwLimit($itemId, $num){
-        $contents =  $this->showByItemId($this->sqlReveiwLimit . $num .';', $itemId);
+    function showReveiwLimitByItemId($itemId, $num){
+        $contents =  $this->showByItemId($this->sqlReveiwLimitByItemId . $num .';', $itemId);
         return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
 

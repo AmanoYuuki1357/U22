@@ -22,11 +22,11 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    $db = new UseDb($db);                                   // オブジェクト生成
-    $item       = $db->showItem($searchItemId);             // 食品詳細検索
-    $genres     = $db->showGenres($searchItemId);           // 食品ジャンル検索
-    $allergens  = $db->showAllergens($searchItemId);        // 食品アレルゲン検索
-    $reveiws    = $db->showReveiwLimit($searchItemId, 2);   // 食品レビュー検索
+    $db = new UseDb($db);                                           // オブジェクト生成
+    $item       = $db->showItemByItemId($searchItemId);             // 食品詳細検索
+    $genres     = $db->showGenresByItemId($searchItemId);           // 食品ジャンル検索
+    $allergens  = $db->showAllergensByItemId($searchItemId);        // 食品アレルゲン検索
+    $reveiws    = $db->showReveiwLimitByItemId($searchItemId, 2);   // 食品レビュー検索
 
     if(empty($item)){
         // 取得できないときは商品一覧へ遷移する
@@ -89,6 +89,8 @@
                     }  
                 ?>
                 </ul>
+
+                <!-- TODO:画像表示 -->
 
                 <!-- 商品名 -->
                 <h2><?php print $item['f_item_name']; ?></h2>
