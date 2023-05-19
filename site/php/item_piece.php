@@ -26,7 +26,7 @@
     $item       = $db->showItemByItemId($searchItemId);             // 食品詳細検索
     $genres     = $db->showGenresByItemId($searchItemId);           // 食品ジャンル検索
     $allergens  = $db->showAllergensByItemId($searchItemId);        // 食品アレルゲン検索
-    $reveiws    = $db->showReveiwLimitByItemId($searchItemId, 2);   // 食品レビュー検索
+    $reveiws    = $db->limitReveiwByItemId($searchItemId, 2);       // 食品レビュー検索
 
     if(empty($item)){
         // 取得できないときは商品一覧へ遷移する
@@ -150,12 +150,12 @@
                         <th>塩分</th>
                     </tr>
                     <tr>
-                        <td><?php print $item['f_item_calorie']; ?></td>
-                        <td><?php print $item['f_item_protein_vol']; ?></td>
-                        <td><?php print $item['f_item_suger_vol']; ?></td>
-                        <td><?php print $item['f_item_lipid_vol']; ?></td>
-                        <td><?php print $item['f_item_dietary_fiber_vol']; ?></td>
-                        <td><?php print $item['f_item_salt_vol']; ?></td>
+                        <td><?php print $item['f_item_calorie']; ?>kcal</td>
+                        <td><?php print $item['f_item_protein_vol']; ?>g</td>
+                        <td><?php print $item['f_item_suger_vol']; ?>g</td>
+                        <td><?php print $item['f_item_lipid_vol']; ?>g</td>
+                        <td><?php print $item['f_item_dietary_fiber_vol']; ?>g</td>
+                        <td><?php print $item['f_item_salt_vol']; ?>g</td>
                     </tr>
                 </table>
 
@@ -201,8 +201,6 @@
                                     <dl>
                                         <dt>日付</dt>
                                             <dd>{$reveiw['f_reveiw_date']}</dd>
-                                        <dt>ユーザー名</dt>
-                                            <dd>{$reveiw['f_user_nick_name']}</dd>
                                         <dt>評価</dt>
                                             <dd>{$reveiw['f_reveiw_point']}</dd>
                                         <dt>コメント</dt>
@@ -211,11 +209,10 @@
                                 </div>";
                         }
 
+                        print "<a href='review.php?id={$searchItemId}&page=1'>レビューを見る</a>";
                     }
                 ?>
                 </div>
-
-                <a href="review.html">レビューを見る</a>
 
             </div>
 

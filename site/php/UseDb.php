@@ -39,47 +39,31 @@ class UseDb{
         WHERE
             f_item_id = ? ;';
 
-    private $sqlReveiwAll = '
+    private $sqlReveiwCntByItemId = '
         SELECT
-            f_reveiw_date,
-            f_item_name,
-            f_user_nick_name,
-            f_reveiw_point,
-            f_reveiw
+            count(*)    AS cnt
         FROM
-            t_item_reveiw    AS reveiw
-        JOIN
-            t_items        AS item
-        ON
-            item.f_item_id = reveiw.f_item_id
-        JOIN
-            t_users        AS user
-        ON
-            user.f_user_id = reveiw.f_user_id
+            t_item_reveiw
         where
-            reveiw.f_item_id = ?;';
+            f_item_id = ?;';
 
-    private $sqlReveiwLimitByItemId = '
+    private $sqlReveiwByItemId = '
         SELECT
             f_reveiw_date,
-            f_user_nick_name,
             f_reveiw_point,
             f_reveiw
         FROM
             t_item_reveiw    AS reveiw
-        JOIN
-            t_users        AS user
-        ON
-            user.f_user_id = reveiw.f_user_id
-        WHERE
+        where
             reveiw.f_item_id = ?
         ORDER BY
             f_reveiw_date DESC
-        limit 0,';
+        LIMIT ';
 
     // ===================================================================================
     // 指定商品IDによるDB検索
     // ===================================================================================
+    // 商品IDで抽出
     function showByItemId($sql, $itemId){
         $contents = $this->db->prepare($sql);
         $contents->bindparam(1, $itemId, PDO::PARAM_INT);
@@ -91,6 +75,7 @@ class UseDb{
     // ===================================================================================
     // 食品詳細情報取得(返り値:商品情報)
     // ===================================================================================
+    // 商品IDで抽出
     function showItemByItemId($itemId){
         $contents = $this->showByItemId($this->sqlItemByItemId, $itemId);
         return $contents->fetch(PDO::FETCH_ASSOC);
@@ -99,6 +84,7 @@ class UseDb{
     // ===================================================================================
     // 食品ジャンル情報取得(返り値:ジャンル情報)
     // ===================================================================================
+    // 商品IDで抽出
     function showGenresByItemId($itemId){
         $contents = $this->showByItemId($this->sqlGenreByItemId, $itemId);
         return  $contents->fetchAll(PDO::FETCH_ASSOC);
@@ -107,6 +93,7 @@ class UseDb{
     // ===================================================================================
     // 食品アレルギー情報取得(返り値:アレルギー情報)
     // ===================================================================================
+    // 商品IDで抽出
     function showAllergensByItemId($itemId){
         $contents = $this->showByItemId($this->sqlAllergensByItemId, $itemId);
         return $contents->fetch(PDO::FETCH_ASSOC);
@@ -115,10 +102,25 @@ class UseDb{
     // ===================================================================================
     // 食品レビュー情報取得(返り値:商品詳細画面用レビュー情報)
     // ===================================================================================
-    function showReveiwLimitByItemId($itemId, $num){
-        $contents =  $this->showByItemId($this->sqlReveiwLimitByItemId . $num .';', $itemId);
+    // 商品IDで抽出
+    function countReveiwByItemId($itemId){
+        $contents =  $this->showByItemId($this->sqlReveiwCntByItemId, $itemId);
+        return  $contents->fetch(PDO::FETCH_ASSOC);
+
+    }
+
+    // 商品IDで抽出(件数指定)
+    function showReveiwByItemId($itemId, $first, $last){
+        $contents =  $this->showByItemId($this->sqlReveiwByItemId . $first . "," . $last .';', $itemId);
         return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // 商品IDで抽出(件数指定)
+    function limitReveiwByItemId($itemId, $num){
+        return $this->showReveiwByItemId($itemId, 0, $num);
+    }
+
+
 
 
 }
