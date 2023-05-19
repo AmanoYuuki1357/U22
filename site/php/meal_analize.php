@@ -2,9 +2,9 @@
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
 
-    if(!empty($session["id"])){
+    if(!empty($_SESSION["id"])){
         $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-        $users->execute(array($session["id"]));
+        $users->execute(array($_SESSION["id"]));
         $user=$users->fetch();
     }
 
@@ -34,33 +34,20 @@
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- ログインしていない時 -->
                 <?php
-                    if(!empty($session["id"])){
+                    if(!empty($_SESSION["id"])){
                 ?>
                 <a href="login.php">ログイン/会員登録</a>
                 <?php
                     }else{
                 ?>
                 <div>
-                    <img src="/素材/icon_1x.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($users["f_user_name"]); ?></a>
                 </div>
                 <?php
                     }
                 ?>
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
-                </div>
 
             </header>
 

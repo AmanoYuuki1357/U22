@@ -1,12 +1,16 @@
 <?php
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+    if(!isset($_SESSION)){
+        session_start();
+    }
 
-    if(!empty($session["id"])){
+    if(isset($_SESSION["id"])){
         $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-        $users->execute(array($session["id"]));
+        $users->execute(array($_SESSION["id"]));
         $user=$users->fetch();
     }
+
 
     // // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
     // if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
