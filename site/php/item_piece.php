@@ -22,7 +22,7 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    $db = new UseDb($db);                                           // オブジェクト生成
+    $db         = new UseDb($db);                                   // オブジェクト生成
     $item       = $db->showItemByItemId($searchItemId);             // 食品詳細検索
     $genres     = $db->showGenresByItemId($searchItemId);           // 食品ジャンル検索
     $allergens  = $db->showAllergensByItemId($searchItemId);        // 食品アレルゲン検索
