@@ -1,6 +1,10 @@
 <?php
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+    if(!isset($_SESSION)){
+        session_start();
+    }
+
 
     if(!empty($_SESSION["id"])){
         $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
@@ -31,7 +35,7 @@
                     ミールフレンド
                 </h2>
                 <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
                 <?php
@@ -43,7 +47,7 @@
                 ?>
                 <div>
                     <img src="../images/icon.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($users["f_user_name"]); ?></a>
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                 </div>
                 <?php
                     }

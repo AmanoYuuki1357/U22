@@ -35,20 +35,20 @@
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
+                <?php
+                    if(!empty($session["id"])){
+                ?>
+                <a href="login.php">ログイン/会員登録</a>
+                <?php
+                    }else{
+                ?>
+                <div>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                 </div>
+                <?php
+                    }
+                ?>
             </nav>
         </header>
 

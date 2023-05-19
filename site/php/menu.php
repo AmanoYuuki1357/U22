@@ -83,7 +83,10 @@
                 ?>
                 <div>
                     <img src="../images/icon.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    <form action="my_page.php">
+                        <input type="hidden"  name="user_id" value="<?php $_SESSION["id"] ?>">
+                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    </form>
                 </div>
                 <?php
                     }
