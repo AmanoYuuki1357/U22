@@ -56,27 +56,34 @@
         <div id="wrap">
             <header>
 
-                <h2>
-                    ミールフレンド
-                </h2>
                 <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <a href="menu.php">商品一覧</a>
+                </div>
+
+                <div>
+                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
                 <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
+                <div>
+                    <a href="login.html">ログイン/会員登録</a>
+                </div>
 
                 <!-- ログインしている時 -->
                 <!-- ユーザーメニュー -->
                 <div id="user">
-                    <label>
+                    <div>
                         <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
+                    </div>
                     <div>
                         <a href="my_page.html">ニックネーム</a>
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
+                </div>
+
+                <!-- どちらの場合でもカートは出す -->
+                <div>
+                    <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
                 </div>
 
             </header>
