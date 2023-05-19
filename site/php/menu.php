@@ -1,8 +1,11 @@
 <?php
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
-    if(!isset($_SESSION)){
-        session_start();
+
+    if(!empty($session["id"])){
+        $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+        $users->execute(array($session["id"]));
+        $user=$users->fetch();
     }
 
     // // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
@@ -67,22 +70,20 @@
                 </div>
 
                 <!-- ログインしていない時 -->
+                <?php
+                    if(!empty($session["id"])){
+                ?>
+                <a href="login.php">ログイン/会員登録</a>
+                <?php
+                    }else{
+                ?>
                 <div>
-                    <a href="login.html">ログイン/会員登録</a>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                 </div>
-
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                    </div>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
-                </div>
-
+                <?php
+                    }
+                ?>
                 <!-- どちらの場合でもカートは出す -->
                 <div>
                     <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>

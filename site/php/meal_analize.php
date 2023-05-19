@@ -1,3 +1,15 @@
+<?php
+    require('common.php');
+    error_reporting(E_ALL & ~E_NOTICE);
+
+    if(!empty($session["id"])){
+        $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+        $users->execute(array($session["id"]));
+        $user=$users->fetch();
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -23,8 +35,20 @@
                 </div>
 
                 <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-
+                <?php
+                    if(!empty($session["id"])){
+                ?>
+                <a href="login.php">ログイン/会員登録</a>
+                <?php
+                    }else{
+                ?>
+                <div>
+                    <img src="/素材/icon_1x.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                </div>
+                <?php
+                    }
+                ?>
                 <!-- ログインしている時 -->
                 <!-- ユーザーメニュー -->
                 <div id="user">
