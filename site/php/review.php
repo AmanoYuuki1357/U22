@@ -30,8 +30,8 @@
     // ===================================================================================
     $db         = new UseDb($db);                                                   // オブジェクト生成
     $item       = $db->showItemByItemId($searchItemId);                             // 食品詳細情報
-    $revCnt     = $db->countReveiwByItemId($searchItemId);                          // 総レビュー件数
-    $reveiws    = $db->showReveiwByItemId($searchItemId, $revStart, $pageRevs);      // 表示対象のレビュー情報
+    $revCnt     = $db->countReviewByItemId($searchItemId);                          // 総レビュー件数
+    $Reviews    = $db->showReviewByItemId($searchItemId, $revStart, $pageRevs);      // 表示対象のレビュー情報
 
     // 検索失敗時
     if(empty($item)){
@@ -105,15 +105,15 @@
                 print "<p>全". $revCnt['cnt'] . "件</p>";
 
                 // レビュー
-                foreach($reveiws as $reveiw){
+                foreach($Reviews as $Review){
                     $strStars =  "☆☆☆☆☆";
-                    for($i=0; $i<$reveiw['f_reveiw_point']; $i++){ $strStars = "★" . $strStars; }
+                    for($i=0; $i<$Review['f_review_point']; $i++){ $strStars = "★" . $strStars; }
 
                     print "
                         <div>
-                            <p>{$reveiw['f_reveiw_date']}</p>
+                            <p>{$Review['f_review_date']}</p>
                             <p>" . mb_substr($strStars, 0, 5) . "</p>
-                            <p>{$reveiw['f_reveiw']}</p>
+                            <p>{$Review['f_review']}</p>
                         </div>
                     ";
                 }

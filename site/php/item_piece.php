@@ -26,7 +26,7 @@
     $item       = $db->showItemByItemId($searchItemId);             // 食品詳細検索
     $genres     = $db->showGenresByItemId($searchItemId);           // 食品ジャンル検索
     $allergens  = $db->showAllergensByItemId($searchItemId);        // 食品アレルゲン検索
-    $reveiws    = $db->limitReveiwByItemId($searchItemId, 2);       // 食品レビュー検索
+    $reviews    = $db->limitreviewByItemId($searchItemId, 2);       // 食品レビュー検索
 
     if(empty($item)){
         // 取得できないときは商品一覧へ遷移する
@@ -189,22 +189,22 @@
 
                 <div>
                 <?php
-                    if(empty($reveiws)){
+                    if(empty($reviews)){
                         // レビュー情報が取得できない場合
                         print "<p>まだレビューはありません</p>";
                     }
                     else{
                         // レビュー情報が取得できた場合
-                        foreach ($reveiws as $reveiw){
+                        foreach ($reviews as $review){
                             print "
                                 <div>
                                     <dl>
                                         <dt>日付</dt>
-                                            <dd>{$reveiw['f_reveiw_date']}</dd>
+                                            <dd>{$review['f_review_date']}</dd>
                                         <dt>評価</dt>
-                                            <dd>{$reveiw['f_reveiw_point']}</dd>
+                                            <dd>{$review['f_review_point']}</dd>
                                         <dt>コメント</dt>
-                                            <dd>{$reveiw['f_reveiw']}</dd>
+                                            <dd>{$review['f_review']}</dd>
                                     </dl>
                                 </div>";
                         }

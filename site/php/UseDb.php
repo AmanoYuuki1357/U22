@@ -39,25 +39,25 @@ class UseDb{
         WHERE
             f_item_id = ? ;';
 
-    private $sqlReveiwCntByItemId = '
+    private $sqlreviewCntByItemId = '
         SELECT
             count(*)    AS cnt
         FROM
-            t_item_reveiw
+            t_item_review
         where
             f_item_id = ?;';
 
-    private $sqlReveiwByItemId = '
+    private $sqlreviewByItemId = '
         SELECT
-            f_reveiw_date,
-            f_reveiw_point,
-            f_reveiw
+            f_review_date,
+            f_review_point,
+            f_review
         FROM
-            t_item_reveiw    AS reveiw
+            t_item_review    AS review
         where
-            reveiw.f_item_id = ?
+            review.f_item_id = ?
         ORDER BY
-            f_reveiw_date DESC
+            f_review_date DESC
         LIMIT ';
 
     // ===================================================================================
@@ -103,21 +103,21 @@ class UseDb{
     // 食品レビュー情報取得(返り値:商品詳細画面用レビュー情報)
     // ===================================================================================
     // 商品IDで抽出
-    function countReveiwByItemId($itemId){
-        $contents =  $this->showByItemId($this->sqlReveiwCntByItemId, $itemId);
+    function countreviewByItemId($itemId){
+        $contents =  $this->showByItemId($this->sqlreviewCntByItemId, $itemId);
         return  $contents->fetch(PDO::FETCH_ASSOC);
 
     }
 
     // 商品IDで抽出(件数指定)
-    function showReveiwByItemId($itemId, $first, $last){
-        $contents =  $this->showByItemId($this->sqlReveiwByItemId . $first . "," . $last .';', $itemId);
+    function showReviewByItemId($itemId, $first, $last){
+        $contents =  $this->showByItemId($this->sqlreviewByItemId . $first . "," . $last .';', $itemId);
         return  $contents->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // 商品IDで抽出(件数指定)
-    function limitReveiwByItemId($itemId, $num){
-        return $this->showReveiwByItemId($itemId, 0, $num);
+    function limitReviewByItemId($itemId, $num){
+        return $this->showreviewByItemId($itemId, 0, $num);
     }
 
 
