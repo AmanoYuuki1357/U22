@@ -79,7 +79,7 @@
                         foreach ($genres as $genre){
                             print "<li>{$genre['f_item_genre_name']}</li>";
                         }
-                    }  
+                    }
                 ?>
                 </ul>
 
