@@ -1,3 +1,19 @@
+<?php
+    require('common.php');
+    error_reporting(E_ALL & ~E_NOTICE);
+    if(!isset($_SESSION)){
+        session_start();
+    }
+
+
+    if(!empty($_SESSION["id"])){
+        $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+        $users->execute(array($_SESSION["id"]));
+        $user=$users->fetch();
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -19,24 +35,23 @@
                     ミールフレンド
                 </h2>
                 <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
+                <?php
+                    if(!empty($_SESSION["id"])){
+                ?>
+                <a href="login.php">ログイン/会員登録</a>
+                <?php
+                    }else{
+                ?>
+                <div>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                 </div>
+                <?php
+                    }
+                ?>
 
             </header>
 

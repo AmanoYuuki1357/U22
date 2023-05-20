@@ -3,6 +3,9 @@
 
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+    if(!isset($_SESSION)){
+        session_start();
+    }
 
     if(!empty($_POST)){
         //会員登録の処理
@@ -54,7 +57,7 @@
                 $member=$login->fetch();
 
                 if($member){
-                    $_SESSION['id']=$member['userID'];
+                    $_SESSION['id']=$member['f_user_id'];
                     header('Location: menu.php');
                     exit();
                 }else{

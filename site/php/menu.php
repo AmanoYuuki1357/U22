@@ -5,6 +5,13 @@
         session_start();
     }
 
+    if(isset($_SESSION["id"])){
+        $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+        $users->execute(array($_SESSION["id"]));
+        $user=$users->fetch();
+    }
+
+
     // // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
     // if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
     //     // ログインした時間を現在の時間に更新
@@ -67,22 +74,23 @@
                 </div>
 
                 <!-- ログインしていない時 -->
+                <?php
+                    if(!empty($session["id"])){
+                ?>
+                <a href="login.php">ログイン/会員登録</a>
+                <?php
+                    }else{
+                ?>
                 <div>
-                    <a href="login.html">ログイン/会員登録</a>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <form action="my_page.php">
+                        <input type="hidden"  name="user_id" value="<?php $_SESSION["id"] ?>">
+                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    </form>
                 </div>
-
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                    </div>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
-                </div>
-
+                <?php
+                    }
+                ?>
                 <!-- どちらの場合でもカートは出す -->
                 <div>
                     <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
