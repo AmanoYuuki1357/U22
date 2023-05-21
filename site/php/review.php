@@ -1,7 +1,46 @@
 <?php
     require "common.php";
-    require "UseDb.php";
+    // require "UseDb.php";
     error_reporting(E_ALL & ~E_NOTICE);
+
+    // ===================================================================================
+    // SQL
+    // ===================================================================================
+    $sqlItems = '
+        SELECT
+            f_item_name,
+            f_item_explain,
+            f_item_calorie,
+            f_item_protein_vol,
+            f_item_suger_vol,
+            f_item_lipid_vol,
+            f_item_dietary_fiber_vol,
+            f_item_salt_vol
+        FROM
+            t_items
+        WHERE
+            f_item_id = ? ;';
+
+    $sqlReviewCnt = '
+        SELECT
+            count(*)    AS cnt
+        FROM
+            t_item_review
+        where
+            f_item_id = ?;';
+
+    $sqlReviews = '
+        SELECT
+            f_review_date,
+            f_review_point,
+            f_review
+        FROM
+            t_item_review    AS review
+        where
+            review.f_item_id = ?
+        ORDER BY
+            f_review_date DESC
+        LIMIT ';
 
     // ===================================================================================
     // セッション開始
@@ -28,10 +67,19 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    $db         = new UseDb($db);                                                   // オブジェクト生成
-    $item       = $db->showItemByItemId($searchItemId);                             // 食品詳細情報
-    $revCnt     = $db->countReviewByItemId($searchItemId);                          // 総レビュー件数
-    $Reviews    = $db->showReviewByItemId($searchItemId, $revStart, $pageRevs);      // 表示対象のレビュー情報
+    // 食品IDによる検索(汎用)
+    function showByItemId($db, $sql, $itemId){
+        $contents = $db->prepare($sql);
+        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->execute();
+
+        return $contents;
+    }
+
+    $item       = showByItemId($db, $sqlItems, $searchItemId)->fetch(PDO::FETCH_ASSOC);         // 食品詳細情報
+    $revCnt     = showByItemId($db, $sqlReviewCnt, $searchItemId)->fetch(PDO::FETCH_ASSOC);     // 総レビュー件数
+    $reviews    = showByItemId($db, $sqlReviews . $revStart . "," . $pageRevs .';', $searchItemId)
+                    ->fetchAll(PDO::FETCH_ASSOC);                                               // 表示対象のレビュー情報
 
     // 検索失敗時
     if(empty($item)){
@@ -105,15 +153,15 @@
                 print "<p>全". $revCnt['cnt'] . "件</p>";
 
                 // レビュー
-                foreach($Reviews as $Review){
+                foreach($reviews as $review){
                     $strStars =  "☆☆☆☆☆";
-                    for($i=0; $i<$Review['f_review_point']; $i++){ $strStars = "★" . $strStars; }
+                    for($i=0; $i<$review['f_review_point']; $i++){ $strStars = "★" . $strStars; }
 
                     print "
                         <div>
-                            <p>{$Review['f_review_date']}</p>
+                            <p>{$review['f_review_date']}</p>
                             <p>" . mb_substr($strStars, 0, 5) . "</p>
-                            <p>{$Review['f_review']}</p>
+                            <p>{$review['f_review']}</p>
                         </div>
                     ";
                 }

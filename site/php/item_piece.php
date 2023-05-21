@@ -1,7 +1,51 @@
 <?php
     require "common.php";
-    require "UseDb.php";
     error_reporting(E_ALL & ~E_NOTICE);
+
+    // ===================================================================================
+    // SQL
+    // ===================================================================================
+    $sqlItems = '
+        SELECT
+            *
+        FROM
+            t_items
+        WHERE
+            f_item_id = ? ;';
+    
+    $sqlGenres = '
+        SELECT
+            type.f_item_genre_id,
+            genre.f_item_genre_name
+        FROM
+            t_item_types    as type
+        JOIN
+            t_item_genre    as genre
+        ON
+            type.f_item_genre_id = genre.f_item_genre_id
+        WHERE
+            type.f_item_id = ? ;';
+
+    $sqlAllergens = '
+        SELECT
+            *
+        FROM
+            t_item_allergens
+        WHERE
+            f_item_id = ? ;';
+
+    $sqlreviews = '
+        SELECT
+            f_review_date,
+            f_review_point,
+            f_review
+        FROM
+            t_item_review    AS review
+        where
+            review.f_item_id = ?
+        ORDER BY
+            f_review_date DESC
+        LIMIT 0, 2';
 
     // ===================================================================================
     // セッション開始
@@ -22,11 +66,19 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    $db         = new UseDb($db);                                   // オブジェクト生成
-    $item       = $db->showItemByItemId($searchItemId);             // 食品詳細検索
-    $genres     = $db->showGenresByItemId($searchItemId);           // 食品ジャンル検索
-    $allergens  = $db->showAllergensByItemId($searchItemId);        // 食品アレルゲン検索
-    $reviews    = $db->limitreviewByItemId($searchItemId, 2);       // 食品レビュー検索
+    // 食品IDによる検索(汎用)
+    function showByItemId($db, $sql, $itemId){
+        $contents = $db->prepare($sql);
+        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->execute();
+
+        return $contents;
+    }
+
+    $item       = showByItemId($db, $sqlItems, $searchItemId)->fetch(PDO::FETCH_ASSOC);       // 食品詳細検索
+    $genres     = showByItemId($db, $sqlGenres, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);   // 食品ジャンル検索
+    $allergens  = showByItemId($db, $sqlAllergens, $searchItemId)->fetch(PDO::FETCH_ASSOC);   // 食品アレルゲン検索
+    $reviews    = showByItemId($db, $sqlreviews, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);  // 食品レビュー検索
 
     if(empty($item)){
         // 取得できないときは商品一覧へ遷移する
@@ -196,13 +248,17 @@
                     else{
                         // レビュー情報が取得できた場合
                         foreach ($reviews as $review){
+
+                            $strStars =  "☆☆☆☆☆";
+                            for($i=0; $i<$review['f_review_point']; $i++){ $strStars = "★" . $strStars; }
+        
                             print "
                                 <div>
                                     <dl>
                                         <dt>日付</dt>
                                             <dd>{$review['f_review_date']}</dd>
                                         <dt>評価</dt>
-                                            <dd>{$review['f_review_point']}</dd>
+                                            <dd>" . mb_substr($strStars, 0, 5) . "</dd>
                                         <dt>コメント</dt>
                                             <dd>{$review['f_review']}</dd>
                                     </dl>
