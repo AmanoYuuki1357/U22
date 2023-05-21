@@ -1,35 +1,8 @@
-<!-- <?php
+<?php
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
     if(!isset($_SESSION)){
         session_start();
-    }
-
-    // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
-    if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
-        // ログインした時間を現在の時間に更新
-        $_SESSION['time']=time();
-        // セッション変数のidを使って、ユーザーの情報を呼び出す
-        $members=$db->prepare('SELECT * FROM user_info WHERE userID=?');
-        $members->execute(array($_SESSION['id']));
-        $member=$members->fetch();
-        // ログインしていないとき
-    }else{
-        // 即時にログイン画面に転送する
-        header('Location: login.php');
-        exit();
-    }
-
-    $posts=$db->query('SELECT * FROM works_info ORDER BY worksCreated DESC;');
-    // for($i=0; $post=$posts->fetch(PDO::FETCH_ASSOC); $i++){}
-    $post=$posts->fetch(PDO::FETCH_ASSOC);
-    for($i=0; $i>5; $i++){
-        if($i==0){
-            print("<tr>");
-        }
-        if($i==5){
-            print("</tr>");
-        }
     }
 
     // ヘッダーのアイコン
@@ -37,7 +10,7 @@
     $icons->execute(array($_SESSION['id']));
     $icon=$icons->fetch();
 
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -62,20 +35,20 @@
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
+                <?php
+                    if(!empty($session["id"])){
+                ?>
+                <a href="login.php">ログイン/会員登録</a>
+                <?php
+                    }else{
+                ?>
+                <div>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                 </div>
+                <?php
+                    }
+                ?>
             </nav>
         </header>
 
@@ -130,7 +103,7 @@
                         </a>
                     </div>
                     <div>
-                        <a href="meal_analize.html">
+                        <a href="meal_analize.php">
                             <img alt="食事分析pic">
                             <p>食事分析</p>
                         </a>
