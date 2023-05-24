@@ -1,6 +1,5 @@
 <?php
     require "common.php";
-    // require "UseDb.php";
     error_reporting(E_ALL & ~E_NOTICE);
 
     // ===================================================================================
@@ -40,7 +39,43 @@
             review.f_item_id = ?
         ORDER BY
             f_review_date DESC
-        LIMIT ';
+        LIMIT ?, ?;';
+
+    // ===================================================================================
+    // 関数
+    // ===================================================================================
+    // 食品IDによる検索(汎用)
+    function showByItemId($db, $sql, $itemId){
+        $contents = $db->prepare($sql);
+        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->execute();
+
+        return $contents;
+    }
+
+    // ページ内表示アイテムの検索
+    function showPage($db, $sql, $itemId, $start, $amount ){
+        $contents = $db->prepare($sql);
+        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->bindparam(2, $start, PDO::PARAM_INT);
+        $contents->bindparam(3, $amount, PDO::PARAM_INT);
+        $contents->execute();
+
+        return $contents;
+    }
+
+    // 点数を☆に変換
+    function strNumToStar($point){
+        $strStars =  "☆☆☆☆☆";
+        for($i=0; $i<$point; $i++){ $strStars = "★" . $strStars; }
+
+        return mb_substr($strStars , 0, 5);
+    }
+
+    // ページURLのテキストを返す
+    function pageUrl($check, $itemId, $page, $str){
+        return $check? "<a href='review.php?id={$itemId}&page={$page}'>{$str}</a>": "<p>{$str}</p>"; 
+    }
 
     // ===================================================================================
     // セッション開始
@@ -51,11 +86,11 @@
     // get取得
     // ===================================================================================
     // 食品ID
-    if(isset($_GET['id'])){ $searchItemId = $_GET['id']; }
+    if( isset($_GET['id']) || is_numeric($_GET['id']) ){ $searchItemId = $_GET['id']; }
     else{ header('Location: ./menu.php');}
 
     // ページ
-    if(isset($_GET['page'])){ $page = $_GET['page']; }
+    if( isset($_GET['page']) || is_numeric($_GET['page']) ){ $page = $_GET['page']; }
     else{ $page = 1; }
 
     // ===================================================================================
@@ -67,18 +102,9 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    // 食品IDによる検索(汎用)
-    function showByItemId($db, $sql, $itemId){
-        $contents = $db->prepare($sql);
-        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
-        $contents->execute();
-
-        return $contents;
-    }
-
     $item       = showByItemId($db, $sqlItems, $searchItemId)->fetch(PDO::FETCH_ASSOC);         // 食品詳細情報
     $revCnt     = showByItemId($db, $sqlReviewCnt, $searchItemId)->fetch(PDO::FETCH_ASSOC);     // 総レビュー件数
-    $reviews    = showByItemId($db, $sqlReviews . $revStart . "," . $pageRevs .';', $searchItemId)
+    $reviews    = showPage($db, $sqlReviews, $searchItemId, $revStart, $pageRevs)
                     ->fetchAll(PDO::FETCH_ASSOC);                                               // 表示対象のレビュー情報
 
     // 検索失敗時
@@ -87,14 +113,11 @@
         header('Location: ./menu.php');
     }
 
-    // ページ数
+    // ===================================================================================
+    // ページ処理
+    // ===================================================================================
     $pageEnd = $revCnt['cnt'] / $pageRevs;
     if($revCnt['cnt'] % $pageRevs != 0){ $pageEnd += 1; }
-
-    // ページURL
-    function urlPage($check, $itemId, $page, $str){
-        return $check? "<a href='review.php?id={$itemId}&page={$page}'>{$str}</a>": "<p>{$str}</p>"; 
-    }
 ?>
 
 <!DOCTYPE html>
@@ -127,11 +150,11 @@
             <div id="user">
                 <label>
                     <img src="../images/icon.jpg" alt="アイコン">
-                    <img src=icon_images/<?php // print(h($icon["userIcon"])) ?> alt="アイコン">
+                    <!-- <img src=icon_images/<?php // print(h($icon["userIcon"])) ?> alt="アイコン"> -->
                 </label>
                 <div>
                     <a href="my_page.html">ニックネーム</a>
-                    <a href="my_page.php"><?php // print(h($user["userNickName"])) ?></a>
+                    <!-- <a href="my_page.php"><?php // print(h($user["userNickName"])) ?></a> -->
                 </div>
             </div>
 
@@ -150,28 +173,29 @@
 
             <?php
                 // レビュー全件数
-                print "<p>全". $revCnt['cnt'] . "件</p>";
+                print "<p>全". h($revCnt['cnt']) . "件</p>";
+
+                $start  = $revStart + 1;
+                $end    = $revCnt['cnt'] < $revStart + $pageRevs? $revCnt['cnt']: $revStart + $pageRevs;
+                print $start . "-" . $end;
 
                 // レビュー
                 foreach($reviews as $review){
-                    $strStars =  "☆☆☆☆☆";
-                    for($i=0; $i<$review['f_review_point']; $i++){ $strStars = "★" . $strStars; }
-
                     print "
                         <div>
-                            <p>{$review['f_review_date']}</p>
-                            <p>" . mb_substr($strStars, 0, 5) . "</p>
-                            <p>{$review['f_review']}</p>
+                            <p>" . h($review['f_review_date']) ."</p>
+                            <p>" . strNumToStar($review['f_review_point']) . "</p>
+                            <p>" . h($review['f_review']) . "</p>
                         </div>
                     ";
                 }
 
                 // ページ部
-                print urlPage( $page-1 > 0, $searchItemId, $page-1, "<" );          // 前へ
+                print pageUrl( $page-1 > 0, $searchItemId, $page-1, "<" );          // 前へ
                 for($i=0; $i<$pageEnd-1; $i++){
-                    print urlPage( $page != $i+1, $searchItemId, $i+1, $i+1 );      // ページ
+                    print pageUrl( $page != $i+1, $searchItemId, $i+1, $i+1 );      // ページ
                 }
-                print urlPage( $page+1 < $pageEnd, $searchItemId, $page + 1, ">" ); // 次へ
+                print pageUrl( $page+1 < $pageEnd, $searchItemId, $page + 1, ">" ); // 次へ
 
             ?>
 
@@ -181,19 +205,19 @@
                 <h2><?php print $item['f_item_name']; ?></h2>
                 <dl>
                     <dt>説明</dt>
-                        <dd><?php print $item['f_item_explain']; ?></dd>
+                        <dd><?php print h($item['f_item_explain']); ?></dd>
                     <dt>カロリー</dt>
-                        <dd><?php print $item['f_item_calorie']; ?>kcal</dd>
+                        <dd><?php print h($item['f_item_calorie']); ?>kcal</dd>
                     <dt>たんぱく質</dt>
-                        <dd><?php print $item['f_item_protein_vol']; ?>g</dd>
+                        <dd><?php print h($item['f_item_protein_vol']); ?>g</dd>
                     <dt>糖質</dt>
-                        <dd><?php print $item['f_item_suger_vol']; ?>g</dd>
+                        <dd><?php print h($item['f_item_suger_vol']); ?>g</dd>
                     <dt>脂質</dt>
-                        <dd><?php print $item['f_item_lipid_vol']; ?>g</dd>
+                        <dd><?php print h($item['f_item_lipid_vol']); ?>g</dd>
                     <dt>食物繊維</dt>
-                        <dd><?php print $item['f_item_dietary_fiber_vol']; ?>g</dd>
+                        <dd><?php print h($item['f_item_dietary_fiber_vol']); ?>g</dd>
                     <dt>塩分</dt>
-                        <dd><?php print $item['f_item_salt_vol']; ?>g</dd>
+                        <dd><?php print h($item['f_item_salt_vol']); ?>g</dd>
                 </dl>
             </div>
 

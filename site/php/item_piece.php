@@ -48,12 +48,36 @@
         LIMIT 0, 2';
 
     // ===================================================================================
+    // 関数
+    // ===================================================================================
+    // 食品IDによる検索(汎用)
+    function showByItemId($db, $sql, $itemId){
+        $contents = $db->prepare($sql);
+        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->execute();
+
+        return $contents;
+    }
+
+    // 点数を☆に変換
+    function strNumToStar($point){
+        $strStars =  "☆☆☆☆☆";
+        for($i=0; $i<$point; $i++){ $strStars = "★" . $strStars; }
+
+        return mb_substr($strStars , 0, 5);
+    }
+
+    function imageUrl(){
+        
+    }
+
+    // ===================================================================================
     // セッション開始
     // ===================================================================================
     if(!isset($_SESSION)){ session_start(); }
 
     // ===================================================================================
-    // 食品IDの取得
+    // getの取得
     // ===================================================================================
     if(isset($_GET['id'])){
         $searchItemId = $_GET['id'];
@@ -66,15 +90,6 @@
     // ===================================================================================
     // DB検索
     // ===================================================================================
-    // 食品IDによる検索(汎用)
-    function showByItemId($db, $sql, $itemId){
-        $contents = $db->prepare($sql);
-        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
-        $contents->execute();
-
-        return $contents;
-    }
-
     $item       = showByItemId($db, $sqlItems, $searchItemId)->fetch(PDO::FETCH_ASSOC);       // 食品詳細検索
     $genres     = showByItemId($db, $sqlGenres, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);   // 食品ジャンル検索
     $allergens  = showByItemId($db, $sqlAllergens, $searchItemId)->fetch(PDO::FETCH_ASSOC);   // 食品アレルゲン検索
@@ -116,7 +131,7 @@
             <!-- マイページ/ログイン -->
             <?php 
                 print isset($_SESSION['id'])? 
-                    "<a href='mypage.html'>{$_SESSION['name']}様</a>":
+                    "<a href='mypage.html'>" . h($_SESSION['name']). "様</a>":
                     "<a href='login.php'>ログイン/会員登録</a>";
             ?>
             </nav>
@@ -136,25 +151,26 @@
                     if(!empty($genres)){
                         // ジャンル情報が取得できた場合
                         foreach ($genres as $genre){
-                            print "<li>{$genre['f_item_genre_name']}</li>";
+                            print "<li>" . h($genre['f_item_genre_name']) . "</li>";
                         }
                     }
                 ?>
                 </ul>
 
                 <!-- TODO:画像表示 -->
+                <p>テスト出力:<?php print h($item['f_item_image']); ?></p>
 
                 <!-- 商品名 -->
-                <h2><?php print $item['f_item_name']; ?></h2>
+                <h2><?php print h($item['f_item_name']); ?></h2>
 
                 <dl>
                     <dt>値段</dt>
-                    <dd><?php print "{$item['f_item_price']}円"; ?></dd>
+                    <dd><?php print h($item['f_item_price']); ?>円</dd>
                 </dl>
 
                 <dl>
                     <dt>商品説明</dt>
-                    <dd><?php print $item['f_item_explain']; ?></dd>
+                    <dd><?php print h($item['f_item_explain']); ?></dd>
                 </dl>
 
                 <p>アレルゲン</p>
@@ -202,28 +218,28 @@
                         <th>塩分</th>
                     </tr>
                     <tr>
-                        <td><?php print $item['f_item_calorie']; ?>kcal</td>
-                        <td><?php print $item['f_item_protein_vol']; ?>g</td>
-                        <td><?php print $item['f_item_suger_vol']; ?>g</td>
-                        <td><?php print $item['f_item_lipid_vol']; ?>g</td>
-                        <td><?php print $item['f_item_dietary_fiber_vol']; ?>g</td>
-                        <td><?php print $item['f_item_salt_vol']; ?>g</td>
+                        <td><?php print h($item['f_item_calorie']); ?>kcal</td>
+                        <td><?php print h($item['f_item_protein_vol']); ?>g</td>
+                        <td><?php print h($item['f_item_suger_vol']); ?>g</td>
+                        <td><?php print h($item['f_item_lipid_vol']); ?>g</td>
+                        <td><?php print h($item['f_item_dietary_fiber_vol']); ?>g</td>
+                        <td><?php print h($item['f_item_salt_vol']); ?>g</td>
                     </tr>
                 </table>
 
                 <dl>
                     <dt>原材料</dt>
-                    <dd><?php print $item['f_item_materials']; ?></dd>
+                    <dd><?php print h($item['f_item_materials']); ?></dd>
                 </dl>
 
                 <dl>
                     <dt>保存方法</dt>
-                    <dd><?php print $item['f_item_save_way']; ?></dd>
+                    <dd><?php print h($item['f_item_save_way']); ?></dd>
                 </dl>
 
                 <dl>
                     <dt>賞味期限</dt>
-                    <dd><?php print $item['f_item_use_by_date']; ?></dd>
+                    <dd><?php print h($item['f_item_use_by_date']); ?></dd>
                 </dl>
             </div>
 
@@ -249,18 +265,15 @@
                         // レビュー情報が取得できた場合
                         foreach ($reviews as $review){
 
-                            $strStars =  "☆☆☆☆☆";
-                            for($i=0; $i<$review['f_review_point']; $i++){ $strStars = "★" . $strStars; }
-        
                             print "
                                 <div>
                                     <dl>
                                         <dt>日付</dt>
-                                            <dd>{$review['f_review_date']}</dd>
+                                            <dd>". h($review['f_review_date']) . "</dd>
                                         <dt>評価</dt>
-                                            <dd>" . mb_substr($strStars, 0, 5) . "</dd>
+                                            <dd>" . strNumToStar($review['f_review_point']) . "</dd>
                                         <dt>コメント</dt>
-                                            <dd>{$review['f_review']}</dd>
+                                            <dd>" . h($review['f_review']) ."</dd>
                                     </dl>
                                 </div>";
                         }
