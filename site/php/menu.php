@@ -64,6 +64,7 @@
     <body>
         <div id="wrap">
             <header>
+                <?php print_r($_SESSION); ?>
 
                 <div>
                     <a href="menu.php">商品一覧</a>
@@ -75,25 +76,23 @@
 
                 <!-- ログインしていない時 -->
                 <?php
-                    if(!empty($session["id"])){
+                    if(!isset($_SESSION["id"])){
                 ?>
                 <a href="login.php">ログイン/会員登録</a>
+                <!-- ログインしている時 -->
                 <?php
                     }else{
                 ?>
                 <div>
                     <img src="../images/icon.jpg" alt="アイコン">
-                    <form action="my_page.php">
-                        <input type="hidden"  name="user_id" value="<?php $_SESSION["id"] ?>">
                         <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    </form>
                 </div>
                 <?php
                     }
                 ?>
                 <!-- どちらの場合でもカートは出す -->
                 <div>
-                    <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
+                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
                 </div>
 
             </header>
@@ -140,10 +139,10 @@
                                         print('<tr>');
                                     }
                                     print('<td>');
-                                    print('<a href="item_piece.php?id='.$item[$i][0].'">');
-                                    print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i][1].'>');
-                                    print('<p>'.$item[$i][1].'</p>');
-                                    print('<p>'.$item[$i][2].'円</p>');
+                                    print('<a href="item_piece.php?id='.$item[$i]['f_item_id'].'">');
+                                    print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i]['f_item_name'].'>');
+                                    print('<p>'.$item[$i]['f_item_name'].'</p>');
+                                    print('<p>'.$item[$i]['f_item_price'].'円</p>');
                                     print('</a>');
                                     print('<button>カートに入れる</button>');
                                     print('</td>');

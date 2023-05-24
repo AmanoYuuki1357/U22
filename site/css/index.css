@@ -1,0 +1,65 @@
+div.top {
+  width: max-content;
+  /* height: 800px; */
+}
+
+div.top img {
+  max-width: 2045px;
+  height: auto;
+}
+
+div.top h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 70px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+div.what {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+div.what h2 {
+  font-size: 50px;
+  font-weight: 700;
+}
+
+div.what p {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+div.what img {
+  width: 50%;
+  height: 50%;
+}
+
+.what {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.content img {
+  width: 500px;
+  height: auto !important;
+  margin-right: 20px;
+}
+
+.content p {
+  margin: 0;
+}
