@@ -7,14 +7,15 @@
     // ===================================================================================
     $sqlItems = '
         SELECT
-            f_item_name,
-            f_item_explain,
-            f_item_calorie,
-            f_item_protein_vol,
-            f_item_suger_vol,
-            f_item_lipid_vol,
-            f_item_dietary_fiber_vol,
-            f_item_salt_vol
+            f_item_name                 AS name,
+            f_item_explain              AS ex,
+            f_item_calorie              AS calorie,
+            f_item_protein_vol          AS protein_vol,
+            f_item_suger_vol            AS suger_vol,
+            f_item_lipid_vol            AS lipid_vol,
+            f_item_dietary_fiber_vol    AS dietary_fiber_vol,
+            f_item_salt_vol             AS salt_vol,
+            f_item_image                AS image
         FROM
             t_items
         WHERE
@@ -22,7 +23,7 @@
 
     $sqlReviewCnt = '
         SELECT
-            count(*)    AS cnt
+            count(*)            AS cnt
         FROM
             t_item_review
         where
@@ -30,9 +31,9 @@
 
     $sqlReviews = '
         SELECT
-            f_review_date,
-            f_review_point,
-            f_review
+            f_review_date       AS date,
+            f_review_point      AS point,
+            f_review            AS review
         FROM
             t_item_review    AS review
         where
@@ -75,6 +76,11 @@
     // ページURLのテキストを返す
     function pageUrl($check, $itemId, $page, $str){
         return $check? "<a href='review.php?id={$itemId}&page={$page}'>{$str}</a>": "<p>{$str}</p>"; 
+    }
+
+    // 画像URLのテキストを返す
+    function imageUrl($str){
+        return "../images/items/" . $str . ".jpg";
     }
 
     // ===================================================================================
@@ -128,7 +134,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php print $item['f_item_name']; ?>のレビュー | ミールフレンド</title>
+    <title><?php print $item['name']; ?>のレビュー | ミールフレンド</title>
 </head>
 
 <body>
@@ -164,7 +170,7 @@
 
             <div>
                 <!-- 商品個別画面に戻る -->
-                <?php print "<a href='item_piece.php?id={$searchItemId}'>＜{$item['f_item_name']}</a>" ?>
+                <?php print "<a href='item_piece.php?id={$searchItemId}'>＜{$item['name']}</a>" ?>
             </div>
 
             <div>
@@ -183,9 +189,9 @@
                 foreach($reviews as $review){
                     print "
                         <div>
-                            <p>" . h($review['f_review_date']) ."</p>
-                            <p>" . strNumToStar($review['f_review_point']) . "</p>
-                            <p>" . h($review['f_review']) . "</p>
+                            <p>" . h($review['date']) ."</p>
+                            <p>" . strNumToStar($review['point']) . "</p>
+                            <p>" . h($review['review']) . "</p>
                         </div>
                     ";
                 }
@@ -200,24 +206,26 @@
             ?>
 
             <div>
-                <!-- 画像 -->
-                <img src="images/salmon.jpg" alt="鮭">
-                <h2><?php print $item['f_item_name']; ?></h2>
+                <!-- TODO:画像表示 -->
+                <img src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                <p>テスト出力:[画像]<?php print imageUrl($item['image']); ?></p>
+
+                <h2><?php print $item['name']; ?></h2>
                 <dl>
                     <dt>説明</dt>
-                        <dd><?php print h($item['f_item_explain']); ?></dd>
+                        <dd><?php print h($item['ex']); ?></dd>
                     <dt>カロリー</dt>
-                        <dd><?php print h($item['f_item_calorie']); ?>kcal</dd>
+                        <dd><?php print h($item['calorie']); ?>kcal</dd>
                     <dt>たんぱく質</dt>
-                        <dd><?php print h($item['f_item_protein_vol']); ?>g</dd>
+                        <dd><?php print h($item['protein_vol']); ?>g</dd>
                     <dt>糖質</dt>
-                        <dd><?php print h($item['f_item_suger_vol']); ?>g</dd>
+                        <dd><?php print h($item['suger_vol']); ?>g</dd>
                     <dt>脂質</dt>
-                        <dd><?php print h($item['f_item_lipid_vol']); ?>g</dd>
+                        <dd><?php print h($item['lipid_vol']); ?>g</dd>
                     <dt>食物繊維</dt>
-                        <dd><?php print h($item['f_item_dietary_fiber_vol']); ?>g</dd>
+                        <dd><?php print h($item['dietary_fiber_vol']); ?>g</dd>
                     <dt>塩分</dt>
-                        <dd><?php print h($item['f_item_salt_vol']); ?>g</dd>
+                        <dd><?php print h($item['salt_vol']); ?>g</dd>
                 </dl>
             </div>
 

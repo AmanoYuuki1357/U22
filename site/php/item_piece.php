@@ -7,7 +7,20 @@
     // ===================================================================================
     $sqlItems = '
         SELECT
-            *
+            f_item_id                   AS id,
+            f_item_name                 AS name,
+            f_item_price                AS price,
+            f_item_explain              AS ex,
+            f_item_calorie              AS calorie,
+            f_item_protein_vol          AS protein_vol,
+            f_item_suger_vol            AS suger_vol,
+            f_item_lipid_vol            AS lipid_vol,
+            f_item_dietary_fiber_vol    AS dietary_fiber_vol,
+            f_item_salt_vol             AS salt_vol,
+            f_item_materials            AS materials,
+            f_item_save_way             AS save_way,
+            f_item_use_by_date          AS use_by_date,
+            f_item_image                AS image
         FROM
             t_items
         WHERE
@@ -15,8 +28,8 @@
     
     $sqlGenres = '
         SELECT
-            type.f_item_genre_id,
-            genre.f_item_genre_name
+            type.f_item_genre_id        AS id,
+            genre.f_item_genre_name     AS name
         FROM
             t_item_types    as type
         JOIN
@@ -28,7 +41,34 @@
 
     $sqlAllergens = '
         SELECT
-            *
+            f_item_allergen_wheat       AS wheat,
+            f_item_allergen_egg         AS egg,
+            f_item_allergen_milk        AS milk,
+            f_item_allergen_soba        AS soba,
+            f_item_allergen_shrimp      AS shrimp,
+            f_item_allergen_clab        AS clab,
+            f_item_allergen_peanut      AS peanut,
+            f_item_allergen_pork        AS pork,
+            f_item_allergen_chicken     AS chicken,
+            f_item_allergen_beef        AS beef,
+            f_item_allergen_salmon      AS salmon,
+            f_item_allergen_mackerel    AS mackerel,
+            f_item_allergen_soy         AS soy,
+            f_item_allergen_aquid       AS aquid,
+            f_item_allergen_yamaimo     AS yamaimo,
+            f_item_allergen_orange      AS orange,
+            f_item_allergen_sesame      AS sesame,
+            f_item_allergen_cashew_nuts AS cashew_nuts,
+            f_item_allergen_abalone     AS abalone,
+            f_item_allergen_ikura       AS ikura,
+            f_item_allergen_kiwi        AS kiwi,
+            f_item_allergen_banana      AS banana,
+            f_item_allergen_peaches     AS peaches,
+            f_item_allergen_apple       AS apple,
+            f_item_allergen_walnut      AS walnut,
+            f_item_allergen_matsutake   AS matsutake,
+            f_item_allergen_gelatin     AS gelatin,
+            f_item_allergen_almond      AS almond
         FROM
             t_item_allergens
         WHERE
@@ -36,9 +76,9 @@
 
     $sqlreviews = '
         SELECT
-            f_review_date,
-            f_review_point,
-            f_review
+            f_review_date               AS date,
+            f_review_point              AS point,
+            f_review                    AS review
         FROM
             t_item_review    AS review
         where
@@ -67,8 +107,9 @@
         return mb_substr($strStars , 0, 5);
     }
 
-    function imageUrl(){
-        
+    // 画像URLのテキストを返す
+    function imageUrl($str){
+        return "../images/items/" . $str . ".jpg";
     }
 
     // ===================================================================================
@@ -115,7 +156,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="../css/common.css"> -->
 
     <!-- 商品個別画面 -->
-    <title><?php print $item['f_item_name']; ?> | ミールフレンド</title>
+    <title><?php print $item['name']; ?> | ミールフレンド</title>
 
 </head>
 
@@ -151,60 +192,61 @@
                     if(!empty($genres)){
                         // ジャンル情報が取得できた場合
                         foreach ($genres as $genre){
-                            print "<li>" . h($genre['f_item_genre_name']) . "</li>";
+                            print "<li>" . h($genre['name']) . "</li>";
                         }
                     }
                 ?>
                 </ul>
 
                 <!-- TODO:画像表示 -->
-                <p>テスト出力:<?php print h($item['f_item_image']); ?></p>
+                <img src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                <p>テスト出力:[画像]<?php print imageUrl($item['image']); ?></p>
 
                 <!-- 商品名 -->
-                <h2><?php print h($item['f_item_name']); ?></h2>
+                <h2><?php print h($item['name']); ?></h2>
 
                 <dl>
                     <dt>値段</dt>
-                    <dd><?php print h($item['f_item_price']); ?>円</dd>
+                    <dd><?php print h($item['price']); ?>円</dd>
                 </dl>
 
                 <dl>
                     <dt>商品説明</dt>
-                    <dd><?php print h($item['f_item_explain']); ?></dd>
+                    <dd><?php print h($item['ex']); ?></dd>
                 </dl>
 
                 <p>アレルゲン</p>
                 <ul>
                 <?php
                     // TODO:該当食品だけ表示
-                    print $allergens['f_item_allergen_wheat']?"<li>小麦</li>": "";
-                    print $allergens['f_item_allergen_egg']?"<li>卵</li>": "";
-                    print $allergens['f_item_allergen_milk']?"<li>乳</li>": "";
-                    print $allergens['f_item_allergen_soba']?"<li>そば</li>": "";
-                    print $allergens['f_item_allergen_shrimp']?"<li>えび</li>": "";
-                    print $allergens['f_item_allergen_clab']?"<li>かに</li>": "";
-                    print $allergens['f_item_allergen_peanut']?"<li>落花生</li>": "";
-                    print $allergens['f_item_allergen_pork']?"<li>豚肉</li>": "";
-                    print $allergens['f_item_allergen_chicken']?"<li>鶏肉</li>": "";
-                    print $allergens['f_item_allergen_beef']?"<li>牛肉</li>": "";
-                    print $allergens['f_item_allergen_salmon']?"<li>さけ</li>": "";
-                    print $allergens['f_item_allergen_mackerel']?"<li>さば</li>": "";
-                    print $allergens['f_item_allergen_soy']?"<li>大豆</li>": "";
-                    print $allergens['f_item_allergen_aquid']?"<li>いか</li>": "";
-                    print $allergens['f_item_allergen_yamaimo']?"<li>やまいも</li>": "";
-                    print $allergens['f_item_allergen_orange']?"<li>オレンジ</li>": "";
-                    print $allergens['f_item_allergen_sesame']?"<li>ごま</li>": "";
-                    print $allergens['f_item_allergen_cashew_nuts']?"<li>カシューナッツ</li>": "";
-                    print $allergens['f_item_allergen_abalone']?"<li>あわび</li>": "";
-                    print $allergens['f_item_allergen_ikura']?"<li>いくら</li>": "";
-                    print $allergens['f_item_allergen_kiwi']?"<li>キウイフルーツ</li>": "";
-                    print $allergens['f_item_allergen_banana']?"<li>バナナ</li>": "";
-                    print $allergens['f_item_allergen_peaches']?"<li>もも</li>": "";
-                    print $allergens['f_item_allergen_apple']?"<li>りんご</li>": "";
-                    print $allergens['f_item_allergen_walnut']?"<li>くるみ</li>": "";
-                    print $allergens['f_item_allergen_matsutake']?"<li>まつたけ</li>": "";
-                    print $allergens['f_item_allergen_gelatin']?"<li>ゼラチン</li>": "";
-                    print $allergens['f_item_allergen_almond']?"<li>アーモンド</li>": "";
+                    print $allergens['wheat']?"<li>小麦</li>": "";
+                    print $allergens['egg']?"<li>卵</li>": "";
+                    print $allergens['milk']?"<li>乳</li>": "";
+                    print $allergens['soba']?"<li>そば</li>": "";
+                    print $allergens['shrimp']?"<li>えび</li>": "";
+                    print $allergens['clab']?"<li>かに</li>": "";
+                    print $allergens['peanut']?"<li>落花生</li>": "";
+                    print $allergens['pork']?"<li>豚肉</li>": "";
+                    print $allergens['chicken']?"<li>鶏肉</li>": "";
+                    print $allergens['beef']?"<li>牛肉</li>": "";
+                    print $allergens['salmon']?"<li>さけ</li>": "";
+                    print $allergens['mackerel']?"<li>さば</li>": "";
+                    print $allergens['soy']?"<li>大豆</li>": "";
+                    print $allergens['aquid']?"<li>いか</li>": "";
+                    print $allergens['yamaimo']?"<li>やまいも</li>": "";
+                    print $allergens['orange']?"<li>オレンジ</li>": "";
+                    print $allergens['sesame']?"<li>ごま</li>": "";
+                    print $allergens['cashew_nuts']?"<li>カシューナッツ</li>": "";
+                    print $allergens['abalone']?"<li>あわび</li>": "";
+                    print $allergens['ikura']?"<li>いくら</li>": "";
+                    print $allergens['kiwi']?"<li>キウイフルーツ</li>": "";
+                    print $allergens['banana']?"<li>バナナ</li>": "";
+                    print $allergens['peaches']?"<li>もも</li>": "";
+                    print $allergens['apple']?"<li>りんご</li>": "";
+                    print $allergens['walnut']?"<li>くるみ</li>": "";
+                    print $allergens['matsutake']?"<li>まつたけ</li>": "";
+                    print $allergens['gelatin']?"<li>ゼラチン</li>": "";
+                    print $allergens['almond']?"<li>アーモンド</li>": "";
                 ?>
                 </ul>
 
@@ -218,28 +260,28 @@
                         <th>塩分</th>
                     </tr>
                     <tr>
-                        <td><?php print h($item['f_item_calorie']); ?>kcal</td>
-                        <td><?php print h($item['f_item_protein_vol']); ?>g</td>
-                        <td><?php print h($item['f_item_suger_vol']); ?>g</td>
-                        <td><?php print h($item['f_item_lipid_vol']); ?>g</td>
-                        <td><?php print h($item['f_item_dietary_fiber_vol']); ?>g</td>
-                        <td><?php print h($item['f_item_salt_vol']); ?>g</td>
+                        <td><?php print h($item['calorie']); ?>kcal</td>
+                        <td><?php print h($item['protein_vol']); ?>g</td>
+                        <td><?php print h($item['suger_vol']); ?>g</td>
+                        <td><?php print h($item['lipid_vol']); ?>g</td>
+                        <td><?php print h($item['dietary_fiber_vol']); ?>g</td>
+                        <td><?php print h($item['salt_vol']); ?>g</td>
                     </tr>
                 </table>
 
                 <dl>
                     <dt>原材料</dt>
-                    <dd><?php print h($item['f_item_materials']); ?></dd>
+                    <dd><?php print h($item['materials']); ?></dd>
                 </dl>
 
                 <dl>
                     <dt>保存方法</dt>
-                    <dd><?php print h($item['f_item_save_way']); ?></dd>
+                    <dd><?php print h($item['save_way']); ?></dd>
                 </dl>
 
                 <dl>
                     <dt>賞味期限</dt>
-                    <dd><?php print h($item['f_item_use_by_date']); ?></dd>
+                    <dd><?php print h($item['use_by_date']); ?></dd>
                 </dl>
             </div>
 
@@ -269,11 +311,11 @@
                                 <div>
                                     <dl>
                                         <dt>日付</dt>
-                                            <dd>". h($review['f_review_date']) . "</dd>
+                                            <dd>". h($review['date']) . "</dd>
                                         <dt>評価</dt>
-                                            <dd>" . strNumToStar($review['f_review_point']) . "</dd>
+                                            <dd>" . strNumToStar($review['point']) . "</dd>
                                         <dt>コメント</dt>
-                                            <dd>" . h($review['f_review']) ."</dd>
+                                            <dd>" . h($review['review']) ."</dd>
                                     </dl>
                                 </div>";
                         }
