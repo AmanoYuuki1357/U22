@@ -64,6 +64,7 @@
     <body>
         <div id="wrap">
             <header>
+                <?php print_r($_SESSION); ?>
 
                 <div>
                     <a href="menu.php">商品一覧</a>
@@ -75,7 +76,7 @@
 
                 <!-- ログインしていない時 -->
                 <?php
-                    if(!empty($session["id"])){
+                    if(!isset($_SESSION["id"])){
                 ?>
                 <a href="login.php">ログイン/会員登録</a>
                 <!-- ログインしている時 -->
@@ -84,10 +85,7 @@
                 ?>
                 <div>
                     <img src="../images/icon.jpg" alt="アイコン">
-                    <form action="my_page.php">
-                        <input type="hidden"  name="user_id" value="<?php $_SESSION["id"] ?>">
                         <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    </form>
                 </div>
                 <?php
                     }
