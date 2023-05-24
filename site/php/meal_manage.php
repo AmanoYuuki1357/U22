@@ -15,6 +15,9 @@
         exit();
     }
 
+    $intakes=$db->prepare('SELECT * FROM t_intakes WHERE f_user_id=?');
+    $intakes->execute(array($_SESSION["id"]));
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +28,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>食事分析</title>
+        <title>食事管理</title>
         <link rel="stylesheet" type="text/css" href="css/reset.css">
 
     </head>
@@ -38,9 +41,8 @@
                     ミールフレンド
                 </h2>
                 <div>
-                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
-
                 <?php
                     if(!isset($_SESSION["id"])){
                 ?>
@@ -60,19 +62,26 @@
 
             <main>
                 <div>
-                    <!-- パンクズ -->
                     <a href="my_page.php">＜マイページ</a>
                 </div>
                 <div>
-                    <h2>アドバイス</h2>
-                    <p>食事の記録がありません</p>
+                    <h2>グラフ</h2>
                 </div>
 
                 <div>
-                    <p>おすすめ商品</p>
-                    <a href="item_piece.html">鮭の塩焼き</a>
-                    <a href="item_piece.html">鮭の塩焼き</a>
-                    <a href="item_piece.html">鮭の塩焼き</a>
+                    <h2>一覧</h2>
+                    <div>
+                        <p>日付</p>
+                        <p>・食べたもの</p>
+
+                        <?php
+                            while($intake=$intakes->fetch()){
+                        ?>
+                        <p><?php print($intake["f_intake_date"]); ?></p>
+                        <?php
+                            }
+                        ?>
+                    </div>
                 </div>
             </main>
 

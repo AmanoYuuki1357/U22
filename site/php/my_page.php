@@ -8,6 +8,9 @@
         $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
         $users->execute(array($_SESSION["id"]));
         $user=$users->fetch();
+    }else{
+        header('Location: login.php');
+        exit();
     }
 
 ?>
@@ -91,13 +94,13 @@
 
                 <div id="box">
                     <div>
-                        <a href="meal_record.html">
+                        <a href="meal_record.php">
                             <img alt="食事記録pic">
                             <p>食事記録</p>
                         </a>
                     </div>
                     <div>
-                        <a href="meal_manage.html">
+                        <a href="meal_manage.php">
                             <img alt="食事管理pic">
                             <p>食事管理</p>
                         </a>
