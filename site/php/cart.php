@@ -25,15 +25,14 @@
     //     exit();
     // }
 
-    // $carts=$db->prepare('SELECT * FROM t_carts WHERE f_user_id=?');
+    // $carts=$db->prepare('SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?');
     // $carts->execute(array($_SESSION["id"]));
     // $cart=$users->fetch();
     $sql='SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=1';
     $carts=$db->query($sql);
-    $cart=$carts->fetch();
+    $cart=$carts->fetchAll();
 
-    // print_r($cart);
-    print($cart['f_item_num']);
+    print_r($cart);
 
 ?>
 
@@ -46,7 +45,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>カート</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../css/reset.css">
 
     </head>
 
@@ -84,7 +83,7 @@
 
                 <!-- どちらの場合でもカートは出す -->
                 <div>
-                    <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
+                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
                 </div>
 
             </header>
@@ -95,37 +94,32 @@
 
                     <h3>ショッピングカート</h3>
 
-                    <div>
-                        <?php
-                            print('<button>pic</button>');
-                            print('<p>'.$cart['f_item_name'].'</p>');
-                            print('<p>'.$cart['f_item_price']*$cart['f_item_num'].'円</p>');
-                            print('<p>-</p>');
-                            print('<p>'.$cart['f_item_num'].'</p>');
-                            print('<p>+</p>');
-                        ?>
-                    </div>
-                    <hr>
 
-                    <div>
-                        <button>pic</button>
-                        <p>商品名</p>
-                        <p>何円</p>
-                        <p>-</p>
-                        <p>個数</p>
-                        <p>+</p>
-                    </div>
-                    <hr>
+                    <?php
+                        $sum=0;
+                        for($i=0;$i<count($cart);$i++){
+                            print('<div>');
+                            print('<button>pic</button>');
+                            print('<p>'.$cart[$i]['f_item_name'].'</p>');
+                            print('<p>'.$cart[$i]['f_item_price']*$cart[$i]['f_item_num'].'円</p>');
+                            print('<button id="up'.$i.'" onClick="down()">-</button>');
+                            print('<p>'.$cart[$i]['f_item_num'].'</p>');
+                            print('<button id="down'.$i.'" onClick="up()">+</button>');
+                            print('</div>');
+                            print('<hr>');
+                            $sum+=$cart[$i]['f_item_price']*$cart[$i]['f_item_num'];
+                        }
+                    ?>
 
                 </div>
 
                 <div>
                     <div>
                         <p>合計</p>
-                        <p>何円</p>
+                        <?php print('<p>'.$sum.'円</p>'); ?>
                     </div>
                     <div>
-                        <a href="buy_pay.html">購入する</a>
+                        <a href="buy_pay.php">購入する</a>
                         <!-- ここはformのinputのbutton -->
                     </div>
 
@@ -139,7 +133,7 @@
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
-    <!-- <script src="js/main.js"></script> -->
+    <script src="../js/cart.js"></script>
 
     </body>
 
