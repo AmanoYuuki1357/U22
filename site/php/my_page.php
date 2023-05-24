@@ -1,4 +1,5 @@
 <?php
+
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
     if(!isset($_SESSION)){
@@ -24,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- <link rel="stylesheet" type="text/css" href="../css/common.css"> -->
 
+
 </head>
 
 <body>
@@ -38,16 +40,17 @@
                 <?php
                     if(!isset($_SESSION["id"])){
                 ?>
-                <a href="login.php">ログイン/会員登録</a>
+                    <a href="login.php">ログイン/会員登録</a>
                 <?php
-                    }else{
+                } else {
                 ?>
+
                 <div>
                     <img src="../images/icon.jpg" alt="アイコン">
                 </div>
                     <?php print($user["f_user_name"]); ?>
                 <?php
-                    }
+                }
                 ?>
             </nav>
         </header>
@@ -119,26 +122,26 @@
                 </div>
 
                 <!-- <?php
-                        $cs=$db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
+                        $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
                         $cs->execute(array($_SESSION['id']));
-                        $c=$cs->fetch();
-                        if($c[0]!=0){
+                        $c = $cs->fetch();
+                        if ($c[0] != 0) {
                             print('<p class="sl">あなたの投稿はこちら</p>');
-                    ?> -->
+                        ?> -->
 
                 <!-- <table> -->
                 <!-- <?php
 
-                            $posts=$db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
+                            $posts = $db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
                             $posts->execute(array($_SESSION['id']));
 
-                            for($i=0; $post=$posts->fetch(); $i++){
-                                if($i==0){
+                            for ($i = 0; $post = $posts->fetch(); $i++) {
+                                if ($i == 0) {
                                     print("<tr>");
                                 }
-                                if($i==5){
+                                if ($i == 5) {
                                     print("</tr>");
-                                    $i=0;
+                                    $i = 0;
                                 }
                         ?> -->
 
@@ -146,7 +149,7 @@
 
                 <!-- <?php
                             }
-                        }else{
+                        } else {
                             print('<p class="sl">あなたの投稿作品はまだありません</p>
                             <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
                         }
@@ -165,26 +168,7 @@
 
 </body>
 <style>
-    *{
-        text-decoration: none;
-        color: #000;
-    }
-    #box{
-        display: flex;
-        text-align: center;
-    }
-    #box div{
-        margin: 15px;
-        padding: 10px;
-        background-color: #c8fac8;
-    }
-    .outline{
-        border-bottom: solid;
-        padding: 3px;
-        margin: 5px;
-    }
 
-    
 </style>
 
 </html>

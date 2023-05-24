@@ -79,6 +79,7 @@ if (!empty($_POST)) {
     <title>ログイン</title>
     <!-- <link rel="stylesheet" type="text/css" href="../css/reset.css"> -->
     <link rel="stylesheet" href="../css/common.css">
+    <!-- <link rel="stylesheet" href="../css/login.css"> -->
 </head>
 
 <body>
@@ -191,29 +192,6 @@ if (!empty($_POST)) {
     </div>
 </body>
 <style>
-    * {
-        text-align: center;
-    }
-
-    #wrap {
-        width: 100%;
-    }
-
-    main {
-        position: relative;
-        top: 110px;
-    }
-
-    #login,
-    #regist {
-        width: 500px;
-        border: 1px solid #000;
-        padding: 10px;
-    }
-
-    .error {
-        color: #F00;
-    }
 </style>
 
 </html>
