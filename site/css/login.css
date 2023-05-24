@@ -12,3 +12,10 @@ p{
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
+.line{
+    border-bottom: 3px solid #a5a5a5;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150%;
+}

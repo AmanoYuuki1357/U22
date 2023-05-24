@@ -42,48 +42,48 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>マイページ</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
+<body>
+    <div id="wrap">
+        <header>
             <header>
-                <header>
 
-                    <h2>
-                        ミールフレンド
-                    </h2>
-                    <div>
-                        <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                    </div>
+                <h2>
+                    ミールフレンド
+                </h2>
+                <div>
+                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                </div>
 
-                    <!-- ログインしていない時 -->
+                <!-- ログインしていない時 -->
                 <a href="login.html">ログイン/会員登録</a>
 
-                    <!-- ログインしている時 -->
-                    <!-- ユーザーメニュー -->
-                    <div id="user">
-                        <label>
-                            <img src="../images/icon.jpg" alt="アイコン">
-                            <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                        </label>
-                        <div>
-                            <a href="my_page.html">ニックネーム</a>
-                            <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                        </div>
+                <!-- ログインしている時 -->
+                <!-- ユーザーメニュー -->
+                <div id="user">
+                    <label>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                    </label>
+                    <div>
+                        <a href="my_page.html">ニックネーム</a>
+                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
+                </div>
 
-                </header>
+            </header>
 
-                <!-- ハンバーガーメニュー -->
-                <!-- <div class="hamburger">
+            <!-- ハンバーガーメニュー -->
+            <!-- <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -97,56 +97,56 @@
                     </ul>
                 </nav> -->
 
-                <!-- <div id=icon>
+            <!-- <div id=icon>
                     <a href="home.php"><img src="images/pigsiv.jpg" alt="アイコン"></a>
                 </div> -->
 
-                <!-- 検索 -->
-                <!-- <div id="search">
+            <!-- 検索 -->
+            <!-- <div id="search">
                     <form method="get" action="search.php">
                         <input type="text" name="search" size="15" placeholder="作品を検索">
                     </form>
                 </div> -->
 
-                <!-- 投稿ボタン -->
-                <!-- <div id="contribute">
+            <!-- 投稿ボタン -->
+            <!-- <div id="contribute">
                     <a href="post.php">作品を投稿</a>
                 </div> -->
 
-            </header>
+        </header>
 
-            <main>
+        <main>
+
+            <div>
 
                 <div>
+                    <a href="meal_record.html">
+                        <img alt="食事記録">
+                        <p>食事記録</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="meal_manage.html">
+                        <img alt="食事管理">
+                        <p>食事管理</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="meal_analize.html">
+                        <img alt="食事分析">
+                        <p>食事分析</p>
+                    </a>
+                </div>
 
-                    <div>
-                        <a href="meal_record.html">
-                            <img alt="食事記録">
-                            <p>食事記録</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="meal_manage.html">
-                            <img alt="食事管理">
-                            <p>食事管理</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="meal_analize.html">
-                            <img alt="食事分析">
-                            <p>食事分析</p>
-                        </a>
-                    </div>
+                <div>
+                    <a href="buy_history.html">あなたの購入履歴</a>
+                </div>
 
-                    <div>
-                        <a href="buy_history.html">あなたの購入履歴</a>
-                    </div>
+                <div>
+                    <a href="delivery_situation.html">あなたの配送状況</a>
+                </div>
 
-                    <div>
-                        <a href="delivery_situation.html">あなたの配送状況</a>
-                    </div>
-
-                    <!-- <?php
+                <!-- <?php
                         $cs=$db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
                         $cs->execute(array($_SESSION['id']));
                         $c=$cs->fetch();
@@ -154,8 +154,8 @@
                             print('<p class="sl">あなたの投稿はこちら</p>');
                     ?> -->
 
-                    <!-- <table> -->
-                        <!-- <?php
+                <!-- <table> -->
+                <!-- <?php
 
                             $posts=$db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
                             $posts->execute(array($_SESSION['id']));
@@ -170,27 +170,27 @@
                                 }
                         ?> -->
 
-                            <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
+                <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
 
-                        <!-- <?php
+                <!-- <?php
                             }
                         }else{
                             print('<p class="sl">あなたの投稿作品はまだありません</p>
                             <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
                         }
                         ?> -->
-                    <!-- </table> -->
-                </div>
-            </main>
+                <!-- </table> -->
+            </div>
+        </main>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-        </div>
+    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-    </body>
+</body>
 
 </html>
