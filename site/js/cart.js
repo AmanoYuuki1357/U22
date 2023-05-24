@@ -1,10 +1,8 @@
-function down() {
-    let next = this.nextElementSibling;
-    next.value--;
-    console.log(next.value);
+function down(e) {
+    let next = e.nextElementSibling;
+    next.innerHTML--;
 }
-function up() {
-    let prev = this.previousElementSibling;
-    prev.value++;
-    console.log(prev.value);
+function up(e) {
+    let prev = e.previousElementSibling;
+    prev.innerHTML++;
 }

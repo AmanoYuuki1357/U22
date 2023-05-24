@@ -30,9 +30,8 @@
     // $cart=$users->fetch();
     $sql='SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=1';
     $carts=$db->query($sql);
-    $cart=$carts->fetchAll();
 
-    print_r($cart);
+    // print_r($cart);
 
 ?>
 
@@ -97,17 +96,17 @@
 
                     <?php
                         $sum=0;
-                        for($i=0;$i<count($cart);$i++){
+                        for($i=0;$cart=$carts->fetch();$i++){
                             print('<div>');
-                            print('<button>pic</button>');
-                            print('<p>'.$cart[$i]['f_item_name'].'</p>');
-                            print('<p>'.$cart[$i]['f_item_price']*$cart[$i]['f_item_num'].'円</p>');
-                            print('<button id="up'.$i.'" onClick="down()">-</button>');
-                            print('<p>'.$cart[$i]['f_item_num'].'</p>');
-                            print('<button id="down'.$i.'" onClick="up()">+</button>');
+                            // print('<button>pic</button>');
+                            print('<p>'.$cart['f_item_name'].'</p>');
+                            print('<p>'.$cart['f_item_price']*$cart['f_item_num'].'円</p>');
+                            print('<button onClick="down(this)">-</button>');
+                            print('<p>'.$cart['f_item_num'].'</p>');
+                            print('<button onClick="up(this)">+</button>');
                             print('</div>');
                             print('<hr>');
-                            $sum+=$cart[$i]['f_item_price']*$cart[$i]['f_item_num'];
+                            $sum+=$cart['f_item_price']*$cart['f_item_num'];
                         }
                     ?>
 
