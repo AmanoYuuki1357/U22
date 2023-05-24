@@ -180,7 +180,7 @@
             <?php
                 // レビュー全件数
                 print "<p>全". h($revCnt['cnt']) . "件</p>";
-
+                // 表示レビューの件数
                 $start  = $revStart + 1;
                 $end    = $revCnt['cnt'] < $revStart + $pageRevs? $revCnt['cnt']: $revStart + $pageRevs;
                 print $start . "-" . $end;

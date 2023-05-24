@@ -87,6 +87,18 @@
             f_review_date DESC
         LIMIT 0, 2';
 
+    $sqlCarts = '
+        SELECT
+            f_item_num      AS item_num
+        FROM
+            t_carts
+        WHERE
+            f_item_id = ?
+        AND
+            f_user_id = ?;';
+
+    $insertCarts = 'INSERT INTO t_carts VALUES( ?, ?, ? );';
+
     // ===================================================================================
     // 関数
     // ===================================================================================
@@ -94,6 +106,16 @@
     function showByItemId($db, $sql, $itemId){
         $contents = $db->prepare($sql);
         $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->execute();
+
+        return $contents;
+    }
+
+    // カート検索
+    function showCart($db, $sql, $itemId, $userId){
+        $contents = $db->prepare($sql);
+        $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+        $contents->bindparam(2, $userId, PDO::PARAM_INT);
         $contents->execute();
 
         return $contents;
@@ -135,6 +157,24 @@
     $genres     = showByItemId($db, $sqlGenres, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);   // 食品ジャンル検索
     $allergens  = showByItemId($db, $sqlAllergens, $searchItemId)->fetch(PDO::FETCH_ASSOC);   // 食品アレルゲン検索
     $reviews    = showByItemId($db, $sqlreviews, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);  // 食品レビュー検索
+
+    // TODO: カート情報を保存するSESSIONの名前は統一すること
+    // カート情報を持っていない場合、カートTBLから取得する
+    if(isset($_SESSION['id']) && !isset($_SESSION['cart_item_num'])){
+
+        $cart_item_num = showByItemId($db, $sqlCarts, $searchItemId)->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($cart_item_num)){ 
+            print "ok:データあり";
+            $_SESSION['cart_item_num'] = $cart_item_num;
+        }
+        else{
+            print "no:データなし"; 
+        }
+    }
+    else{
+        print "no:ゲストユーザー/セッションあり";
+    }
 
     if(empty($item)){
         // 取得できないときは商品一覧へ遷移する
@@ -286,12 +326,25 @@
             </div>
 
             <div>
-                <button>
-                    お気に入り
-                </button>
-                <button>
-                    カートに入れる
-                </button>
+                <div>
+                    <button>
+                        お気に入り
+                    </button>
+                </div>
+
+                <div>
+                    <p>カートに入れる</p>
+                    <button>
+                        +
+                    </button>
+                        <?php 
+                            print isset($_SESSION["cart_item_num"])? h($_SESSION["cart_item_num"]): 0;
+                        ?>
+                    <button>
+                        -
+                    </button>
+                </div>
+                
             </div>
 
             <div>
@@ -336,3 +389,7 @@
 </body>
 
 </html>
+
+<?php 
+    // セッションのカート情報をDBに入れる
+?>
