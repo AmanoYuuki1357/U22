@@ -1,0 +1,18 @@
+*{
+    /* text-decoration: none; */
+    /* color: #000; */
+}
+#box{
+    display: flex;
+    text-align: center;
+}
+#box div{
+    margin: 15px;
+    padding: 10px;
+    background-color: #c8fac8;
+}
+.outline{
+    border-bottom: solid;
+    padding: 3px;
+    margin: 5px;
+}
