@@ -1,14 +1,15 @@
 <?php
-require('common.php');
-error_reporting(E_ALL & ~E_NOTICE);
-if (!isset($_SESSION)) {
-    session_start();
-}
 
-// ヘッダーのアイコン
-$icons = $db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-$icons->execute(array($_SESSION['id']));
-$icon = $icons->fetch();
+    require('common.php');
+    error_reporting(E_ALL & ~E_NOTICE);
+    if(!isset($_SESSION)){
+        session_start();
+    }
+    if(isset($_SESSION["id"])){
+        $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+        $users->execute(array($_SESSION["id"]));
+        $user=$users->fetch();
+    }
 
 ?>
 
@@ -22,8 +23,8 @@ $icon = $icons->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マイページ</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/mypage.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../css/common.css"> -->
+
 
 </head>
 
@@ -37,16 +38,17 @@ $icon = $icons->fetch();
                 </div>
 
                 <?php
-                if (!empty($session["id"])) {
+                    if(!isset($_SESSION["id"])){
                 ?>
                     <a href="login.php">ログイン/会員登録</a>
                 <?php
                 } else {
                 ?>
-                    <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    </div>
+
+                <div>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                </div>
+                    <?php print($user["f_user_name"]); ?>
                 <?php
                 }
                 ?>
@@ -104,10 +106,10 @@ $icon = $icons->fetch();
                         </a>
                     </div>
                     <div>
-                        <a href="meal_analize.php">
-                            <img alt="食事分析pic">
-                            <p>食事分析</p>
-                        </a>
+                            <a href="meal_analize.php">
+                                <img alt="食事分析pic">
+                                <p>食事分析</p>
+                            </a>
                     </div>
                 </div>
 

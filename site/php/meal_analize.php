@@ -6,7 +6,7 @@
     }
 
 
-    if(!empty($_SESSION["id"])){
+    if(isset($_SESSION["id"])){
         $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
         $users->execute(array($_SESSION["id"]));
         $user=$users->fetch();
@@ -39,7 +39,7 @@
                 </div>
 
                 <?php
-                    if(!empty($_SESSION["id"])){
+                    if(!isset($_SESSION["id"])){
                 ?>
                 <a href="login.php">ログイン/会員登録</a>
                 <?php
