@@ -35,14 +35,12 @@
     // ジャンルを取り出す
     $sql='SELECT f_item_genre_name FROM t_item_genre';
     $genres=$db->query($sql);
-    $genre=$genres->fetchAll();
 
     // 商品情報を取り出す
     // 本当は販売履歴と結合してランキングにする
     // 画像も取り出す
     $sql2='SELECT f_item_id,f_item_name,f_item_price FROM t_items';
     $items=$db->query($sql2);
-    $item=$items->fetchAll();
 
 ?>
 
@@ -64,11 +62,10 @@
     <body>
         <div id="wrap">
             <header>
-                <?php print_r($_SESSION); ?>
 
-                <div>
+                <!-- <div>
                     <a href="menu.php">商品一覧</a>
-                </div>
+                </div> -->
 
                 <div>
                     <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
@@ -106,8 +103,8 @@
                     <select name='genre'>
                     <option value='all'>すべて</option>
                     <?php
-                    for($i=0; $i!=count($genre); $i++){
-                        print('<option value={$i}>'.$genre[$i]['f_item_genre_name'].'</option>');
+                    for($i=0; $genre=$genres->fetch(); $i++){
+                        print('<option value={$i}>'.$genre['f_item_genre_name'].'</option>');
                     }
                     ?>
                     </select>
@@ -134,15 +131,15 @@
                         <table>
 
                             <?php
-                                for($i=0; $i!=count($item); $i++){
+                                for($i=0; $item=$items->fetch(); $i++){
                                     if($i%4==0){
                                         print('<tr>');
                                     }
                                     print('<td>');
-                                    print('<a href="item_piece.php?id='.$item[$i]['f_item_id'].'">');
-                                    print('<img src="../images/menu'.$i.'.jpg" alt='.$item[$i]['f_item_name'].'>');
-                                    print('<p>'.$item[$i]['f_item_name'].'</p>');
-                                    print('<p>'.$item[$i]['f_item_price'].'円</p>');
+                                    print('<a href="item_piece.php?id='.$item['f_item_id'].'">');
+                                    print('<img src="../images/menu'.$i.'.jpg" alt='.$item['f_item_name'].'>');
+                                    print('<p>'.$item['f_item_name'].'</p>');
+                                    print('<p>'.$item['f_item_price'].'円</p>');
                                     print('</a>');
                                     print('<button>カートに入れる</button>');
                                     print('</td>');

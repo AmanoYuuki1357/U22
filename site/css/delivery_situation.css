@@ -2,12 +2,13 @@
 * {
     color: #000;
     text-decoration: none;
+    max-width: 100%;
 }
 
 #gomypage {
     position: fixed;
     left: 0;
-    top: 16vh;
+    top: 13vh;
     width: 100%;
     border-bottom: solid;
     background-color: #fff;
@@ -33,4 +34,10 @@ main {
 }
 h2{
     text-align: center;
+}
+header{
+    width: 10000px;
+}
+header nav{
+    height: 100px;
 }

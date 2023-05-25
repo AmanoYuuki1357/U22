@@ -9,7 +9,7 @@
     <title>配送状況</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/delivery_situation.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/delivery_situation.css">
 
 </head>
 
@@ -28,7 +28,8 @@
                 <!-- ユーザーメニュー -->
                 <div id="user">
                     <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <img src="../images/icon.jpg" alt="アイコン"><!-- アイコンのサイズとりあえずstyleで小さくしてます -->
+
                         <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
                     </label>
                     <div>
@@ -92,6 +93,10 @@
 
 </body>
 <style>
+    img {
+        width: auto;
+        height: 50px;
+    }
 </style>
 
 </html>
