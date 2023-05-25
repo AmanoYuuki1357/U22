@@ -2,12 +2,28 @@
 * {
     color: #000;
     text-decoration: none;
+    max-width: 100%;
+}
+body{
+    position: absolute;
+    top: 0;
+}
+#wrap{
+    height: 100%;
+}
+header{
+    width: 10000px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    
 }
 
 #gomypage {
     position: fixed;
     left: 0;
-    top: 16vh;
+    top: 13vh;
     width: 100%;
     border-bottom: solid;
     background-color: #fff;

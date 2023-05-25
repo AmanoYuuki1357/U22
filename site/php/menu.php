@@ -62,11 +62,10 @@
     <body>
         <div id="wrap">
             <header>
-                <?php print_r($_SESSION); ?>
 
-                <div>
+                <!-- <div>
                     <a href="menu.php">商品一覧</a>
-                </div>
+                </div> -->
 
                 <div>
                     <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
