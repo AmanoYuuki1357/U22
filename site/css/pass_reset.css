@@ -1,0 +1,31 @@
+
+* {
+    color: #000;
+    text-decoration: none;
+    max-width: 100%;
+}
+
+#gomypage {
+    position: fixed;
+    left: 0;
+    top: 13vh;
+    width: 100%;
+    border-bottom: solid;
+    background-color: #fff;
+    opacity: 50%;
+    padding: 5px;
+}
+
+main {
+    padding: 20px;
+    border: 1px solid;
+}
+
+header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+form div{
+    padding: 10px;
+}
