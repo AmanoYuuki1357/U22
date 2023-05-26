@@ -22,36 +22,34 @@
         <h2 id="title">ログイン/新規会員登録</h2>
     </header>
 
-    <main>
-        <!-- ページ遷移 -->
-        <div>
-            <a href="index.html">遷移前の画面へ</a>
-            <a href="my_page.html">マイページへ</a>
-        </div>
-
-        <!-- ログインフォーム -->
-        <div>
-            <h2>登録済の方はこちら</h2>
+        <main>
+            <form action="" method="post">
+                <div>
+                    <p>メールアドレス</p>
+                    <input type="text" />
+                    <!-- <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($_POST['email']); ?>" />
+                        <?php if($error['login']=='blank'): ?>
+                            <p class="error">*メールアドレスとパスワードをご記入ください</p>
+                        <?php endif; ?>
+                        <?php if($error['login']=='failed'): ?>
+                            <p class="error">*ログインに失敗しました。正しくご記入ください</p>
+                        <?php endif; ?> -->
+                </div>
+                <div>
+                    <p>パスワード</p>
+                    <input type="text" />
+                    <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
+                </div>
+                <div>
+                    <button>ログインする</button>
+                    <!-- <input class="wid" type='submit' value="ログイン"> -->
+                </div>
+            </form>
             <div>
-                <p>メールアドレス</p>
-                <input type="text" />
+                <p>
+                    <a href="./pass_reset.html">パスワードをお忘れの方はこちら</a>
+                </p>
             </div>
-            <div>
-                <p>パスワード</p>
-                <input type="text" />
-            </div>
-            <div>
-                <button>ログインする</button>
-                <a href="login_error.html">エラー表示</a>
-            </div>
-        </div>
-
-        <!-- パスワード再設定 -->
-        <div>
-            <p>
-                <a href="pass_reset.html">パスワードをお忘れの方はこちら</a>
-            </p>
-        </div>
 
         <!-- 新規登録フォーム -->
         <div>
