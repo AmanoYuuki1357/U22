@@ -6,88 +6,97 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
-<style>
-    body{ margin: 0; }
-    #title{ text-align: center;}
-</style>
-
 <body>
-    <header>
-        <div>
-            <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-        </div>
-        <h2 id="title">ログイン/新規会員登録</h2>
-    </header>
+    <div id="wrap">
+        <header>
+            <h1>ログイン/新規会員登録</h1>
+            <nav>
+                <div>
+                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                </div>
+            </nav>
+        </header>
 
         <main>
-            <form action="" method="post">
+            <!-- ログイン -->
+            <p>ログイン</p>
+            <div id="login">
+                <form action="" method="post">
+                    <div>
+                        <p>メールアドレス</p>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        <p>パスワード</p>
+                        <input type="password" />
+                    </div>
+                    <input type='submit' value="ログイン">
+                    <a href="./login_error.html">エラー表示</a>
+                    <div>
+                    </div>
+                </form>
+
+                <!-- パスワード再発行 -->
                 <div>
-                    <p>メールアドレス</p>
-                    <input type="text" />
-                    <!-- <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($_POST['email']); ?>" />
-                        <?php if($error['login']=='blank'): ?>
-                            <p class="error">*メールアドレスとパスワードをご記入ください</p>
-                        <?php endif; ?>
-                        <?php if($error['login']=='failed'): ?>
-                            <p class="error">*ログインに失敗しました。正しくご記入ください</p>
-                        <?php endif; ?> -->
+                    <p>
+                        <a href="./pass_reset.html">パスワードをお忘れの方はこちら</a>
+                    </p>
                 </div>
-                <div>
-                    <p>パスワード</p>
-                    <input type="text" />
-                    <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
-                </div>
-                <div>
-                    <button>ログインする</button>
-                    <!-- <input class="wid" type='submit' value="ログイン"> -->
-                </div>
-            </form>
-            <div>
-                <p>
-                    <a href="./pass_reset.html">パスワードをお忘れの方はこちら</a>
-                </p>
             </div>
 
-        <!-- 新規登録フォーム -->
-        <div>
-            <h2>初めてご利用の方はこちら</h2>
-            <div>
-                <p>お名前[必須]</p>
-                <input type="text" />
+            <!-- 新規登録フォーム -->
+            <p>初めてご利用の方はこちら</p>
+            <div id="regist">
+                <form action="" method="post">
+                    <div>
+                        <p>必須</p>
+                        <p>お名前</p>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        <p>必須</p>
+                        <p>ニックネーム</p>
+                        <input type="text" />
+                    </div>
+                    <!-- <div>
+                        <p>性別</p>
+                        <input type="radio" name="性別" value="男" />男
+                        <input type="radio" name="性別" value="女" />女
+                        <input type="radio" name="性別" value="その他" checked />その他
+                    </div> -->
+                    <div>
+                        <p>メールアドレス</p>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        <p>パスワード</p>
+                        <input type="password" />
+                    </div>
+                    <div>
+                        <p>パスワード(確認用)</p>
+                        <input type="password" />
+                    </div>
+                    <div>
+                        <input type='submit' value="この内容でアカウントを作る">
+                    </div>
+                </form>
             </div>
-            <div>
-                <p>ニックネーム[必須]</p>
-                <input type="text" />
-            </div>
-            <div>
-                <p>性別</p>
-                <input type="radio" name="性別" value="男" />男
-                <input type="radio" name="性別" value="女" />女
-                <input type="radio" name="性別" value="その他" checked />その他
-            </div>
-            <div>
-                <p>メールアドレス</p>
-                <input type="text" />
-            </div>
-            <div>
-                <p>パスワード</p>
-                <input type="text" />
-            </div>
-            <div>
-                <p>パスワード(確認用)</p>
-                <input type="text" />
-            </div>
-            <div>
-                <button>この内容でアカウントを作る</button>
-            </div>
-        </div>
 
-    </main>
+            <div>
+                <a href="">元の画面へ</a>
+                <a href="my_page.php">マイページへ</a>
+            </div>
+        </main>
 
-    <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+    </div>
 </body>
+<style>
+</style>
 
 </html>

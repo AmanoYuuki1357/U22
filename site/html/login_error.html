@@ -6,14 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン(エラー) | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
-
-<style>
-    body{ margin: 0; }
-    #title{ text-align: center;}
-    .error{ color: red; }
-</style>
 
 <body>
     <header>
@@ -24,12 +20,7 @@
     </header>
 
     <main>
-        <!-- ページ遷移 -->
-        <div>
-            <a href="index.html">遷移前の画面へ</a>
-            <a href="my_page.html">マイページへ</a>
-        </div>
-
+        <div id="wrap">
         <form action="" method="post">
             <h2>登録済の方はこちら</h2>
             <div>
@@ -58,7 +49,7 @@
         <div>
             <h2>初めてご利用の方はこちら</h2>
             <div>
-                <p>お名前[必須]</p>
+                <p>お名前<span class="required">[必須]</span></p>
                 <input type="text" />
                 <p class="error">*ニックネームを入力してください</p>
             </div>
@@ -70,12 +61,12 @@
                         <p class="error">*ニックネームを入力してください</p>
                     <?php endif; ?> -->
             </div>
-            <div>
+            <!-- <div>
                 <p>性別</p>
                 <input type="radio" name="性別" value="男" />男
                 <input type="radio" name="性別" value="女" />女
                 <input type="radio" name="性別" value="その他" />その他
-            </div>
+            </div> -->
             <div>
                 <p>メールアドレス</p>
                 <input type="text" />
@@ -110,8 +101,14 @@
                     <?php endif; ?> -->
             </div>
             <div>
-                <!-- <input type='submit' value="この内容でアカウントを作る"> -->
+                <input type='submit' value="この内容でアカウントを作る">
             </div>
+
+                    <!-- ページ遷移 -->
+                    <div>
+                        <a href="">元の画面へ</a>
+                        <a href="my_page.php">マイページへ</a>
+                    </div>
         </div>
     </main>
 
