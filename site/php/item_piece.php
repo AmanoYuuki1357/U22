@@ -215,12 +215,14 @@ if (empty($item)) {
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- マイページ/ログイン -->
-                <?php
-                print isset($_SESSION['id']) ?
-                    "<a href='mypage.html'>" . h($_SESSION['name']) . "様</a>" :
-                    "<a href='login.php'>ログイン/会員登録</a>";
-                ?>
+                <div id="header-right">
+                    <!-- マイページ/ログイン -->
+                    <?php
+                    print isset($_SESSION['id']) ?
+                        "<a href='mypage.html'>" . h($_SESSION['name']) . "様</a>" :
+                        "<a href='login.php'>ログイン/会員登録</a>";
+                    ?>
+                </div>
             </nav>
 
         </header>

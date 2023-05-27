@@ -78,23 +78,27 @@
                 <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
-            <!-- ログインしていない時 -->
+            <div id="header-right">
+                <!-- ログインしていない時 -->
 
-            <!-- ログインしている時 -->
-            <!-- ユーザーメニュー -->
-            <div id="user">
-                <div>
-                    <img src="../images/icon.jpg" alt="アイコン">
+                <!-- ログインしている時 -->
+                <!-- ユーザーメニュー -->
+                <div id="user">
+                    <div>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                    </div>
+                    <div>
+                        <a href="my_page.html">ニックネーム</a>
+                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                    </div>
                 </div>
+
+                <!-- どちらの場合でもカートは出す -->
                 <div>
-                    <a href="my_page.html">ニックネーム</a>
-                    <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                    <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
                 </div>
             </div>
 
-            <!-- どちらの場合でもカートは出す -->
-            <div>
-                <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
 
         </header>
 

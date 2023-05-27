@@ -71,25 +71,27 @@ $items = $db->query($sql2);
                 <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
-            <!-- ログインしていない時 -->
-            <?php
-            if (!isset($_SESSION["id"])) {
-            ?>
-                <a href="login.php">ログイン/会員登録</a>
-                <!-- ログインしている時 -->
-            <?php
-            } else {
-            ?>
+            <div id="header-right">
+                <!-- ログインしていない時 -->
+                <?php
+                if (!isset($_SESSION["id"])) {
+                ?>
+                    <a href="login.php">ログイン/会員登録</a>
+                    <!-- ログインしている時 -->
+                <?php
+                } else {
+                ?>
+                    <div>
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
+                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    </div>
+                <?php
+                }
+                ?>
+                <!-- どちらの場合でもカートは出す -->
                 <div>
-                    <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
                 </div>
-            <?php
-            }
-            ?>
-            <!-- どちらの場合でもカートは出す -->
-            <div>
-                <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
             </div>
 
         </header>

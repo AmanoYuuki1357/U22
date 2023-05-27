@@ -28,6 +28,12 @@ header {
   top: 0;
   left: 0;
   z-index: 100;
+  display: flex;
+}
+#header-right{
+  position: absolute;
+  right: 0;
+  display: flex;
 }
 
 .logo {

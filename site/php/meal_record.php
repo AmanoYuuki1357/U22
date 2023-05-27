@@ -45,20 +45,22 @@
 
             <!-- ログインしていない時 -->
 
-            <?php
-            if (!isset($_SESSION["id"])) {
-            ?>
-                <a href="login.php">ログイン/会員登録</a>
-            <?php
-            } else {
-            ?>
-                <div>
-                    <img src="../images/icon.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                </div>
-            <?php
-            }
-            ?>
+            <div id="header-right">
+                <?php
+                if (!isset($_SESSION["id"])) {
+                ?>
+                    <a href="login.php">ログイン/会員登録</a>
+                <?php
+                } else {
+                ?>
+                    <div>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
 
         </header>
 
