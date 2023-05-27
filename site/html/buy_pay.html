@@ -38,99 +38,107 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>購入カード情報</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入カード情報</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/stepbar.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
+<body>
+    <div id="wrap">
+        <header>
 
-                <h2>
-                    ミールフレンド
-                </h2>
+            <h2>
+                ミールフレンド
+            </h2>
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
+
+            <!-- ログインしていない時 -->
+            <a href="login.html">ログイン/会員登録</a>
+
+            <!-- ログインしている時 -->
+            <!-- ユーザーメニュー -->
+            <div id="user">
+                <label>
+                    <img src="../images/icon.jpg" alt="アイコン">
+                    <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                    <span></span>
+                </label>
                 <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <a href="my_page.html">ニックネーム</a>
+                    <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                 </div>
+            </div>
 
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
+            <!-- 購入用ヘッダー -->
+            <div>
+                <ul id="buy">
+                    <li>お届け先</li>
+                    <li id="here">お支払方法</li>
+                    <li>購入完了</li>
+                </ul>
+            </div>
 
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                        <span></span>
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
-                </div>
+        </header>
 
-                <!-- 購入用ヘッダー -->
-                <div>
-                    <ul id="buy">
-                        <li>お届け先</li>
-                        <li id="here">お支払方法</li>
-                        <li>購入完了</li>
-                    </ul>
-                </div>
+        <main>
 
-            </header>
-
-            <main>
-
-                <div>
-
-                    <div>
-                        <p>カード番号</p>
-                        <p>
-                            <!-- <?php echo h($_SESSION['join']['c_number']); ?> -->
-                        </p>
-                        <p>カード名義人</p>
-                        <p>
-                            <!-- <?php echo h($_SESSION['join']['c_name']); ?> -->
-                        </p>
-                        <p>有効期限(月/年)</p>
-                        <p>
-                            <!-- <?php echo h($_SESSION['join']['c_e_month']).'/'.h($_SESSION['join']['c_e_year']); ?> -->
-                        </p>
-                        <p>セキュリティコード</p>
-                        <p>
-                            【表示されません】
-                        </p>
-                    </div>
-                    <div>
-                        <a href="">クレジットカード情報を編集する</a>
-                    </div>
-
-                </div>
+            <div>
 
                 <div>
-                    <a href="buy_complete.html">次へ</a>
+                    <p>カード番号</p>
+                    <p>
+                        <!-- <?php echo h($_SESSION['join']['c_number']); ?> -->
+                    </p>
+                    <p>カード名義人</p>
+                    <p>
+                        <!-- <?php echo h($_SESSION['join']['c_name']); ?> -->
+                    </p>
+                    <p>有効期限(月/年)</p>
+                    <p>
+                        <!-- <?php echo h($_SESSION['join']['c_e_month']).'/'.h($_SESSION['join']['c_e_year']); ?> -->
+                    </p>
+                    <p>セキュリティコード</p>
+                    <p>
+                        【表示されません】
+                    </p>
                 </div>
-                <div class="back">
-                    <a href="buy_address.html">戻る</a>
+                <div>
+                    <a href="">クレジットカード情報を編集する</a>
                 </div>
 
-            </main>
+            </div>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+            <div>
+                <a href="buy_complete.html">次へ</a>
+            </div>
+            <div class="back">
+                <a href="buy_address.html">戻る</a>
+            </div>
 
-        </div>
+        </main>
+
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-    </body>
+</body>
+<style>
+    img {
+        width: 50px;
+    }
+</style>
+
 </html>

@@ -75,14 +75,3 @@ header{
 .stepbar .done span {
     background-color: #E65100;
 }
-
-#gomypage {
-    position: fixed;
-    left: 0;
-    top: 16vh;
-    width: 100%;
-    border-bottom: solid;
-    background-color: #fff;
-    opacity: 50%;
-    padding: 5px;
-}
