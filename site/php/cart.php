@@ -63,29 +63,31 @@ $carts = $db->query($sql);
                 <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
-            <!-- ログインしていない時 -->
-            <?php
-            if (!empty($session["id"])) {
-            ?>
-                <a href="login.php">ログイン/会員登録</a>
-                <!-- ログインしている時 -->
-            <?php
-            } else {
-            ?>
-                <div>
-                    <img src="../images/icon.jpg" alt="アイコン">
-                    <form action="my_page.php">
-                        <input type="hidden" name="user_id" value="<?php $_SESSION["id"] ?>">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    </form>
-                </div>
-            <?php
-            }
-            ?>
+            <div id="header-right">
+                <!-- ログインしていない時 -->
+                <?php
+                if (!empty($session["id"])) {
+                ?>
+                    <a href="login.php">ログイン/会員登録</a>
+                    <!-- ログインしている時 -->
+                <?php
+                } else {
+                ?>
+                    <div>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                        <form action="my_page.php">
+                            <input type="hidden" name="user_id" value="<?php $_SESSION["id"] ?>">
+                            <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                        </form>
+                    </div>
+                <?php
+                }
+                ?>
 
-            <!-- どちらの場合でもカートは出す -->
-            <div>
-                <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
+                <!-- どちらの場合でもカートは出す -->
+                <div>
+                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
+                </div>
             </div>
 
         </header>
