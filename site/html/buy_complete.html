@@ -20,24 +20,24 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>購入完了</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
-        <link rel="stylesheet" type="text/css" href="css/card.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入完了</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/stepbar.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
+<body>
+    <div id="wrap">
 
-                <h2>
-                    ミールフレンド
-                </h2>
+        <header>
+            <h1>ミールフレンド</h1>
+            <nav>
                 <div>
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
@@ -48,43 +48,49 @@
                 <!-- ユーザーメニュー -->
                 <div id="user">
                     <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <!-- <img src="../images/icon.jpg" alt="アイコン"> -->
                         <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                        <span></span>
                     </label>
                     <div>
                         <a href="my_page.html">ニックネーム</a>
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
                 </div>
-
-                <!-- 購入用ヘッダー -->
-                <div>
-                    <ul id="buy">
-                        <li>お届け先</li>
-                        <li>お支払方法</li>
-                        <li id="here">購入完了</li>
-                    </ul>
+                <div id="gomypage">
+                    <a href="my_page.html">＜マイページ</a>
                 </div>
+            </nav>
+        </header>
 
-            </header>
+        <main>
 
-            <main>
+            <!-- 進行度バー -->
+            <div class="stepbar-row">
+                <ol class="stepbar">
+                    <li class="done"><span></span><br />お届け先</li>
+                    <li class="done"><span></span><br />お支払方法</li>
+                    <li class="done"><span></span><br />完了</li>
+                </ol>
+            </div>
 
-                <p>登録完了しました</p>
-                <p>ありがとうございました</p>
+            <p>登録完了しました</p>
+            <p>ありがとうございました</p>
 
-                <div class="back"><a href="my_page.html">マイページへ</a></div>
+            <div class="back"><a href="my_page.html">マイページへ</a></div>
 
-            </main>
+        </main>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-        </div>
+    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-    </body>
+</body>
+<style>
+
+</style>
+
 </html>
