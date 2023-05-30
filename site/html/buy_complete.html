@@ -24,18 +24,14 @@
                 </div>
 
                 <div id="header-right">
-                    <!-- ログインしていない時 -->
-                    <a href="login.html">ログイン/会員登録</a>
                     <!-- ログインしている時 -->
                     <!-- ユーザーメニュー -->
                     <div id="user">
-                        <label>
-                            <!-- <img src="../images/icon.jpg" alt="アイコン"> -->
-                            <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                        </label>
+                        <div>
+                            <img src="../images/icon.jpg" alt="アイコン">
+                        </div>
                         <div>
                             <a href="my_page.html">ニックネーム</a>
-                            <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                         </div>
                     </div>
                 </div>
@@ -69,7 +65,9 @@
 
 </body>
 <style>
-
+    img {
+        width: 50px;
+    }
 </style>
 
 </html>

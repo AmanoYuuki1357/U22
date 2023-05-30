@@ -172,13 +172,13 @@ if (isset($_SESSION['id']) && !isset($_SESSION['cart_item_num'])) {
     $cart_item_num = showByItemId($db, $sqlCarts, $searchItemId)->fetch(PDO::FETCH_ASSOC);
 
     if (!empty($cart_item_num)) {
-        print "ok:データあり";
+        print "[debug]ok:データあり";
         $_SESSION['cart_item_num'] = $cart_item_num;
     } else {
-        print "no:データなし";
+        print "[debug]no:データなし";
     }
 } else {
-    print "no:ゲストユーザー/セッションあり";
+    print "[debug]no:ゲストユーザー/セッションあり";
 }
 
 if (empty($item)) {

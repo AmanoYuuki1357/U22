@@ -25,9 +25,9 @@
 
                 <div id="header-right">
                     <div id="user">
-                        <label>
+                        <div>
                             <img src="../images/icon.jpg" alt="アイコン">
-                        </label>
+                        </div>
                         <div>
                             <a href="my_page.html">ニックネーム</a>
                         </div>
@@ -36,18 +36,19 @@
             </header>
 
             <div id="gomypage">
-                <a href="my_page.html">>&lt;マイページ</a>
+                <a href="my_page.html">&lt;マイページ</a>
             </div>
 
             <main>
                 <div id="graph">
                     <h2>グラフ</h2>
+                    <div class="prototype_graph">[グラフ]</div>
                 </div>
 
                 <div id="record">
                     <h2>一覧</h2>
                     <div>
-                        <p>日付</p>
+                        <p>4月18日の食事</p>
                         <h3>食べたもの</h3>
                         <ul>
                             <li>飯</li>
@@ -58,7 +59,7 @@
                         </ul>
                     </div>
                     <div>
-                        <p>日付</p>
+                        <p>4月17日の食事</p>
                         <h3>食べたもの</h3>
                         <ul>
                             <li>飯</li>
@@ -76,4 +77,23 @@
 
     </body>
 
+    <style>
+        main{
+            padding-top: 100px;
+        }
+
+        img {
+            width: 50px;
+        }
+
+        div#record > div{
+            padding-bottom: 20px;
+        }
+
+        .prototype_graph{
+            width: 400px;
+            height: 200px;
+            background-color: skyblue;
+        }
+    </style>
 </html>

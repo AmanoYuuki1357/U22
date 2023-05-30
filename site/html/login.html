@@ -24,9 +24,9 @@
 
         <main>
             <!-- ログイン -->
-            <p>ログイン</p>
+            <h2>ログイン</h2>
             <div id="login">
-                <form action="" method="post">
+                <form action="menu.html" method="post">
                     <div>
                         <p>メールアドレス</p>
                         <input type="text" />
@@ -35,12 +35,11 @@
                         <p>パスワード</p>
                         <input type="password" />
                     </div>
-                    <input type='submit' value="ログイン">
-                    <a href="./login_error.html">エラー表示</a>
                     <div>
+                        <input type='submit' value="ログイン">
                     </div>
                 </form>
-
+                
                 <!-- パスワード再発行 -->
                 <div>
                     <p>
@@ -50,17 +49,15 @@
             </div>
 
             <!-- 新規登録フォーム -->
-            <p>初めてご利用の方はこちら</p>
+            <h2>初めてご利用の方はこちら</h2>
             <div id="regist">
-                <form action="" method="post">
+                <form action="menu.html" method="post">
                     <div>
-                        <p>必須</p>
-                        <p>お名前</p>
+                        <p><span class="required">[必須]</span>お名前</p>
                         <input type="text" />
                     </div>
                     <div>
-                        <p>必須</p>
-                        <p>ニックネーム</p>
+                        <p><span class="required">[必須]</span>ニックネーム</p>
                         <input type="text" />
                     </div>
                     <!-- <div>
@@ -89,15 +86,41 @@
             </div>
 
             <div>
-                <a href="">元の画面へ</a>
-                <a href="my_page.php">マイページへ</a>
+                <a href="index.html">元の画面へ</a>
+                <!-- <a href="my_page.php">マイページへ</a> -->
             </div>
+
+            <div>
+                <a class="prototype_link" href="./login_error.html">[プロトタイプ用]エラー表示</a>
+            </div>
+
         </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
     </div>
+
 </body>
+
 <style>
+    p, h2 {
+        margin: 0;
+    }
+
+    main > div {
+        margin-bottom: 30px;
+    }
+    form > div {
+        padding-bottom: 10px;
+    }
+
+    .required{
+        color: red;
+    }
+
+    .prototype_link{
+        text-decoration: underline;
+    }
 </style>
 
 </html>
