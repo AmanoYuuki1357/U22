@@ -105,12 +105,12 @@ $carts = $db->query($sql);
                     print('<div>');
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
-                    print('<p>' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
+                    print('<p>' . $cart['f_item_price'] . '円</p>');
                     print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
+                    print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('</div>');
-                    print('<hr>');
                     $sum += $cart['f_item_price'] * $cart['f_item_num'];
                 }
                 ?>
