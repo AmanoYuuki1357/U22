@@ -171,10 +171,5 @@ $items = $db->query($sql2);
     <!-- <script src="js/main.js"></script> -->
 
 </body>
-<style>
-    .headerimg {
-        width: 50px;
-    }
-</style>
 
 </html>
