@@ -65,7 +65,7 @@
         </header>
 
         <div id="gomypage">
-            <a href="my_page.html">＜マイページ</a>
+            <a href="my_page.php">＜マイページ</a>
         </div>
         <main>
 
