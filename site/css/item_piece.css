@@ -6,9 +6,8 @@ header{
 }
 main{
     display: flex;
-    padding: 50px;
     /* border: 1px solid; */
-    padding: 10px;
+    padding: 20px;
     position: relative;
     top: 150px;
     width: 100%;
@@ -54,7 +53,7 @@ header nav{
     justify-content: left;
 }
 #piece_img{
-    width: 400px;
+    width: 350px;
     padding: 10px;
 }
 #meal_genre,ul{
@@ -62,4 +61,7 @@ header nav{
 }
 h2{
     font-size: 30px;
+}
+table{
+    border-bottom: 1px solid;
 }
