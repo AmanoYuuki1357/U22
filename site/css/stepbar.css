@@ -75,3 +75,6 @@ header{
 .stepbar .done span {
     background-color: #E65100;
 }
+img {
+    width: 50px;
+}
