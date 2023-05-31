@@ -25,10 +25,41 @@ if (isset($_SESSION["id"])) {
 //     exit();
 // }
 
+if(!empty($_POST)){
+    print_r($_POST);
+    // if($_FILES['image']==''){
+    //     $error['image']='blank';
+    // }else{
+    //     $ext=substr($_FILES['image']['name'],-4);
+    //     if($ext!='.gif' && $ext!='.jpg' && $ext!='.png' && $ext!='.bmp'){
+    //         $error['image']='extension';
+    //     }
+    // }
+    // if($_POST['title']==''){
+    //     $error['title']='blank';
+    // }
+    // if(empty($error)){
+    //     $file=$_FILES['image'];
+    //     $filePath='post_images/'.$file['name'];
+    //     $success=move_uploaded_file($file['tmp_name'],$filePath);
+
+    //     $message=$db->prepare('INSERT INTO works_info (worksImage,worksTitle,worksCreatedID,worksCreated,worksComment) VALUES (?,?,?,NOW(),?)');
+    //     $message->execute(array(
+    //         $file['name'],
+    //         $_POST['title'],
+    //         $_SESSION['id'],
+    //         $_POST['comment'],
+    //     ));
+    //     header('Location: my_works.php');
+    //     exit();
+    // }
+}
+
+
 // $carts=$db->prepare('SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?');
 // $carts->execute(array($_SESSION["id"]));
 // $cart=$users->fetch();
-$sql = 'SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=1';
+$sql = 'SELECT c.f_item_id,c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=1';
 $carts = $db->query($sql);
 
 // print_r($cart);
@@ -102,6 +133,7 @@ $carts = $db->query($sql);
                 <?php
                 $sum = 0;
                 for ($i = 0; $cart = $carts->fetch(); $i++) {
+
                     print('<div>');
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
@@ -109,7 +141,11 @@ $carts = $db->query($sql);
                     print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
-                    print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
+                    // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
+                    print('<form action="" method="post" enctype="multipart/form-data">');
+                    ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
+                    print('<input type="submit" value="削除" />');
+                    print('</form>');
                     print('</div>');
                     $sum += $cart['f_item_price'] * $cart['f_item_num'];
                 }
@@ -120,10 +156,10 @@ $carts = $db->query($sql);
             <div id="pay">
                 <div>
                     <p>合計</p>
-                    <?php print('<p>' . $sum . '円</p>'); ?>
+                    <?php print('<p id="buySum">' . $sum . '円</p>'); ?>
                 </div>
                 <div id="button">
-                    <a href="buy_address.html">購入する</a>
+                    <a href="buy_address.html">レジに進む</a>
                     <!-- ここはformのinputのbutton -->
                 </div>
 

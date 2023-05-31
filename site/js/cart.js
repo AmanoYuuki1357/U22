@@ -1,3 +1,6 @@
+buySum = document.getElementById("buySum");
+buyNum = parseInt(buySum.innerHTML.replace('円', ''));
+
 function down(e) {
     console.log("down");
     let next = e.nextElementSibling;
@@ -6,8 +9,9 @@ function down(e) {
         next.innerHTML--;
         let afterN = next.innerHTML;
         let priceN = e.parentNode.firstElementChild.nextElementSibling.innerHTML.replace('円', '');
-        let smallSumN = e.parentNode.lastElementChild;
-        smallSumN.innerHTML = "小計:"+priceN*afterN+"円";
+        // let smallSumN = e.parentNode.lastElementChild;
+        buyNum += priceN*(afterN - beforeN);
+        buySum.innerHTML = buyNum+"円";
     }
 }
 function up(e) {
@@ -17,6 +21,7 @@ function up(e) {
     prev.innerHTML++;
     let afterP = prev.innerHTML;
     let priceP = e.parentNode.firstElementChild.nextElementSibling.innerHTML.replace('円', '');
-    let smallSumP = e.parentNode.lastElementChild;
-    smallSumP.innerHTML = "小計:"+priceP*afterP+"円";
+    // let smallSumP = e.parentNode.lastElementChild;
+    buyNum += priceP*(afterP - beforeP);
+    buySum.innerHTML = buyNum+"円";
 }
