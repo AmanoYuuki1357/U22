@@ -9,7 +9,7 @@ tr td{
     border: 1px solid;
     padding: 10px;
     position: relative;
-    top: 800px;
+    top: 1300px;
     height: 100%;
 }
 header{
@@ -25,4 +25,8 @@ main{
 }
 header nav{
     height: 100px;
+}
+#menu_img{
+    height: 100px;
+    padding: 5px;
 }

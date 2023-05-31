@@ -138,7 +138,7 @@ $items = $db->query($sql2);
                             }
                             print('<td>');
                             print('<a href="item_piece.php?id=' . $item['f_item_id'] . '">');
-                            print('<img src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
+                            print('<img id="menu_img" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
                             print('<p>' . $item['f_item_name'] . '</p>');
                             print('<p>' . $item['f_item_price'] . '円</p>');
                             print('</a>');
