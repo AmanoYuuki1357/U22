@@ -1,136 +1,121 @@
-<!-- <?php
-    require('common.php');
-    error_reporting(E_ALL & ~E_NOTICE);
-    if(!isset($_SESSION)){
-        session_start();
-    }
-
-    // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
-    if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
-        // ログインした時間を現在の時間に更新
-        $_SESSION['time']=time();
-        // セッション変数のidを使って、ユーザーの情報を呼び出す
-        $members=$db->prepare('SELECT * FROM user_info WHERE userID=?');
-        $members->execute(array($_SESSION['id']));
-        $member=$members->fetch();
-        // ログインしていないとき
-    }else{
-        // 即時にログイン画面に転送する
-        header('Location: login.php');
-        exit();
-    }
-
-    $posts=$db->query('SELECT * FROM works_info ORDER BY worksCreated DESC;');
-    // for($i=0; $post=$posts->fetch(PDO::FETCH_ASSOC); $i++){}
-    $post=$posts->fetch(PDO::FETCH_ASSOC);
-    for($i=0; $i>5; $i++){
-        if($i==0){
-            print("<tr>");
-        }
-        if($i==5){
-            print("</tr>");
-        }
-    }
-
-    // ヘッダーのアイコン
-    $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-    $icons->execute(array($_SESSION['id']));
-    $icon=$icons->fetch();
-
-?> -->
-
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>カート</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カート | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/cart.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
+<body>
+    <div id="wrap">
+        <header>
 
-                <h2>
-                    ミールフレンド
-                </h2>
-                <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                </div>
+            <div>
+                <a href="menu.html">商品一覧へ戻る</a>
+            </div>
 
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
+
+            <div id="header-right">
                 <!-- ログインしていない時 -->
                 <a href="login.html">ログイン/会員登録</a>
 
                 <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
+                <!-- <div>
+                    <div>
                         <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
                         <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                    </div>
+                </div> -->
+            </div>
+
+        </header>
+
+        <main>
+
+            <div id="cart">
+
+                <h3>ショッピングカート</h3>
+
+                <div class="items">
+                    <div class="prototype_photo">pic</div>
+                    <div>
+                        <p>メニュー1</p>
+                        <p>500円</p>
+                        <div class="chenge_vol">
+                            <button>-</button>
+                            <p style="text-align: center;">1</p>
+                            <button>+</button>
+                        </div>
                     </div>
                 </div>
 
-            </header>
+                <hr>
 
-            <main>
+                <div class="items">
+                    <div class="prototype_photo">pic</div>
+                    <div>
+                        <p>メニュー2</p>
+                        <p>500円</p>
+                        <div class="chenge_vol">
+                            <button>-</button>
+                            <p style="text-align: center;">2</p>
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
 
+                <hr>
+
+                <a href="recommend.html">おすすめ商品を見る</a>
+
+            </div>
+
+            <div id="pay">
                 <div>
-
-                    <h3>ショッピングカート</h3>
-
-                    <div>
-                        <button>pic</button>
-                        <p>商品名</p>
-                        <p>何円</p>
-                        <p>-</p>
-                        <p>個数</p>
-                        <p>+</p>
-                    </div>
-                    <hr>
-
-                    <div>
-                        <button>pic</button>
-                        <p>商品名</p>
-                        <p>何円</p>
-                        <p>-</p>
-                        <p>個数</p>
-                        <p>+</p>
-                    </div>
-                    <hr>
-
+                    <p>計 3点</p>
+                    <p>合計 1500円</p>
+                </div>
+                <div id="button">
+                    <a href="buy_address.html">購入手続きへ</a>
+                    <!-- ここはformのinputのbutton -->
                 </div>
 
-                <div>
-                    <div>
-                        <p>合計</p>
-                        <p>何円</p>
-                    </div>
-                    <div>
-                        <a href="buy_pay.html">購入する</a>
-                        <!-- ここはformのinputのbutton -->
-                    </div>
+            </div>
 
-                </div>
+        </main>
 
-            </main>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+    </div>
 
-        </div>
+</body>
 
-    <!-- jQuery -->
-    <!-- <script src="js/jQuery.js"></script> -->
-    <!-- <script src="js/main.js"></script> -->
+<style>
+    .items{
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
 
-    </body>
+    .chenge_vol{
+        display: grid;
+        grid-template-columns: 50px 50px 50px;
+    }
+
+    .prototype_photo{
+        width:150px;
+        height: 150px;
+        background-color: skyblue;
+    }
+</style>
 
 </html>

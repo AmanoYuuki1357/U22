@@ -1,44 +1,3 @@
-<!-- <?php
-    require('common.php');
-    error_reporting(E_ALL & ~E_NOTICE);
-    if(!isset($_SESSION)){
-        session_start();
-    }
-
-    // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
-    if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
-        // ログインした時間を現在の時間に更新
-        $_SESSION['time']=time();
-        // セッション変数のidを使って、ユーザーの情報を呼び出す
-        $members=$db->prepare('SELECT * FROM user_info WHERE userID=?');
-        $members->execute(array($_SESSION['id']));
-        $member=$members->fetch();
-        // ログインしていないとき
-    }else{
-        // 即時にログイン画面に転送する
-        header('Location: login.php');
-        exit();
-    }
-
-    $posts=$db->query('SELECT * FROM works_info ORDER BY worksCreated DESC;');
-    // for($i=0; $post=$posts->fetch(PDO::FETCH_ASSOC); $i++){}
-    $post=$posts->fetch(PDO::FETCH_ASSOC);
-    for($i=0; $i>5; $i++){
-        if($i==0){
-            print("<tr>");
-        }
-        if($i==5){
-            print("</tr>");
-        }
-    }
-
-    // ヘッダーのアイコン
-    $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-    $icons->execute(array($_SESSION['id']));
-    $icon=$icons->fetch();
-
-?> -->
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -47,139 +6,77 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>マイページ</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+        <title>マイページ | ミールフレンド</title>
+        <link rel="stylesheet" type="text/css" href="../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../css/common.css">
+        <link rel="stylesheet" type="text/css" href="../css/mypage.css">
 
     </head>
 
     <body>
         <div id="wrap">
             <header>
-                <header>
-
-                    <h2>
-                        ミールフレンド
-                    </h2>
+                <h1>ミールフレンド</h1>
+                <nav>
                     <div>
                         <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                     </div>
 
-                    <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-
-                    <!-- ログインしている時 -->
                     <!-- ユーザーメニュー -->
-                    <div id="user">
-                        <label>
-                            <img src="../images/icon.jpg" alt="アイコン">
-                            <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                        </label>
+                    <div id="header-right">
                         <div>
+                            <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                             <a href="my_page.html">ニックネーム</a>
-                            <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                         </div>
                     </div>
-
-                </header>
-
-                <!-- ハンバーガーメニュー -->
-                <!-- <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <nav class="globalMenuSp">
-                    <ul>
-                        <li><a href="home.php">ホーム</a></li>
-                        <li><a href="ranking.php">ランキング</a></li>
-                        <li><a href="recommendation.php">おすすめ</a></li>
-                        <li><a href="new.php">新着</a></li>
-                    </ul>
-                </nav> -->
-
-                <!-- <div id=icon>
-                    <a href="home.php"><img src="images/pigsiv.jpg" alt="アイコン"></a>
-                </div> -->
-
-                <!-- 検索 -->
-                <!-- <div id="search">
-                    <form method="get" action="search.php">
-                        <input type="text" name="search" size="15" placeholder="作品を検索">
-                    </form>
-                </div> -->
-
-                <!-- 投稿ボタン -->
-                <!-- <div id="contribute">
-                    <a href="post.php">作品を投稿</a>
-                </div> -->
-
+                </nav>
             </header>
 
             <main>
 
                 <div>
 
-                    <div>
-                        <a href="meal_record.html">
-                            <img alt="食事記録">
-                            <p>食事記録</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="meal_manage.html">
-                            <img alt="食事管理">
-                            <p>食事管理</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="meal_analize.html">
-                            <img alt="食事分析">
-                            <p>食事分析</p>
-                        </a>
+                    <div id="box">
+
+                        <div class="prototype_button">
+                            <a href="meal_record.html">
+                                <figure>
+                                    <img class="prototype_figure" alt="[図]">
+                                </figure>
+                                <p>食事記録</p>
+                            </a>
+                        </div>
+
+                        <div class="prototype_button">
+                            <a href="meal_manage.html">
+                                <figure>
+                                    <img class="prototype_figure" alt="[図]">
+                                </figure>
+                                <p>食事管理</p>
+                            </a>
+                        </div>
+
+                        <div class="prototype_button">
+                            <a href="meal_analize.html">
+                                <figure>
+                                    <img class="prototype_figure" alt="[図]">
+                                </figure>
+                                <p>食事分析</p>
+                            </a>
+                        </div>
+
                     </div>
 
-                    <div>
+                    <div class="outline">
                         <a href="buy_history.html">あなたの購入履歴</a>
                     </div>
 
-                    <div>
+                    <div class="outline">
                         <a href="delivery_situation.html">あなたの配送状況</a>
                     </div>
-
-                    <!-- <?php
-                        $cs=$db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
-                        $cs->execute(array($_SESSION['id']));
-                        $c=$cs->fetch();
-                        if($c[0]!=0){
-                            print('<p class="sl">あなたの投稿はこちら</p>');
-                    ?> -->
-
-                    <!-- <table> -->
-                        <!-- <?php
-
-                            $posts=$db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
-                            $posts->execute(array($_SESSION['id']));
-
-                            for($i=0; $post=$posts->fetch(); $i++){
-                                if($i==0){
-                                    print("<tr>");
-                                }
-                                if($i==5){
-                                    print("</tr>");
-                                    $i=0;
-                                }
-                        ?> -->
-
-                            <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
-
-                        <!-- <?php
-                            }
-                        }else{
-                            print('<p class="sl">あなたの投稿作品はまだありません</p>
-                            <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
-                        }
-                        ?> -->
-                    <!-- </table> -->
+                    <div class="outline">
+                        <a href="#">各種設定</a>
+                    </div>
                 </div>
             </main>
 
@@ -192,5 +89,33 @@
     <!-- <script src="js/main.js"></script> -->
 
     </body>
+
+    <style>
+        .headerimg {
+            width: 50px;
+        }
+
+        .prototype_button{
+            width:200px;
+            height: 200px;
+        }
+
+        figure{
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .prototype_figure{
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+        }
+
+        .outline::after{
+            content: ">";
+
+        }
+    </style>
 
 </html>

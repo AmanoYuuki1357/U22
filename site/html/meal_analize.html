@@ -2,13 +2,13 @@
 <html lang="ja">
 
     <head>
-
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>食事分析</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
-
+        <title>食事分析 | ミールフレンド</title>
+        <link rel="stylesheet" type="text/css" href="../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../css/common.css">
+        <link rel="stylesheet" type="text/css" href="../css/meal_analize.css">
     </head>
 
     <body>
@@ -22,39 +22,39 @@
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                <div id="header-right">
+                    <div id="user">
+                        <label>
+                            <img src="../images/icon.jpg" alt="アイコン">
+                        </label>
+                        <div>
+                            <a href="my_page.html">ニックネーム</a>
+                        </div>
                     </div>
                 </div>
 
             </header>
 
+            <!-- パンくずリスト-->
+            <div id="gomypage">
+                <a href="my_page.html">&lt;マイページ</a>
+            </div>
+
             <main>
                 <div>
-                    <!-- パンクズ -->
-                    <a href="my_page.html">＜マイページ</a>
-                </div>
-                <div>
                     <h2>アドバイス</h2>
-                    <p>食事の記録がありません</p>
+                    <div id="advice">
+                        <p>食事の記録がありません</p>
+                    </div>
                 </div>
 
-                <div>
+                <div id="recommend">
                     <p>おすすめ商品</p>
-                    <a href="item_piece.html">鮭の塩焼き</a>
-                    <a href="item_piece.html">鮭の塩焼き</a>
-                    <a href="item_piece.html">鮭の塩焼き</a>
+                    <ul>
+                        <li><a href="item_piece.html">鮭の塩焼き</a></li>
+                        <li><a href="item_piece.html">鮭の塩焼き</a></li>
+                        <li><a href="item_piece.html">鮭の塩焼き</a></li>
+                    </ul>
                 </div>
             </main>
 
@@ -62,5 +62,15 @@
         </div>
 
     </body>
+
+    <style>
+        img {
+            width: 50px;
+        }
+
+        #advice {
+            height: 200px;
+        }
+    </style>
 
 </html>

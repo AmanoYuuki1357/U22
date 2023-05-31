@@ -1,0 +1,36 @@
+
+* {
+    color: #000;
+    text-decoration: none;
+}
+
+#wrap{
+    width: 100%;
+}
+/* main {
+    position: relative;
+    top: 170px;
+} */
+
+header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+header nav{
+    height: 100px;
+}
+.recommend_item{
+    border-bottom: 1px solid;
+    padding: 10px;
+}
+#cartinput{
+    background-color: #b5d4c2dd;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+}
+#box{
+    border:1px solid;
+    padding: 40px;
+}

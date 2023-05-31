@@ -54,28 +54,31 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>購入お届け先情報</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入お届け先情報</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/stepbar.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
+<body>
+    <div id="wrap">
+        <header>
 
-                <div>
-                    <a href="menu.php">商品一覧</a>
-                </div>
+            <div>
+                <a href="menu.php">商品一覧</a>
+            </div>
 
-                <div>
-                    <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                </div>
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
 
+            <div id="header-right">
                 <!-- ログインしていない時 -->
 
                 <!-- ログインしている時 -->
@@ -85,65 +88,72 @@
                         <img src="../images/icon.jpg" alt="アイコン">
                     </div>
                     <div>
-                        <a href="my_page.html">ニックネーム</a>
+                        <a href="my_page.php">ニックネーム</a>
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
                 </div>
 
                 <!-- どちらの場合でもカートは出す -->
                 <div>
-                    <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
+                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
                 </div>
+            </div>
 
-                <!-- 購入用ヘッダー -->
-                <div>
-                    <ul id="buy">
-                        <li id="here">お届け先</li>
-                        <li>お支払方法</li>
-                        <li>購入完了</li>
-                    </ul>
-                </div>
 
-            </header>
+        </header>
 
-            <main>
+        <main>
+            <!-- 進行度バー -->
+            <div class="stepbar-row">
+                <ol class="stepbar">
+                    <li class="done"><span></span><br />お届け先</li>
+                    <li><span></span><br />お支払方法</li>
+                    <li><span></span><br />完了</li>
+                </ol>
+            </div>
 
-                <div>
+            <div>
 
-                    <p>お届け情報</p>
+                <p>お届け情報</p>
 
-                    <hr>
+                <hr>
 
-                    <!-- デフォルトはユーザの住所 -->
-                    <p>お届け先</p>
-                    <!-- <p><?php print(h($user["userAddress"])) ?></p> -->
+                <!-- デフォルトはユーザの住所 -->
+                <p>お届け先</p>
+                <!-- <p><?php print(h($user["userAddress"])) ?></p> -->
 
-                    <!-- 一度入力した届け先を購入履歴から持ってくる -->
-                    <!-- <p><?php print(h($user["userAddress"])) ?></p> -->
+                <!-- 一度入力した届け先を購入履歴から持ってくる -->
+                <!-- <p><?php print(h($user["userAddress"])) ?></p> -->
 
-                    <p>新しいお届け先を登録する</p>
-                    <form action="" method="post">
-                        <div>
-                            <input type="text" />
-                            <!-- <input id="fin" type='submit' value="確認画面へ"> -->
-                        </div>
+                <p>新しいお届け先を登録する</p>
+                <form action="" method="post">
+                    <div>
+                        <input type="text" />
+                        <!-- <input id="fin" type='submit' value="確認画面へ"> -->
+                    </div>
 
-                    </form>
+                </form>
 
-                    <div><a href="buy_pay.html">次へ</a></div>
-                    <div class="back"><a href="my_page.html">マイページへ</a></div>
+                <div><a href="buy_pay.html">次へ</a></div>
+                <div class="back"><a href="my_page.php">マイページへ</a></div>
 
-                </div>
+            </div>
 
-            </main>
+        </main>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-        </div>
+    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-    </body>
+</body>
+<style>
+    img {
+        width: 50px;
+    }
+</style>
+
 </html>

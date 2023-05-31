@@ -42,89 +42,96 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>おすすめ購入</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おすすめ購入</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/recommend.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
+<body>
+    <div id="wrap">
+        <header>
 
-                <h2>
-                    ミールフレンド
-                </h2>
-                <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                </div>
+            <div>
+                <a href="menu.php">商品一覧</a>
+            </div>
 
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
+
+            <div id="header-right">
                 <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
 
                 <!-- ログインしている時 -->
                 <!-- ユーザーメニュー -->
                 <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
                     <div>
-                        <a href="my_page.html">ニックネーム</a>
+                        <img src="../images/icon.jpg" alt="アイコン">
+                    </div>
+                    <div>
+                        <a href="my_page.php">ニックネーム</a>
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
                 </div>
 
-            </header>
+                <!-- どちらの場合でもカートは出す -->
+                <div>
+                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
+                </div>
 
-            <main>
+        </header>
+
+        <main>
+            <div id="box">
 
                 <div>
 
                     <h3>食事記録からのおすすめ</h3>
 
-                    <div>
+                    <div class="recommend_item">
                         <button>pic</button>
                         <p>商品名</p>
                         <p>(カロリー情報など)</p>
                         <p>何円</p>
                     </div>
-                    <hr>
 
-                    <div>
+                    <div class="recommend_item">
                         <button>pic</button>
                         <p>商品名</p>
                         <p>(カロリー情報など)</p>
                         <p>何円</p>
                     </div>
-                    <hr>
 
                     <p>合計:x円</p>
 
                 </div>
+            </div>
 
-                <div>
-                    <div>
-                        <a href="cart.html">カートに追加</a>
-                        <!-- ここはformのinputのbutton -->
-                    </div>
-
+            <div>
+                <div id="cartinput">
+                    <a href="cart.php">カートに追加</a>
+                    <!-- ここはformのinputのbutton -->
                 </div>
 
-            </main>
+            </div>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        </main>
 
-        </div>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-    </body>
+</body>
 
 </html>

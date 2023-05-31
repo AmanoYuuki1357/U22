@@ -1,130 +1,125 @@
-<!-- <?php
-    require('common.php');
-    error_reporting(E_ALL & ~E_NOTICE);
-    if(!isset($_SESSION)){
-        session_start();
-    }
-
-    // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
-    if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
-        // ログインした時間を現在の時間に更新
-        $_SESSION['time']=time();
-        // セッション変数のidを使って、ユーザーの情報を呼び出す
-        $members=$db->prepare('SELECT * FROM user_info WHERE userID=?');
-        $members->execute(array($_SESSION['id']));
-        $member=$members->fetch();
-        // ログインしていないとき
-    }else{
-        // 即時にログイン画面に転送する
-        header('Location: login.php');
-        exit();
-    }
-
-    $posts=$db->query('SELECT * FROM works_info ORDER BY worksCreated DESC;');
-    // for($i=0; $post=$posts->fetch(PDO::FETCH_ASSOC); $i++){}
-    $post=$posts->fetch(PDO::FETCH_ASSOC);
-    for($i=0; $i>5; $i++){
-        if($i==0){
-            print("<tr>");
-        }
-        if($i==5){
-            print("</tr>");
-        }
-    }
-
-    // ヘッダーのアイコン
-    $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-    $icons->execute(array($_SESSION['id']));
-    $icon=$icons->fetch();
-
-?> -->
-
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>おすすめ購入</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おすすめ購入 | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/recommend.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
+<body>
+    <div id="wrap">
+        <header>
 
-                <h2>
-                    ミールフレンド
-                </h2>
-                <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                </div>
+            <div>
+                <a href="menu.html">商品一覧</a>
+            </div>
 
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
+
+            <div id="header-right">
                 <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
 
                 <!-- ログインしている時 -->
                 <!-- ユーザーメニュー -->
                 <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
+                    <div>
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
+                    </div>
                     <div>
                         <a href="my_page.html">ニックネーム</a>
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
                 </div>
 
-            </header>
+                <!-- どちらの場合でもカートは出す -->
+                <div>
+                    <a href="cart.html"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
+                </div>
 
-            <main>
+        </header>
+
+        <main>
+            <div id="box">
 
                 <div>
 
                     <h3>食事記録からのおすすめ</h3>
 
-                    <div>
-                        <button>pic</button>
-                        <p>商品名</p>
-                        <p>(カロリー情報など)</p>
-                        <p>何円</p>
+                    <div class="recommend_item">
+                        <div class="prototype_photo">
+                            <input type="checkbox"> 
+                            pic
+                        </div>
+                        <div style="padding: 10px;">
+                            <p>商品名</p>
+                            <p>(カロリー情報など)</p>
+                            <p>何円</p>
+                        </div>
                     </div>
-                    <hr>
 
-                    <div>
-                        <button>pic</button>
-                        <p>商品名</p>
-                        <p>(カロリー情報など)</p>
-                        <p>何円</p>
+                    <div class="recommend_item">
+                        <div class="prototype_photo">
+                            <input type="checkbox"> 
+                            pic
+                        </div>
+                        <div  style="padding: 10px;">
+                            <p>商品名</p>
+                            <p>(カロリー情報など)</p>
+                            <p>何円</p>
+                        </div>
                     </div>
-                    <hr>
 
                     <p>合計:x円</p>
 
                 </div>
+            </div>
 
-                <div>
-                    <div>
-                        <a href="cart.html">カートに追加</a>
-                        <!-- ここはformのinputのbutton -->
-                    </div>
-
+            <div>
+                <div id="cartinput">
+                    <a href="cart.html">カートに追加</a>
+                    <!-- ここはformのinputのbutton -->
                 </div>
 
-            </main>
+            </div>
 
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        </main>
 
-        </div>
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-    </body>
+</body>
+<style>
+    main {
+        padding-top: 200px;
+        padding-bottom: 150px;
+    }
 
+    .recommend_item{
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
+    .headerimg {
+        width: 50px;
+    }
+    
+    .prototype_photo{
+        width:150px;
+        height: 150px;
+        background-color: skyblue;
+    }
+</style>
 </html>
