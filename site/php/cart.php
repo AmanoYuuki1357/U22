@@ -140,10 +140,5 @@ $carts = $db->query($sql);
     <script src="../js/cart.js"></script>
 
 </body>
-<style>
-    img {
-        width: 50px;
-    }
-</style>
 
 </html>
