@@ -138,7 +138,7 @@ $carts = $db->query($sql);
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
-                    print('<button onClick="down(this)">-</button>');
+                    print('<div id=plus_minus><button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
@@ -176,10 +176,5 @@ $carts = $db->query($sql);
     <script src="../js/cart.js"></script>
 
 </body>
-<style>
-    img {
-        width: 50px;
-    }
-</style>
 
 </html>

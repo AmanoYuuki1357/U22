@@ -41,3 +41,17 @@ header nav{
     background-color: #b5d4c2dd;
     padding: 10px;
 }
+#plus_minus{
+    display: flex;
+    text-align: center;
+}
+#plus_minus button{
+    margin: 5px;
+    padding: 8px 12px;
+}
+#plus_minus p{
+    height: 10px;
+}
+img {
+    width: 50px;
+}

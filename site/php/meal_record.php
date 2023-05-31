@@ -29,6 +29,8 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/meal_record.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/meal_record.js"></script>
 
 </head>
 
@@ -72,13 +74,17 @@
             <div id="meal">
                 <div id="tab_breakfast">
                     <h2>献立</h2>
-                    <input type="text" name="search" size="15" placeholder="料理名を検索">
-                    <button>検索</button>
+                    <input type="text" name="search" size="15" id="search" placeholder="料理名を検索">
+                    <button onclick="search()">検索</button>
                     <div>
                         <input type="radio" name="time" value="朝食">朝食
                         <input type="radio" name="time" value="昼飯">昼食
                         <input type="radio" name="time" value="夕飯">夕食
                         <input type="radio" name="time" value="その他" checked>その他
+                    </div>
+
+                    <div id="food_list">
+
                     </div>
 
 
