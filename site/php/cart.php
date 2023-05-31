@@ -123,7 +123,7 @@ $carts = $db->query($sql);
                     <?php print('<p>' . $sum . '円</p>'); ?>
                 </div>
                 <div id="button">
-                    <a href="buy_pay.html">購入する</a>
+                    <a href="buy_address.html">購入する</a>
                     <!-- ここはformのinputのbutton -->
                 </div>
 
