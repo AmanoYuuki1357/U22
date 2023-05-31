@@ -60,7 +60,7 @@ $carts = $db->query($sql);
             </div>
 
             <div>
-                <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
             <div id="header-right">

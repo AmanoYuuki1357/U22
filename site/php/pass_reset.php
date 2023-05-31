@@ -34,7 +34,7 @@
 
             <div id="header-right">
                 <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
+                <a href="login.php">ログイン/会員登録</a>
 
                 <!-- ログインしている時 -->
                 <!-- ユーザーメニュー -->
@@ -44,7 +44,7 @@
                         <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
                     </label>
                     <div>
-                        <a href="my_page.html">ニックネーム</a>
+                        <a href="my_page.php">ニックネーム</a>
                         <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
                     </div>
                 </div>
@@ -83,7 +83,7 @@
             </form>
             <div>
                 <a href="">元の画面へ</a>
-                <a href="my_page.html">マイページへ</a>
+                <a href="my_page.php">マイページへ</a>
             </div>
         </main>
 
