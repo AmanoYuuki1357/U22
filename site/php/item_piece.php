@@ -219,7 +219,7 @@ if (empty($item)) {
                     <!-- マイページ/ログイン -->
                     <?php
                     print isset($_SESSION['id']) ?
-                        "<a href='mypage.html'>" . h($_SESSION['name']) . "様</a>" :
+                        "<a href='my_page.php'>" . h($_SESSION['name']) . "様</a>" :
                         "<a href='login.php'>ログイン/会員登録</a>";
                     ?>
                 </div>
@@ -236,20 +236,22 @@ if (empty($item)) {
 
 
             <div>
-                <p>食品ジャンル</p>
-                <ul>
-                    <?php
-                    if (!empty($genres)) {
-                        // ジャンル情報が取得できた場合
-                        foreach ($genres as $genre) {
-                            print "<li>" . h($genre['name']) . "</li>";
+                <div id="meal_genre">
+                    <p>食品ジャンル:</p>
+                    <ul>
+                        <?php
+                        if (!empty($genres)) {
+                            // ジャンル情報が取得できた場合
+                            foreach ($genres as $genre) {
+                                print "<li>" . h($genre['name']) . "|</li>";
+                            }
                         }
-                    }
-                    ?>
-                </ul>
+                        ?>
+                    </ul>
+                </div>
                 <div id="itemimg">
                     <!-- TODO:画像表示 -->
-                    <img src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                    <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
                     <p>テスト出力:[画像]<?php print imageUrl($item['image']); ?></p>
                     <div id="review">
                         <h2>レビュー</h2>

@@ -1,19 +1,19 @@
 <?php
-// require('common.php');
-// error_reporting(E_ALL & ~E_NOTICE);
-// if (!isset($_SESSION)) {
-//     session_start();
-// }
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 
-// if (isset($_SESSION["id"])) {
-//     $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-//     $users->execute(array($_SESSION["id"]));
-//     $user = $users->fetch();
-// } else {
-//     header('Location: login.php');
-//     exit();
-// }
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
 ?>
 
@@ -40,7 +40,7 @@
                 ミールフレンド
             </h2>
             <div>
-                <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
             <div id="header-right">

@@ -237,7 +237,7 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
             </div>
             <div id="iteminfo">
                 <!-- TODO:画像表示 -->
-                <img src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
                 <p>テスト出力:[画像]<?php print imageUrl($item['image']); ?></p>
 
                 <h2><?php print $item['name']; ?></h2>

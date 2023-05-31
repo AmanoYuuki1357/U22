@@ -6,12 +6,11 @@ header{
 }
 main{
     display: flex;
-    padding: 50px;
     /* border: 1px solid; */
-    padding: 10px;
+    padding: 20px;
     position: relative;
-    top: 200px;
-    width: 100vh;
+    top: 150px;
+    width: 100%;
     height: 100%;
 }
 main div{
@@ -31,7 +30,7 @@ header nav{
 #iteminfo{
     position: relative;
     right: -500px;
-    top: -500px;
+    top: -800px;
     display: block;
 }
 #review{
@@ -52,4 +51,17 @@ header nav{
     position: relative;
     left: 0;
     justify-content: left;
+}
+#piece_img{
+    width: 350px;
+    padding: 10px;
+}
+#meal_genre,ul{
+    display: flex;
+}
+h2{
+    font-size: 30px;
+}
+table{
+    border-bottom: 1px solid;
 }

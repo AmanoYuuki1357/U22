@@ -65,13 +65,13 @@
         </header>
 
         <div id="gomypage">
-            <a href="my_page.html">＜マイページ</a>
+            <a href="my_page.php">＜マイページ</a>
         </div>
         <main>
 
             <div id="meal">
                 <div id="tab_breakfast">
-                    <h2>朝食</h2>
+                    <h2>献立</h2>
                     <input type="text" name="search" size="15" placeholder="料理名を検索">
                     <button>検索</button>
                     <div>
@@ -83,28 +83,11 @@
 
 
                     <?php
-                        $menus=$db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
-                        $menus->execute();
-                        $menu=$menus->fetch();
+                        // $menus=$db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
+                        // $menus->execute();
+                        // $menu=$menus->fetch();
                     ?>
 
-                </div>
-
-                <div>
-                    <h2>昼食</h2>
-                    <input type="text" name="search" size="15" placeholder="料理名を検索">
-                    <input type="image" src="images/meal.jpg" alt="飯">
-                </div>
-
-                <div id="tab_dinner">
-                    <h2>夕食</h2>
-                    <input type="text" name="search" size="15" placeholder="料理名を検索">
-                    <input type="image" src="images/meal.jpg" alt="飯">
-                    <p>飯1</p>
-                    <p>飯2</p>
-                    <p>飯3</p>
-                    <p>飯4</p>
-                    <p>飯5</p>
                 </div>
 
             <div id="table">
@@ -114,26 +97,6 @@
                     <tr>
                         <th>メニュー</th>
                         <th>削除</th>
-                    </tr>
-                    <tr>
-                        <td>朝食</td>
-                        <td><button>佐久間</button></td>
-                    </tr>
-                    <tr>
-                        <td>朝食</td>
-                        <td><button>佐久間</button></td>
-                    </tr>
-                    <tr>
-                        <td>朝食</td>
-                        <td><button>佐久間</button></td>
-                    </tr>
-                    <tr>
-                        <td>朝食</td>
-                        <td><button>佐久間</button></td>
-                    </tr>
-                    <tr>
-                        <td>朝食</td>
-                        <td><button>佐久間</button></td>
                     </tr>
                     <tr>
                         <td>朝食</td>

@@ -10,7 +10,7 @@ main{
     /* border: 1px solid; */
     padding: 10px;
     position: relative;
-    top: 50px;
+    top: 100px;
     width: 100vh;
     height: 100%;
 }
@@ -40,4 +40,7 @@ img{
 #iteminfo{
     padding: 20px;
     display: block;
+}
+#piece_img{
+    width: 100px;
 }

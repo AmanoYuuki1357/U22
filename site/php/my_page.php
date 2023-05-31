@@ -1,17 +1,17 @@
 <?php
-require('common.php');
-error_reporting(E_ALL & ~E_NOTICE);
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (isset($_SESSION["id"])) {
-    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-    $users->execute(array($_SESSION["id"]));
-    $user = $users->fetch();
-} else {
-    header('Location: login.php');
-    exit();
-}
+// require('common.php');
+// error_reporting(E_ALL & ~E_NOTICE);
+// if (!isset($_SESSION)) {
+//     session_start();
+// }
+// if (isset($_SESSION["id"])) {
+//     $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+//     $users->execute(array($_SESSION["id"]));
+//     $user = $users->fetch();
+// } else {
+//     header('Location: login.php');
+//     exit();
+// }
 
 ?>
 
