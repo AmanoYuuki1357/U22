@@ -38,8 +38,7 @@ $genres = $db->query($sql);
 
 // 商品情報を取り出す
 // 本当は販売履歴と結合してランキングにする
-// 画像も取り出す
-$sql2 = 'SELECT f_item_id,f_item_name,f_item_price FROM t_items';
+$sql2 = 'SELECT f_item_id,f_item_name,f_item_price,f_item_image FROM t_items';
 $items = $db->query($sql2);
 
 ?>
@@ -139,7 +138,7 @@ $items = $db->query($sql2);
                             }
                             print('<td>');
                             print('<a href="item_piece.php?id=' . $item['f_item_id'] . '">');
-                            print('<img src="../images/menu' . $i . '.jpg" alt=' . $item['f_item_name'] . '>');
+                            print('<img src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
                             print('<p>' . $item['f_item_name'] . '</p>');
                             print('<p>' . $item['f_item_price'] . '円</p>');
                             print('</a>');
