@@ -5,7 +5,7 @@
 
     $food_name = $_POST['food_name'];
 
-    $searchs = $db->prepare('SELECT f_item_name FROM t_items WHERE LIKE ?');
+    $searchs = $db->prepare('SELECT f_item_name FROM t_items WHERE f_item_name LIKE "%?%"');
     $searchs->execute(array($food_name));
 
     while($search = $searchs->fetch()){
