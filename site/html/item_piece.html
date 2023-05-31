@@ -6,90 +6,99 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品個別画面</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/works.css">
+    <title>商品個別画面 | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/item_piece.css">
 
 </head>
 
 <body>
-
-    <header>
-        <div>
-            <a class="logo" href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-        </div>
-
-        <nav>
-            <!-- ログインしていない時 -->
-            <a href="login.html">ログイン/会員登録</a>
-            <!-- ログインしている時 -->
-            <img class="icon" src="../images/nakao.jpg" alt="アイコン">
-            <a href="my_page.html">ニックネーム</a>
-        </nav>
-    </header>
-
     <div id="wrap">
+        <header>
+            <h1>ミールフレンド</h1>
+            <nav>
+                <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                </div>
+
+                <div id="header-right">
+                    <!-- ログインしていない時 -->
+                    <a href="login.html">ログイン/会員登録</a>
+                    <!-- ログインしている時 -->
+                    <!-- <img class="icon" src="../images/nakao.jpg" alt="アイコン">
+                    <a href="my_page.html">ニックネーム</a> -->
+
+                    <!-- どちらの場合でもカートは出す -->
+                    <div>
+                        <a href="cart.html"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+
+        <div id="gomenu">
+            <a href="./menu.html">&lt;メニュー一覧</a>
+        </div>
 
         <main>
             <div>
-                <a href="index.html">＜メニュー一覧</a>
-            </div>
+                <div id="itemimg">
+                    <img src="../images/sake.jpg" alt="鮭">
 
+                    <div id="review">
+                        <h2>レビュー</h2>
+                        <div>
+                            <img class="icon" src="../images/nakao.jpg" alt="アイコン">
+                            <dl>
+                                <dt>日付</dt>
+                                    <dd>2023.04.17</dd>
+                                <dt>評価</dt>
+                                    <dd>★★★☆☆</dd>
+                                <dt>コメント</dt>
+                                    <dd>テストコメント</dd>
+                            </dl>
+                        </div>
 
-            <div>
-                <img class="works" src="../images/sake.jpg" alt="鮭">
-            </div>
+                        <div>
+                            <img class="icon" src="../images/nakao.jpg" alt="アイコン">
+                            <dl>
+                                <dt>日付</dt>
+                                    <dd>2023.04.17</dd>
+                                <dt>評価</dt>
+                                    <dd>★★★☆☆</dd>
+                                <dt>コメント</dt>
+                                    <dd>テストコメント</dd>
+                            </dl>
+                        </div>
+                        <a href="review.html">レビューを見る</a>
+                    </div>
 
-            <div>
-                <h2>
-                    鮭の塩焼き
-                </h2>
-                <p>
-                    値段
-                </p>
-                <p>
-                    商品説明
-                </p>
-                <p>
-                    アレルゲン
-                </p>
-                <p>
-                    |カロリー｜タンパク質｜脂質｜食物繊維｜塩分｜
-                </p>
-                <p>
-                    原材料
-                </p>
-                <p>
-                    保存方法
-                </p>
-                <p>
-                    賞味期限
-                </p>
-            </div>
-            <div>
-                <button>
-                    お気に入り
-                </button>
-                <button>
-                    カートに入れる
-                </button>
-            </div>
+                </div>
 
-            <div>
-                <p>
-                    レビュー
-                </p>
-                <img class="icon" src="../images/nakao.jpg" alt="アイコン">
-                <p>
-                    ユーザー名｜評価｜コメント｜
-                </p>
-
-                <img class="icon" src="../images/nakao.jpg" alt="アイコン">
-                <p>
-                    ユーザー名｜評価｜コメント｜
-                </p>
-                <a href="review.html">レビューを見る</a>
+                <div id="iteminfo">
+                    <h2>鮭の塩焼き</h2>
+                    <p>値段</p>
+                    <p>商品説明</p>
+                    <p>アレルゲン</p>
+                    <p>|カロリー｜タンパク質｜脂質｜食物繊維｜塩分｜</p>
+                    <p>原材料</p>
+                    <p>保存方法</p>
+                    <p>賞味期限</p>
+                    <div>
+                        <div>
+                            <button>お気に入り</button>
+                        </div>
+                        
+                        <div>
+                            <p>カートに入れる</p>
+                            <button>+</button>
+                            0
+                            <button>-</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
 
@@ -98,4 +107,9 @@
     </div>
 </body>
 
+<style>
+    .headerimg {
+        width: 50px;
+    }
+</style>
 </html>

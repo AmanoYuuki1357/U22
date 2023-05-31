@@ -1,0 +1,55 @@
+
+header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+main{
+    display: flex;
+    padding: 50px;
+    /* border: 1px solid; */
+    padding: 10px;
+    position: relative;
+    top: 200px;
+    width: 100vh;
+    height: 100%;
+}
+main div{
+    width: 100%;
+}
+#wrap{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+header nav{
+    height: 100px;
+}
+#itemimg{
+    float: left;
+}
+#iteminfo{
+    position: relative;
+    right: -500px;
+    top: -500px;
+    display: block;
+}
+#review{
+    float: left;
+}
+#gomenu {
+    width: 100%;
+    border-bottom: solid;
+    background-color: #fff;
+    opacity: 50%;
+    padding: 5px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    z-index: 100;
+}
+#box{
+    position: relative;
+    left: 0;
+    justify-content: left;
+}

@@ -1,0 +1,43 @@
+
+* {
+    color: #000;
+    text-decoration: none;
+}
+
+#wrap{
+    width: 100%;
+}
+
+header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+main{
+    display: flex;
+    width: 100%;
+    padding: 20px;
+}
+header nav{
+    height: 100px;
+}
+#pay{
+    height: 200px;
+    border: 1px solid;
+    padding: 20px;
+    position: relative;
+    top: 50px;
+    right: -200px;
+}
+#cart{
+    width: 500px;
+    position: relative;
+    top: 50px;
+    left: -100px;
+    border: 1px solid;
+    padding: 10px;
+}
+#button{
+    background-color: #b5d4c2dd;
+    padding: 10px;
+}

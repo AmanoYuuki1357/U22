@@ -1,55 +1,98 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>購入履歴</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入履歴 | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/buy_history.css">
 
-    </head>
+</head>
 
-    <body>
-        <div id="wrap">
-            <header>
-                <h1>
-                    ミールフレンド
-                </h1>
-            </header>
+<body>
+    <div id="wrap">
 
-            <main>
-                <div>
-                    <a href="my_page.html">＜マイページ</a>
+        <header>
+            <h1>ミールフレンド</h1>
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
+            
+            <nav>
+                <div id="header-right">
+
+                    <!-- ログインしている時 -->
+                    <div id="user">
+                        <div>
+                            <img src="../images/icon.jpg" alt="アイコン"><!-- アイコンのサイズとりあえずstyleで小さくしてます -->
+                        </div>
+                        <div>
+                            <a href="my_page.html">ニックネーム</a>
+                        </div>
+                    </div>
+
+                    <!-- どちらの場合でもカートは出す -->
+                    <div>
+                        <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
+                    </div>
+
                 </div>
+            </nav>
+        </header>
 
-                <div>
-                    <h2>購入履歴</h2>
-                    <div>
-                        <p>日付</p>
-                        <p>・食べたもの</p>
-                        <p>・食べたもの</p>
-                    </div>
-                    <div>
-                        <p>日付</p>
-                        <p>・食べたもの</p>
-                        <p>・食べたもの</p>
-                    </div>
-                    <div>
-                        <p>日付</p>
-                        <p>・食べたもの</p>
-                        <p>・食べたもの</p>
-                    </div>
-                </div>
-
-
-
-            </main>
-
-            <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+        <div id="gomypage">
+            <a href="my_page.html">＜マイページ</a>
         </div>
 
-    </body>
+        <main>
+
+            <h2>購入履歴</h2>
+            <div class="situation">
+                <p>購入履歴:○○年○○月○○日</p>
+                <div class="info">
+                    <ul>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="situation">
+                <p>購入履歴:○○年○○月○○日</p>
+                <div class="info">
+                    <ul>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="situation">
+                <p>購入履歴:○○年○○月○○日</p>
+                <div class="info">
+                    <ul>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                        <li>商品名</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+
+        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+    </div>
+
+</body>
+
+<style>
+    img {
+        width: 50px;
+    }
+</style>
 
 </html>

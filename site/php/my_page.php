@@ -1,17 +1,17 @@
 <?php
-    require('common.php');
-    error_reporting(E_ALL & ~E_NOTICE);
-    if(!isset($_SESSION)){
-        session_start();
-    }
-    if(isset($_SESSION["id"])){
-        $users=$db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-        $users->execute(array($_SESSION["id"]));
-        $user=$users->fetch();
-    }else{
-        header('Location: login.php');
-        exit();
-    }
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
 ?>
 
@@ -25,8 +25,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マイページ</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/common.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="../css/mypage.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
 
 
 </head>
@@ -40,21 +40,23 @@
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <?php
-                if (!isset($_SESSION["id"])) {
-                ?>
-                    <a href="login.php">ログイン/会員登録</a>
-                <?php
-                } else {
-                ?>
+                <div id="header-right">
+                    <?php
+                    if (!isset($_SESSION["id"])) {
+                    ?>
+                        <a href="login.php">ログイン/会員登録</a>
+                    <?php
+                    } else {
+                    ?>
 
-                    <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                    </div>
-                    <?php print($user["f_user_name"]); ?>
-                <?php
-                }
-                ?>
+                        <div>
+                            <img src="../images/icon.jpg" alt="アイコン">
+                        </div>
+                        <?php print($user["f_user_name"]); ?>
+                    <?php
+                    }
+                    ?>
+                </div>
             </nav>
         </header>
 

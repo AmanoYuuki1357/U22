@@ -1,41 +1,3 @@
-<!-- <?php
-    require('common.php');
-    error_reporting(E_ALL & ~E_NOTICE);
-    if(!isset($_SESSION)){
-        session_start();
-    }
-
-    if($_COOKIE['email']!=''){
-        $_POST['email']=$_COOKIE['email'];
-        $_POST['password']=$_COOKIE['password'];
-        $_POST['save']='on';
-    }
-    if(!empty($_POST)){
-        if($_POST['email']!='' && $_POST['password']!=''){
-            $login=$db->prepare('SELECT * FROM user_info WHERE userMail=? AND userPassword=?');
-            $login->execute(array($_POST['email'],sha1($_POST['password'])));
-            $member=$login->fetch();
-            
-            if($member){
-                $_SESSION['id']=$member['userID'];
-                
-                $_SESSION['time']=time();
-                    if($_POST['save']=='on'){
-                        setcookie('email',$_POST['email'],time()+60*60*24*14);
-                        setcookie('password',$_POST['password'],time()+60*60*24*14);
-                    }
-                header('Location: home.php');
-                exit();
-            }else{
-                $error['login']='failed';
-            }
-        }else{
-            $error['login']='blank';
-        }
-    }
-?> -->
-
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -43,126 +5,122 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン</title>
-    <!-- <link rel="stylesheet" type="text/css" href="css/reset.css"> -->
+    <title>ログイン | ミールフレンド</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
     <div id="wrap">
         <header>
-
-            <h2>
-                ミールフレンド
-            </h2>
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <!-- ログインしている時 -->
-
+            <h1>ロゴ入れたいねぇ</h1>
+            <nav>
+                <div>
+                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                </div>
+            </nav>
         </header>
 
         <main>
-            <form action="" method="post">
+            <!-- ログイン -->
+            <h2>ログイン</h2>
+            <div id="login">
+                <form action="menu.html" method="post">
+                    <div>
+                        <p>メールアドレス</p>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        <p>パスワード</p>
+                        <input type="password" />
+                    </div>
+                    <div>
+                        <input type='submit' value="ログイン">
+                    </div>
+                </form>
+                
+                <!-- パスワード再発行 -->
                 <div>
-                    <p>メールアドレス</p>
-                    <input type="text" />
-                    <!-- <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($_POST['email']); ?>" />
-                        <?php if($error['login']=='blank'): ?>
-                            <p class="error">*メールアドレスとパスワードをご記入ください</p>
-                        <?php endif; ?>
-                        <?php if($error['login']=='failed'): ?>
-                            <p class="error">*ログインに失敗しました。正しくご記入ください</p>
-                        <?php endif; ?> -->
+                    <p>
+                        <a href="./pass_reset.html">パスワードをお忘れの方はこちら</a>
+                    </p>
                 </div>
-                <div>
-                    <p>パスワード</p>
-                    <input type="text" />
-                    <!-- <input type="password" name="password" size="35" maxlength="255" value="<?php echo h($_POST['password']); ?>" /> -->
-                </div>
-                <div>
-                    <button>ログインする</button>
-                    <!-- <input class="wid" type='submit' value="ログイン"> -->
-                </div>
-            </form>
-            <div>
-                <p>
-                    <a href="/site/php/pass_reset.html">パスワードをお忘れの方はこちら</a>
-                </p>
             </div>
 
-
-            <p>初めてご利用の方はこちら</p>
-            <form action="" method="post">
-                <div>
-                    <p>必須</p>
-                    <p>お名前</p>
-                    <input type="text" />
-                    <!-- <input type="text" name="name" size="35" maxlength="255"  value="<?php echo h($_POST['name']); ?>"/>
-                        <?php if($error['name']=='blank'): ?>
-                            <p class="error">*ニックネームを入力してください</p>
-                        <?php endif; ?> -->
-                </div>
-                <div>
-                    <p>必須</p>
-                    <p>ニックネーム</p>
-                    <input type="text" />
-                    <!-- <input type="text" name="name" size="35" maxlength="255"  value="<?php echo h($_POST['name']); ?>"/>
-                        <?php if($error['name']=='blank'): ?>
-                            <p class="error">*ニックネームを入力してください</p>
-                        <?php endif; ?> -->
-                </div>
-                <div>
-                    <p>性別</p>
-                    <input type="radio" name="性別" value="男" />男
-                    <input type="radio" name="性別" value="女" />女
-                    <input type="radio" name="性別" value="その他" />その他
-                </div>
-                <div>
-                    <p>メールアドレス</p>
-                    <input type="text" />
-                    <!-- <input type="text" name="email" size="35" maxlength="255"  value="<?php echo h($_POST['email']); ?>"/>
-                        <?php if($error['email']=='blank'): ?>
-                            <p class="error">*メールアドレスを入力してください</p>
-                        <?php endif; ?>
-                        <?php if($error['email']=='duplicate'): ?>
-                            <p class="error">*指定されたメールアドレスはすでに登録されています</p>
-                        <?php endif; ?> -->
-                </div>
-                <div>
-                    <p>パスワード</p>
-                    <input type="text" />
-                    <!-- <input type="password" name="password" size="10" maxlength="20" value="<?php echo h($_POST['password']); ?>"/>
-                        <?php if($error['password']=='blank'): ?>
-                            <p class="error">*パスワードを入力してください</p>
-                        <?php endif; ?>
-                        <?php if($error['password']=='length'): ?>
-                            <p class="error">*パスワードは4文字以上で入力してください</p>
-                        <?php endif; ?> -->
-                </div>
-                <div>
-                    <p>パスワード(確認用)</p>
-                    <input type="text" />
-                    <!-- <input type="password" name="password_re" size="10" maxlength="20"  value="<?php echo h($_POST['password_re']); ?>"/>
-                        <?php if($error['password_re']=='blank'): ?>
-                            <p class="error">*パスワード(確認用)を入力してください</p>
-                        <?php endif; ?>
-                        <?php if($error['password_re']=='notequal'): ?>
-                            <p class="error">*パスワードが一致していません</p>
-                        <?php endif; ?> -->
-                </div>
-                <div>
-                    <!-- <input type='submit' value="この内容でアカウントを作る"> -->
-                </div>
-            </form>
-            <div>
-                <a href="">元の画面へ</a>
-                <a href="my_page.html">マイページへ</a>
+            <!-- 新規登録フォーム -->
+            <h2>初めてご利用の方はこちら</h2>
+            <div id="regist">
+                <form action="menu.html" method="post">
+                    <div>
+                        <p><span class="required">[必須]</span>お名前</p>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        <p><span class="required">[必須]</span>ニックネーム</p>
+                        <input type="text" />
+                    </div>
+                    <!-- <div>
+                        <p>性別</p>
+                        <input type="radio" name="性別" value="男" />男
+                        <input type="radio" name="性別" value="女" />女
+                        <input type="radio" name="性別" value="その他" checked />その他
+                    </div> -->
+                    <div>
+                        <p>メールアドレス</p>
+                        <input type="text" />
+                    </div>
+                    <div>
+                        <p>パスワード</p>
+                        <input type="password" />
+                    </div>
+                    <div>
+                        <p>パスワード(確認用)</p>
+                        <input type="password" />
+                    </div>
+                    <div>
+                        <input type='hidden' name="type" value="regist">
+                        <input type='submit' value="この内容でアカウントを作る">
+                    </div>
+                </form>
             </div>
+
+            <div>
+                <a href="index.html">元の画面へ</a>
+                <!-- <a href="my_page.php">マイページへ</a> -->
+            </div>
+
+            <div>
+                <a class="prototype_link" href="./login_error.html">[プロトタイプ用]エラー表示</a>
+            </div>
+
         </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
     </div>
+
 </body>
+
+<style>
+    p, h2 {
+        margin: 0;
+    }
+
+    main > div {
+        margin-bottom: 30px;
+    }
+    form > div {
+        padding-bottom: 10px;
+    }
+
+    .required{
+        color: red;
+    }
+
+    .prototype_link{
+        text-decoration: underline;
+    }
+</style>
 
 </html>

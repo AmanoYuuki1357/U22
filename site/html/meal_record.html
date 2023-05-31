@@ -2,83 +2,78 @@
 <html lang="ja">
 
     <head>
-
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>食事記録</title>
-        <link rel="stylesheet" type="text/css" href="css/reset.css">
-
+        <title>食事記録 | ミールフレンド</title>
+        <link rel="stylesheet" type="text/css" href="../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../css/common.css">
+        <link rel="stylesheet" type="text/css" href="../css/meal_record.css">
     </head>
 
     <body>
         <div id="wrap">
             <header>
-
-                <h2>
-                    ミールフレンド
-                </h2>
+                <h2>ミールフレンド</h2>
                 <div>
                     <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
                 </div>
 
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
+                <div id="header-right">
+                    <!-- ログインしている時 -->
+                    <div id="user">
+                        <label>
+                            <img src="../images/icon.jpg" alt="アイコン">
+                        </label>
+                        <div>
+                            <a href="my_page.html">ニックネーム</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+            <div id="gomypage">
+                <a href="my_page.html">&lt;マイページ</a>
+            </div>
+
+            <main>
+                <div id="meal">
+                    <div id="tab_breakfast">
+                        <h2>朝食</h2>
+                        <input type="text" name="search" size="15" placeholder="料理名を検索">
+                        <input type="image" style="width: 150px; height: 150px;" src="images/meal.jpg" alt="アップロードした食事の画像">
+                        <p>飯1</p>
+                        <p>飯2</p>
+                        <p>飯3</p>
+                        <p>飯4</p>
+                        <p>飯5</p>
+                    </div>
+
+                    <div id="tab_lunch">
+                        <h2>昼食</h2>
+                        <input type="text" name="search" size="15" placeholder="料理名を検索">
+                        <input type="image" style="width: 150px; height: 150px;" src="images/meal.jpg" alt="アップロードした食事の画像">
+                        <p>飯1</p>
+                        <p>飯2</p>
+                        <p>飯3</p>
+                        <p>飯4</p>
+                        <p>飯5</p>
+                    </div>
+
+                    <div id="tab_dinner">
+                        <h2>夕食</h2>
+                        <input type="text" name="search" size="15" placeholder="料理名を検索">
+                        <input type="image" style="width: 150px; height: 150px;" src="images/meal.jpg" alt="アップロードした食事の画像">
+                        <p>飯1</p>
+                        <p>飯2</p>
+                        <p>飯3</p>
+                        <p>飯4</p>
+                        <p>飯5</p>
                     </div>
                 </div>
 
-            </header>
-
-            <main>
-                <div>
-                    <a href="my_page.html">＜マイページ</a>
-                </div>
-                <div>
-                    <h2>朝食</h2>
-                    <input type="text" name="search" size="15" placeholder="料理名を検索">
-                    <input type="image" src="images/meal.jpg" alt="飯">
-                    <p>飯1</p>
-                    <p>飯2</p>
-                    <p>飯3</p>
-                    <p>飯4</p>
-                    <p>飯5</p>
-                </div>
-
-                <div>
-                    <h2>昼食</h2>
-                    <input type="text" name="search" size="15" placeholder="料理名を検索">
-                    <input type="image" src="images/meal.jpg" alt="飯">
-                    <p>飯1</p>
-                    <p>飯2</p>
-                    <p>飯3</p>
-                    <p>飯4</p>
-                    <p>飯5</p>
-                </div>
-
-                <div>
-                    <h2>夕食</h2>
-                    <input type="text" name="search" size="15" placeholder="料理名を検索">
-                    <input type="image" src="images/meal.jpg" alt="飯">
-                    <p>飯1</p>
-                    <p>飯2</p>
-                    <p>飯3</p>
-                    <p>飯4</p>
-                    <p>飯5</p>
-                </div>
-
-                <div>
-                    <p>日付</p>
+                <div id="table">
+                    <p>4月18日の食事</p>
                     <!-- table作成 -->
                     <table border="1">
                         <tr>
@@ -86,36 +81,32 @@
                             <th>削除</th>
                         </tr>
                         <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
+                            <td>メニュー1</td>
+                            <td><button>削除</button></td>
                         </tr>
                         <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
+                            <td>メニュー2</td>
+                            <td><button>削除</button></td>
                         </tr>
                         <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
+                            <td>メニュー3</td>
+                            <td><button>削除</button></td>
                         </tr>
                         <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
+                            <td>メニュー4</td>
+                            <td><button>削除</button></td>
                         </tr>
                         <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
+                            <td>メニュー5</td>
+                            <td><button>削除</button></td>
                         </tr>
                         <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
+                            <td>メニュー6</td>
+                            <td><button>削除</button></td>
                         </tr>
                     </table>
-                    <button>
-                        <a>登録</a>
-                    </button>
+                    <button>登録</button>
                 </div>
-
-
 
             </main>
 
@@ -123,5 +114,14 @@
         </div>
 
     </body>
+
+    <style>
+        img {
+            width: 50px;
+        }
+        table{
+            width: 200px;
+        }
+    </style>
 
 </html>

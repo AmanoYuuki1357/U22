@@ -9,41 +9,45 @@
     <title>購入履歴</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/buy_history.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/buy_history.css">
 
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
-
+    <header>
+        <h1>ミールフレンド</h1>
+        <nav>
             <div>
                 <a href="menu.php">商品一覧</a>
             </div>
-
             <div>
-                <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
-            <!-- ログインしていない時 -->
+            <div id="header-right">
+                <!-- ログインしていない時 -->
+                <a href="login.html">ログイン/会員登録</a>
+                <!-- ログインしている時 -->
+                <!-- ユーザーメニュー -->
+                <div id="user">
+                    <div>
+                        <img src="../images/icon.jpg" alt="アイコン"><!-- アイコンのサイズとりあえずstyleで小さくしてます -->
+                    </div>
+                    <div>
+                        <a href="my_page.html">ニックネーム</a>
+                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                    </div>
 
-            <!-- ログインしている時 -->
-            <!-- ユーザーメニュー -->
-            <div id="user">
-                <div>
-                    <img src="../images/icon.jpg" alt="アイコン">
+                    <div id="gomypage">
+                        <a href="my_page.html">＜マイページ</a>
+                    </div>
+
+                    <!-- どちらの場合でもカートは出す -->
+                    <div>
+                        <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
+                    </div>
                 </div>
-                <div>
-                    <a href="my_page.html">ニックネーム</a>
-                    <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                </div>
             </div>
-
-            <!-- どちらの場合でもカートは出す -->
-            <div>
-                <a href="cart.html"><img src="../images/cart.jpg" alt="カート"></a>
-            </div>
-
             <!-- 購入用ヘッダー -->
             <div>
                 <ul id="buy">
@@ -52,8 +56,9 @@
                     <li>購入完了</li>
                 </ul>
             </div>
-
-        </header>
+        </nav>
+    </header>
+    <div id="wrap">
 
         <main>
 
@@ -98,7 +103,9 @@
 
 </body>
 <style>
-
+    img {
+        width: 50px;
+    }
 </style>
 
 </html>
