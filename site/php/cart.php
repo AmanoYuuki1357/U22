@@ -60,7 +60,7 @@ $carts = $db->query($sql);
             </div>
 
             <div>
-                <a href="index.php"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
             </div>
 
             <div id="header-right">
@@ -123,7 +123,7 @@ $carts = $db->query($sql);
                     <?php print('<p>' . $sum . '円</p>'); ?>
                 </div>
                 <div id="button">
-                    <a href="buy_pay.php">購入する</a>
+                    <a href="buy_pay.html">購入する</a>
                     <!-- ここはformのinputのbutton -->
                 </div>
 

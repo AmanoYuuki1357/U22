@@ -219,7 +219,7 @@ if (empty($item)) {
                     <!-- マイページ/ログイン -->
                     <?php
                     print isset($_SESSION['id']) ?
-                        "<a href='mypage.html'>" . h($_SESSION['name']) . "様</a>" :
+                        "<a href='my_page.php'>" . h($_SESSION['name']) . "様</a>" :
                         "<a href='login.php'>ログイン/会員登録</a>";
                     ?>
                 </div>
