@@ -112,14 +112,15 @@ $carts->execute(array($user['f_user_id']));
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
-                    print('<div id=plus_minus>');
+                    print('<div id=plus_minus>'); //+-ボタン横並びにするためのid指定
                     print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
-                    print('</div>');
+                    print('</div>'); //div id="plus_minus"閉じタグ
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
-                    ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
+                ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>">
+                <?php
                     print('<input type="submit" value="削除" />');
                     print('</form>');
                     print('</div>');
