@@ -52,7 +52,7 @@ $carts->execute(array($user['f_user_id']));
     <title>カート</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/cart.css">
+    <link rel="stylesheet" type="text/css" href="../css/cart.css"> <!-- cart.htmlで検証　こっちでもCSS適用されているかは未確認 -->
 
 
 </head>
@@ -118,13 +118,13 @@ $carts->execute(array($user['f_user_id']));
                     print('<button onClick="up(this)">+</button>');
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
-                ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
-                                                                                                        print('<input type="submit" value="削除" />');
-                                                                                                        print('</form>');
-                                                                                                        print('</div>');
-                                                                                                        $sum += $cart['f_item_price'] * $cart['f_item_num'];
-                                                                                                    }
-                                                                                                        ?>
+                    ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
+                    print('<input type="submit" value="削除" />');
+                    print('</form>');
+                    print('</div>');
+                    $sum += $cart['f_item_price'] * $cart['f_item_num'];
+                }
+                ?>
 
             </div>
 
