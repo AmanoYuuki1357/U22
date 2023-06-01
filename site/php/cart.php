@@ -10,6 +10,7 @@ if (isset($_SESSION["id"])) {
     $users->execute(array($_SESSION["id"]));
     $user = $users->fetch();
 }
+
 // // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
 // if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
 //     // ログインした時間を現在の時間に更新
@@ -26,43 +27,17 @@ if (isset($_SESSION["id"])) {
 // }
 
 if(!empty($_POST)){
-    print_r($_POST);
-    // if($_FILES['image']==''){
-    //     $error['image']='blank';
-    // }else{
-    //     $ext=substr($_FILES['image']['name'],-4);
-    //     if($ext!='.gif' && $ext!='.jpg' && $ext!='.png' && $ext!='.bmp'){
-    //         $error['image']='extension';
-    //     }
-    // }
-    // if($_POST['title']==''){
-    //     $error['title']='blank';
-    // }
-    // if(empty($error)){
-    //     $file=$_FILES['image'];
-    //     $filePath='post_images/'.$file['name'];
-    //     $success=move_uploaded_file($file['tmp_name'],$filePath);
+    $delCart=$db->prepare('DELETE FROM t_carts WHERE f_user_id=? and f_item_id=?');
+    $delCart->execute(array($user['f_user_id'],$_POST['delete']));
 
-    //     $message=$db->prepare('INSERT INTO works_info (worksImage,worksTitle,worksCreatedID,worksCreated,worksComment) VALUES (?,?,?,NOW(),?)');
-    //     $message->execute(array(
-    //         $file['name'],
-    //         $_POST['title'],
-    //         $_SESSION['id'],
-    //         $_POST['comment'],
-    //     ));
-    //     header('Location: my_works.php');
-    //     exit();
-    // }
+    header('Location: cart.php');
+    exit();
+
 }
 
-
-// $carts=$db->prepare('SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?');
-// $carts->execute(array($_SESSION["id"]));
-// $cart=$users->fetch();
-$sql = 'SELECT c.f_item_id,c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=1';
-$carts = $db->query($sql);
-
-// print_r($cart);
+$sql = 'SELECT c.f_item_id,c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?';
+$carts = $db->prepare($sql);
+$carts->execute(array($user['f_user_id']));
 
 ?>
 
