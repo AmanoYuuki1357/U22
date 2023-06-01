@@ -100,3 +100,13 @@ footer{
   opacity: 50%;
   padding: 5px;
 }
+#menulink{
+  background-color: #98fb98;
+  padding: 40px;
+  width: auto;
+  font-size: large;
+}
+h2{
+  text-align: center;
+  margin: 60px;
+}

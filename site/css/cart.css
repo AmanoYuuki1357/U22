@@ -26,8 +26,8 @@ header nav{
     border: 1px solid;
     padding: 20px;
     position: relative;
-    top: 50px;
-    right: -200px;
+    /* top: 50px; */
+    right: -500px;
 }
 #cart{
     width: 500px;

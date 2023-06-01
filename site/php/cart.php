@@ -25,7 +25,7 @@ if (isset($_SESSION["id"])) {
 //     exit();
 // }
 
-if(!empty($_POST)){
+if (!empty($_POST)) {
     print_r($_POST);
     // if($_FILES['image']==''){
     //     $error['image']='blank';
@@ -77,7 +77,7 @@ $carts = $db->query($sql);
     <title>カート</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/cart.css"> <!-- cart.htmlで検証　こっちでもCSS適用されているかは未確認 -->
+    <link rel="stylesheet" type="text/css" href="../css/cart.css">
 
 
 </head>
@@ -143,13 +143,13 @@ $carts = $db->query($sql);
                     print('<button onClick="up(this)">+</button>');
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
-                    ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
-                    print('<input type="submit" value="削除" />');
-                    print('</form>');
-                    print('</div>');
-                    $sum += $cart['f_item_price'] * $cart['f_item_num'];
-                }
-                ?>
+                ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
+                                                                                                        print('<input type="submit" value="削除" />');
+                                                                                                        print('</form>');
+                                                                                                        print('</div>');
+                                                                                                        $sum += $cart['f_item_price'] * $cart['f_item_num'];
+                                                                                                    }
+                                                                                                        ?>
 
             </div>
 
