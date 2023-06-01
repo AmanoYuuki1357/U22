@@ -138,18 +138,20 @@ $carts = $db->query($sql);
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
-                    print('<div id=plus_minus><button onClick="down(this)">-</button>');
+                    print('<div id=plus_minus>');
+                    print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
+                    print('</div>');
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
                 ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
-                                                                                                        print('<input type="submit" value="削除" />');
-                                                                                                        print('</form>');
-                                                                                                        print('</div>');
-                                                                                                        $sum += $cart['f_item_price'] * $cart['f_item_num'];
-                                                                                                    }
-                                                                                                        ?>
+                                                                                                    print('<input type="submit" value="削除" />');
+                                                                                                    print('</form>');
+                                                                                                    print('</div>');
+                                                                                                    $sum += $cart['f_item_price'] * $cart['f_item_num'];
+                                                                                                }
+                                                                                                    ?>
 
             </div>
 
