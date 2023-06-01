@@ -116,7 +116,7 @@ $carts->execute(array($user['f_user_id']));
                     print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
-                    print('</div>'); //div id="plus_munis"閉じタグ
+                    print('</div>'); //div id="plus_minus"閉じタグ
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
                 ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>">
