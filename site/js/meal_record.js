@@ -1,3 +1,10 @@
+function delet(){
+    let list = document.getElementById("food_list");
+
+    while(list.lastChild){
+        list.removeChild(list.lastChild);
+    }
+}
 function search(){
     let e = document.getElementById("search");
     let food_name = e.value;
@@ -10,6 +17,7 @@ function search(){
         data: { val1: food_name},
 
         success: function (data) {
+                delet();
             let i;
             Data = JSON.parse(data);
 
