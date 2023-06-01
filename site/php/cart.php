@@ -26,13 +26,12 @@ if (isset($_SESSION["id"])) {
 //     exit();
 // }
 
-if(!empty($_POST)){
-    $delCart=$db->prepare('DELETE FROM t_carts WHERE f_user_id=? and f_item_id=?');
-    $delCart->execute(array($user['f_user_id'],$_POST['delete']));
+if (!empty($_POST)) {
+    $delCart = $db->prepare('DELETE FROM t_carts WHERE f_user_id=? and f_item_id=?');
+    $delCart->execute(array($user['f_user_id'], $_POST['delete']));
 
     header('Location: cart.php');
     exit();
-
 }
 
 $sql = 'SELECT c.f_item_id,c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?';
@@ -113,18 +112,20 @@ $carts->execute(array($user['f_user_id']));
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
-                    print('<div id=plus_minus><button onClick="down(this)">-</button>');
+                    print('<div id=plus_minus>');
+                    print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
+                    print('</div>');
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
-                    ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
-                    print('<input type="submit" value="削除" />');
-                    print('</form>');
-                    print('</div>');
-                    $sum += $cart['f_item_price'] * $cart['f_item_num'];
-                }
-                ?>
+                ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
+                                                                                                        print('<input type="submit" value="削除" />');
+                                                                                                        print('</form>');
+                                                                                                        print('</div>');
+                                                                                                        $sum += $cart['f_item_price'] * $cart['f_item_num'];
+                                                                                                    }
+                                                                                                        ?>
 
             </div>
 
