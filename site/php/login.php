@@ -7,6 +7,12 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+// ログインしているときメニューに飛ばす
+if (isset($_SESSION["id"])) {
+    header('Location: menu.php');
+    exit();
+}
+
 if (!empty($_POST)) {
     //会員登録の処理
     if ($_POST['type'] == 'regist') {
