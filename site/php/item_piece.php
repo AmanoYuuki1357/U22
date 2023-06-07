@@ -268,9 +268,20 @@ else{
                 <div id="header-right">
                     <!-- マイページ/ログイン -->
                     <?php
-                    print $userId != 0?
-                        "<a href='my_page.php'>" . h($_SESSION['name']) . "様</a>" :
-                        "<a href='login.php'>ログイン/会員登録</a>";
+                        if(isset($_SESSION['id'])){
+                            print '
+                            <div id="user">
+                                <label>
+                                    <img src=icon_images/'. h($icon["userIcon"]) . ' alt="アイコン">
+                                </label>
+                                <div>
+                                    <a href="my_page.php">' . h($user["userNickName"]) . '</a>
+                                </div>
+                            </div>';
+                        }
+                        else{
+                            print "<a href='login.php'>ログイン/会員登録</a>";
+                        }
                     ?>
                 </div>
             </nav>

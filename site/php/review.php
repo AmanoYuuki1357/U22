@@ -52,7 +52,7 @@ function showByItemId($db, $sql, $itemId)
     $contents->bindparam(1, $itemId, PDO::PARAM_INT);
     $contents->execute();
 
-    return $contents;
+    return $contents->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // ページ内表示アイテムの検索
@@ -123,10 +123,9 @@ $revStart   = $pageRevs * ($page - 1);  // 表示対象開始の数
 // ===================================================================================
 // DB検索
 // ===================================================================================
-$item       = showByItemId($db, $sqlItems, $searchItemId)->fetch(PDO::FETCH_ASSOC);         // 食品詳細情報
-$revCnt     = showByItemId($db, $sqlReviewCnt, $searchItemId)->fetch(PDO::FETCH_ASSOC);     // 総レビュー件数
-$reviews    = showPage($db, $sqlReviews, $searchItemId, $revStart, $pageRevs)
-    ->fetchAll(PDO::FETCH_ASSOC);                                               // 表示対象のレビュー情報
+$item       = showByItemId($db, $sqlItems, $searchItemId)[0];                   // 食品詳細情報
+$revCnt     = showByItemId($db, $sqlReviewCnt, $searchItemId)[0];               // 総レビュー件数
+$reviews    = showPage($db, $sqlReviews, $searchItemId, $revStart, $pageRevs);  // 表示対象のレビュー情報
 
 // 検索失敗時
 if (empty($item)) {
@@ -168,24 +167,23 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
             </div>
 
             <div id="header-right">
-                <!-- ログインしていない時 -->
-                <a href="login.html">ログイン/会員登録</a>
-
-                <!-- ログインしている時 -->
-
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php // print(h($icon["userIcon"])) 
-                                                    ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.html">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php // print(h($user["userNickName"])) 
-                                                    ?></a> -->
-                    </div>
-                </div>
+                <!-- マイページ/ログイン -->
+                <?php
+                    if(isset($_SESSION['id'])){
+                        print '
+                        <div id="user">
+                            <label>
+                                <img src=icon_images/'. h($icon["userIcon"]) . ' alt="アイコン">
+                            </label>
+                            <div>
+                                <a href="my_page.php">' . h($user["userNickName"]) . '</a>
+                            </div>
+                        </div>';
+                    }
+                    else{
+                        print "<a href='login.php'>ログイン/会員登録</a>";
+                    }
+                ?>
             </div>
 
         </header>
@@ -236,9 +234,8 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
 
             </div>
             <div id="iteminfo">
-                <!-- TODO:画像表示 -->
+                <!-- 画像表示 -->
                 <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
-                <p>テスト出力:[画像]<?php print imageUrl($item['image']); ?></p>
 
                 <h2><?php print $item['name']; ?></h2>
                 <dl>
