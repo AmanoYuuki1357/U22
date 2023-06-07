@@ -48,7 +48,6 @@ if (isset($_SESSION["id"])) {
                 <div>
                     <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                     <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    <!-- <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p> -->
                 </div>
                 <!-- どちらの場合でもカートは出す -->
                 <div>
