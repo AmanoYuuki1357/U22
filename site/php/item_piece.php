@@ -158,8 +158,8 @@ function review_db($flg, $str){
 // ===================================================================================
 // 初期値
 // ===================================================================================
-// $userId     = 0;        // ユーザーID(ゲストユーザー)
-$userId     = 1;        // REVIEW: ユーザーID(テスト用)
+$userId     = 0;        // ユーザーID(ゲストユーザー)
+// $userId     = 1;        // REVIEW: ユーザーID(テスト用)
 
 // ===================================================================================
 // セッション開始
@@ -194,7 +194,7 @@ $genres     = showByItemId($db, $sqlGenres, $itemId);           // 食品ジャ�
 $allergens  = showByItemId($db, $sqlAllergens, $itemId)[0];     // 食品アレルゲン検索
 $reviews    = showByItemId($db, $sqlreviews, $itemId);          // 食品レビュー検索
 
-// 確認ログ
+// REVIEW: 確認ログ
 review_db(empty($item), "商品");
 review_db(empty($genres), "ジャンル");
 review_db(empty($allergens), "アレルゲン");
@@ -205,25 +205,33 @@ if (empty($item)) {
     header('Location: ./menu.php');
 }
 
-
 if (isset($_SESSION['cart'][$itemId]['num'])){
+    // 既にセッション内にカート情報がある
+
+    // REVIEW: 確認ログ
     info("[session取得]セッション内のカート情報：{$_SESSION['cart'][$itemId]['num']}");
 }
 else{
+    // まだセッション内にカート情報がない
+
+    // REVIEW: 確認ログ
     info("[セッション:データなし]セッション内のカート情報");
 
-    // ログイン状態かつカート情報を持っていない場合、カートTBLから情報を取得する
+    // ログインしている場合、カートTBLから情報を取得する
     if( $userId != 0 ){
-        $cart = showCart($db, $sqlCarts, $itemId, $userId);         // カート内情報検索
+        // カート内情報検索
+        $cart = showCart($db, $sqlCarts, $itemId, $userId);
 
-        // 確認ログ
+        // REVIEW: 確認ログ
         review_db(empty($cart), "カート情報");
-        
+
         if (!empty($cart)) {
+            // DBに保存されたカート情報をセッションに格納
             $_SESSION['cart'][$itemId]['num'] = $cart['item_num'];
         }
     }
     else{
+        // REVIEW: 確認ログ
         warn("[データなし]ゲストユーザー");
     }
 }
