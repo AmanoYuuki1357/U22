@@ -5,6 +5,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 // ===================================================================================
 // SQL
 // ===================================================================================
+// 食品検索SQL
 $sqlItems = '
         SELECT
             f_item_id                   AS id,
@@ -26,6 +27,7 @@ $sqlItems = '
         WHERE
             f_item_id = ? ;';
 
+// ジャンル検索SQL
 $sqlGenres = '
         SELECT
             type.f_item_genre_id        AS id,
@@ -39,6 +41,7 @@ $sqlGenres = '
         WHERE
             type.f_item_id = ? ;';
 
+// アレルギー検索SQL
 $sqlAllergens = '
         SELECT
             f_item_allergen_wheat       AS wheat,
@@ -74,6 +77,7 @@ $sqlAllergens = '
         WHERE
             f_item_id = ? ;';
 
+// レビュー検索SQL
 $sqlreviews = '
         SELECT
             f_review_date               AS date,
@@ -87,6 +91,7 @@ $sqlreviews = '
             f_review_date DESC
         LIMIT 0, 2';
 
+// カート検索SQL
 $sqlCarts = '
         SELECT
             f_item_num      AS item_num
@@ -97,36 +102,35 @@ $sqlCarts = '
         AND
             f_user_id = ?;';
 
+// カート登録SQL
 $insertCarts = 'INSERT INTO t_carts VALUES( ?, ?, ? );';
 
 // ===================================================================================
 // 関数
 // ===================================================================================
 // 食品IDによる検索(汎用)
-function showByItemId($db, $sql, $itemId)
-{
+function showByItemId($db, $sql, $itemId){
     $contents = $db->prepare($sql);
     $contents->bindparam(1, $itemId, PDO::PARAM_INT);
     $contents->execute();
-
-    return $contents;
+    
+    return $contents->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // カート検索
-function showCart($db, $sql, $itemId, $userId)
-{
+function showCart($db, $sql, $itemId, $userId){
     $contents = $db->prepare($sql);
     $contents->bindparam(1, $itemId, PDO::PARAM_INT);
     $contents->bindparam(2, $userId, PDO::PARAM_INT);
     $contents->execute();
 
-    return $contents;
+    return $contents->fetch(PDO::FETCH_ASSOC);
 }
 
 // 点数を☆に変換
 function strNumToStar($point)
 {
-    $strStars =  "☆☆☆☆☆";
+    $strStars = "☆☆☆☆☆";
     for ($i = 0; $i < $point; $i++) {
         $strStars = "★" . $strStars;
     }
@@ -140,6 +144,23 @@ function imageUrl($str)
     return "../images/items/" . $str . ".jpg";
 }
 
+// REVIEW: コンソールにテスト出力
+function debug($data){ echo '<script>console.debug('.json_encode($data).')</script>'; }
+function error($data){ echo '<script>console.error('.json_encode($data).')</script>'; }
+function warn($data){ echo '<script>console.warn('.json_encode($data).')</script>'; }
+function info($data){ echo '<script>console.info('.json_encode($data).')</script>'; }
+
+function review_db($flg, $str){
+    if ($flg) { warn("[DB取得:データなし]{$str}情報"); }
+    else{ info("[DB取得]{$str}情報"); }
+}
+
+// ===================================================================================
+// 初期値
+// ===================================================================================
+$userId     = 0;        // ユーザーID(ゲストユーザー)
+// $userId     = 1;        // REVIEW: ユーザーID(テスト用)
+
 // ===================================================================================
 // セッション開始
 // ===================================================================================
@@ -147,11 +168,19 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+// ユーザーID取得
+if(isset($_SESSION['id'])){
+    // ログインユーザーのIDを取得
+    $userId = $_SESSION['id'];
+}
+
 // ===================================================================================
 // getの取得
 // ===================================================================================
+// 商品ID取得
 if (isset($_GET['id'])) {
-    $searchItemId = $_GET['id'];
+    // 前ページから渡された商品IDの取得
+    $itemId = $_GET['id'];
 } else {
     // 商品のIDが取得できないときは商品一覧へ遷移する
     header('Location: ./menu.php');
@@ -160,30 +189,51 @@ if (isset($_GET['id'])) {
 // ===================================================================================
 // DB検索
 // ===================================================================================
-$item       = showByItemId($db, $sqlItems, $searchItemId)->fetch(PDO::FETCH_ASSOC);       // 食品詳細検索
-$genres     = showByItemId($db, $sqlGenres, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);   // 食品ジャンル検索
-$allergens  = showByItemId($db, $sqlAllergens, $searchItemId)->fetch(PDO::FETCH_ASSOC);   // 食品アレルゲン検索
-$reviews    = showByItemId($db, $sqlreviews, $searchItemId)->fetchAll(PDO::FETCH_ASSOC);  // 食品レビュー検索
+$item       = showByItemId($db, $sqlItems, $itemId)[0];         // 食品詳細検索
+$genres     = showByItemId($db, $sqlGenres, $itemId);           // 食品ジャンル検索
+$allergens  = showByItemId($db, $sqlAllergens, $itemId)[0];     // 食品アレルゲン検索
+$reviews    = showByItemId($db, $sqlreviews, $itemId);          // 食品レビュー検索
 
-// TODO: カート情報を保存するSESSIONの名前は統一すること
-// カート情報を持っていない場合、カートTBLから取得する
-if (isset($_SESSION['id']) && !isset($_SESSION['cart_item_num'])) {
-
-    $cart_item_num = showByItemId($db, $sqlCarts, $searchItemId)->fetch(PDO::FETCH_ASSOC);
-
-    if (!empty($cart_item_num)) {
-        print "[debug]ok:データあり";
-        $_SESSION['cart_item_num'] = $cart_item_num;
-    } else {
-        print "[debug]no:データなし";
-    }
-} else {
-    print "[debug]no:ゲストユーザー/セッションあり";
-}
+// REVIEW: 確認ログ
+review_db(empty($item), "商品");
+review_db(empty($genres), "ジャンル");
+review_db(empty($allergens), "アレルゲン");
+review_db(empty($reviews), "レビュー");
 
 if (empty($item)) {
-    // 取得できないときは商品一覧へ遷移する
+    // 商品情報が取得できないときは商品一覧へ遷移する
     header('Location: ./menu.php');
+}
+
+if (isset($_SESSION['cart'][$itemId]['num'])){
+    // 既にセッション内にカート情報がある
+
+    // REVIEW: 確認ログ
+    info("[session取得]セッション内のカート情報：{$_SESSION['cart'][$itemId]['num']}");
+}
+else{
+    // まだセッション内にカート情報がない
+
+    // REVIEW: 確認ログ
+    info("[セッション:データなし]セッション内のカート情報");
+
+    // ログインしている場合、カートTBLから情報を取得する
+    if( $userId != 0 ){
+        // カート内情報検索
+        $cart = showCart($db, $sqlCarts, $itemId, $userId);
+
+        // REVIEW: 確認ログ
+        review_db(empty($cart), "カート情報");
+
+        if (!empty($cart)) {
+            // DBに保存されたカート情報をセッションに格納
+            $_SESSION['cart'][$itemId]['num'] = $cart['item_num'];
+        }
+    }
+    else{
+        // REVIEW: 確認ログ
+        warn("[データなし]ゲストユーザー");
+    }
 }
 
 ?>
@@ -218,9 +268,20 @@ if (empty($item)) {
                 <div id="header-right">
                     <!-- マイページ/ログイン -->
                     <?php
-                    print isset($_SESSION['id']) ?
-                        "<a href='my_page.php'>" . h($_SESSION['name']) . "様</a>" :
-                        "<a href='login.php'>ログイン/会員登録</a>";
+                        if(isset($_SESSION['id'])){
+                            print '
+                            <div id="user">
+                                <label>
+                                    <img src="../images/icon.jpg" alt="アイコン">
+                                </label>
+                                <div>
+                                    <a href="my_page.php">' . h($user["userNickName"]) . '</a>
+                                </div>
+                            </div>';
+                        }
+                        else{
+                            print "<a href='login.php'>ログイン/会員登録</a>";
+                        }
                     ?>
                 </div>
             </nav>
@@ -250,9 +311,9 @@ if (empty($item)) {
                     </ul>
                 </div>
                 <div id="itemimg">
-                    <!-- TODO:画像表示 -->
+                    <!-- 画像表示 -->
                     <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
-                    <p>テスト出力:[画像]<?php print imageUrl($item['image']); ?></p>
+
                     <div id="review">
                         <h2>レビュー</h2>
 
@@ -278,7 +339,7 @@ if (empty($item)) {
                                 </div>";
                                 }
 
-                                print "<a href='review.php?id={$searchItemId}&page=1'>レビューを見る</a>";
+                                print "<a href='review.php?id={$itemId}&page=1'>レビューを見る</a>";
                             }
                             ?>
                         </div>
@@ -382,7 +443,9 @@ if (empty($item)) {
                                 +
                             </button>
                             <?php
-                            print isset($_SESSION["cart_item_num"]) ? h($_SESSION["cart_item_num"]) : 0;
+                                print isset($_SESSION['cart'][$itemId]['num'])
+                                    ? h($_SESSION['cart'][$itemId]['num'])
+                                    : 0;
                             ?>
                             <button>
                                 -
