@@ -173,7 +173,7 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
                         print '
                         <div id="user">
                             <label>
-                                <img src=icon_images/'. h($icon["userIcon"]) . ' alt="アイコン">
+                                <img src="../images/icon.jpg" alt="アイコン">
                             </label>
                             <div>
                                 <a href="my_page.php">' . h($user["userNickName"]) . '</a>
