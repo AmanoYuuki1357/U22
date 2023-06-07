@@ -1,39 +1,42 @@
-<!-- <?php
-    require('dbconnect.php');
+<?php
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+
+    // ===================================================================================
+    // セッション開始
+    // ===================================================================================
     if(!isset($_SESSION)){
         session_start();
     }
 
-    if(!isset($_SESSION['join'])){
-        header('Location: c_input.php');
-        exit();
+
+    // ユーザーID取得
+    if(isset($_SESSION['id'])){
+        // ログインユーザーのIDを取得
+        $userId = $_SESSION['id'];
     }
 
-    print_r($_SESSION);
+    // if(!empty($_POST)){
+    //     $statement=$db->prepare('UPDATE user_info SET CardNumber=?,CardName=?,CardEMonth=?,CardEYear=?,CardCode=? WHERE userID=?');
+    //     //echo $ret=$statement->execute(array(
+    //     $cnt = $statement->execute(array(
+    //         sha1($_SESSION['join']['c_number']),
+    //         sha1($_SESSION['join']['c_name']),
+    //         sha1($_SESSION['join']['c_e_month']),
+    //         sha1($_SESSION['join']['c_e_year']),
+    //         sha1($_SESSION['join']['c_code']),
+    //         $_SESSION['id']
+    //     ));
+    //     header('Location: c_complete.php');
+    //     exit();
+    // }
 
-    if(!empty($_POST)){
-        $statement=$db->prepare('UPDATE user_info SET CardNumber=?,CardName=?,CardEMonth=?,CardEYear=?,CardCode=? WHERE userID=?');
-        //echo $ret=$statement->execute(array(
-        $cnt = $statement->execute(array(
-            sha1($_SESSION['join']['c_number']),
-            sha1($_SESSION['join']['c_name']),
-            sha1($_SESSION['join']['c_e_month']),
-            sha1($_SESSION['join']['c_e_year']),
-            sha1($_SESSION['join']['c_code']),
-            $_SESSION['id']
-        ));
-        header('Location: c_complete.php');
-        exit();
-    }
+    // // ヘッダーのアイコン
+    // $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
+    // $icons->execute(array($_SESSION['id']));
+    // $icon=$icons->fetch();
 
-    // ヘッダーのアイコン
-    $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-    $icons->execute(array($_SESSION['id']));
-    $icon=$icons->fetch();
-
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
