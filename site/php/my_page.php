@@ -35,9 +35,9 @@ if (isset($_SESSION["id"])) {
     <div id="wrap">
         <header>
 
-            <!-- <div>
+            <div>
                     <a href="menu.php">商品一覧</a>
-                </div> -->
+                </div>
 
             <div>
                 <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
@@ -57,37 +57,6 @@ if (isset($_SESSION["id"])) {
             </div>
 
         </header>
-
-        <!-- ハンバーガーメニュー -->
-        <!-- <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <nav class="globalMenuSp">
-                    <ul>
-                        <li><a href="home.php">ホーム</a></li>
-                        <li><a href="ranking.php">ランキング</a></li>
-                        <li><a href="recommendation.php">おすすめ</a></li>
-                        <li><a href="new.php">新着</a></li>
-                    </ul>
-                </nav> -->
-
-        <!-- <div id=icon>
-                    <a href="home.php"><img src="images/pigsiv.jpg" alt="アイコン"></a>
-                </div> -->
-
-        <!-- 検索 -->
-        <!-- <div id="search">
-                    <form method="get" action="search.php">
-                        <input type="text" name="search" size="15" placeholder="作品を検索">
-                    </form>
-                </div> -->
-
-        <!-- 投稿ボタン -->
-        <!-- <div id="contribute">
-                    <a href="post.php">作品を投稿</a>
-                </div> -->
 
         </header>
 
