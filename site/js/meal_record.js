@@ -1,3 +1,10 @@
+function delet(){
+    let list = document.getElementById("food_list");
+
+    while(list.lastChild){
+        list.removeChild(list.lastChild);
+    }
+}
 function search(){
     let e = document.getElementById("search");
     let food_name = e.value;
@@ -10,15 +17,21 @@ function search(){
         data: { val1: food_name},
 
         success: function (data) {
-
-            console.log(data);
+                delet();
+            let i;
             Data = JSON.parse(data);
-            console.log(Data);
 
-            let list = document.getElementById("food_list");
-            let f_name = document.createElement("p");
-            f_name.textContent = Data[0][0];
-            list.appendChild(f_name);
+            let count = $(Data).length;
+            console.log(count);
+
+            for(i=0; i<count; i++){
+
+                let list = document.getElementById("food_list");
+                let f_name = document.createElement("p");
+                f_name.textContent = Data[i][0];
+                list.appendChild(f_name);
+            }
+
         }
-    })
+    });
 }

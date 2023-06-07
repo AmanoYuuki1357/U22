@@ -10,6 +10,7 @@ if (isset($_SESSION["id"])) {
     $users->execute(array($_SESSION["id"]));
     $user = $users->fetch();
 }
+
 // // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
 // if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
 //     // ログインした時間を現在の時間に更新
@@ -25,44 +26,17 @@ if (isset($_SESSION["id"])) {
 //     exit();
 // }
 
-if(!empty($_POST)){
-    print_r($_POST);
-    // if($_FILES['image']==''){
-    //     $error['image']='blank';
-    // }else{
-    //     $ext=substr($_FILES['image']['name'],-4);
-    //     if($ext!='.gif' && $ext!='.jpg' && $ext!='.png' && $ext!='.bmp'){
-    //         $error['image']='extension';
-    //     }
-    // }
-    // if($_POST['title']==''){
-    //     $error['title']='blank';
-    // }
-    // if(empty($error)){
-    //     $file=$_FILES['image'];
-    //     $filePath='post_images/'.$file['name'];
-    //     $success=move_uploaded_file($file['tmp_name'],$filePath);
+if (!empty($_POST)) {
+    $delCart = $db->prepare('DELETE FROM t_carts WHERE f_user_id=? and f_item_id=?');
+    $delCart->execute(array($user['f_user_id'], $_POST['delete']));
 
-    //     $message=$db->prepare('INSERT INTO works_info (worksImage,worksTitle,worksCreatedID,worksCreated,worksComment) VALUES (?,?,?,NOW(),?)');
-    //     $message->execute(array(
-    //         $file['name'],
-    //         $_POST['title'],
-    //         $_SESSION['id'],
-    //         $_POST['comment'],
-    //     ));
-    //     header('Location: my_works.php');
-    //     exit();
-    // }
+    header('Location: cart.php');
+    exit();
 }
 
-
-// $carts=$db->prepare('SELECT c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?');
-// $carts->execute(array($_SESSION["id"]));
-// $cart=$users->fetch();
-$sql = 'SELECT c.f_item_id,c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=1';
-$carts = $db->query($sql);
-
-// print_r($cart);
+$sql = 'SELECT c.f_item_id,c.f_item_num,i.f_item_name,i.f_item_price FROM t_carts c INNER JOIN t_items i ON c.f_item_id = i.f_item_id WHERE f_user_id=?';
+$carts = $db->prepare($sql);
+$carts->execute(array($user['f_user_id']));
 
 ?>
 
@@ -138,12 +112,15 @@ $carts = $db->query($sql);
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
-                    print('<div id=plus_minus><button onClick="down(this)">-</button>');
+                    print('<div id=plus_minus>'); //+-ボタン横並びにするためのid指定
+                    print('<button onClick="down(this)">-</button>');
                     print('<p>' . $cart['f_item_num'] . '</p>');
                     print('<button onClick="up(this)">+</button>');
+                    print('</div>'); //div id="plus_minus"閉じタグ
                     // print('<p class="smallSum">小計:' . $cart['f_item_price'] * $cart['f_item_num'] . '円</p>');
                     print('<form action="" method="post" enctype="multipart/form-data">');
-                    ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>"><?php
+                ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>">
+                <?php
                     print('<input type="submit" value="削除" />');
                     print('</form>');
                     print('</div>');
