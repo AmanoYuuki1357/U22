@@ -36,8 +36,8 @@ if (isset($_SESSION["id"])) {
         <header>
 
             <div>
-                    <a href="menu.php">商品一覧</a>
-                </div>
+                <a href="menu.php">商品一覧</a>
+            </div>
 
             <div>
                 <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
