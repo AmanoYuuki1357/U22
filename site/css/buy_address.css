@@ -1,0 +1,9 @@
+main{
+    position: relative;
+    top: 200px;
+}
+#box{
+    line-height: 320%;
+    position: relative;
+    top: -50px;
+}

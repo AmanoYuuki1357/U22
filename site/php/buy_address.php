@@ -33,12 +33,12 @@ $strAddress = "";       // お届け先
 // ===================================================================================
 // セッション開始
 // ===================================================================================
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
 
 // ユーザーID取得
-if(isset($_SESSION['id'])){
+if (isset($_SESSION['id'])) {
     // ログインユーザーのIDを取得
     $userId = $_SESSION['id'];
 }
@@ -46,32 +46,37 @@ if(isset($_SESSION['id'])){
 // ===================================================================================
 // 入力チェック
 // ===================================================================================
-if(!empty($_POST)){
+if (!empty($_POST)) {
     // -------------------------------------------------------------------------------
     // 郵便番号
     // -------------------------------------------------------------------------------
     // 必須チェック
-    if($_POST['postal-code'] == ''){
-        $error['postal-code']='blank';
-    }
-    else{
+    if ($_POST['postal-code'] == '') {
+        $error['postal-code'] = 'blank';
+    } else {
         // -------------------------------------------------------------------------------
         // 都道府県
         // -------------------------------------------------------------------------------
         // 必須チェック・不整合チェック
-        if($_POST['region'] == ''){ $error['region']='blank'; }
+        if ($_POST['region'] == '') {
+            $error['region'] = 'blank';
+        }
 
         // -------------------------------------------------------------------------------
         // 市区町村
         // -------------------------------------------------------------------------------
         // 必須チェック・不整合チェック
-        if($_POST['locality'] == ''){ $error['locality']='blank'; }
+        if ($_POST['locality'] == '') {
+            $error['locality'] = 'blank';
+        }
     }
 
     // -------------------------------------------------------------------------------
     // 町名番地
     // -------------------------------------------------------------------------------
-    if($_POST['street-address'] == ''){ $error['street-address']='blank'; }
+    if ($_POST['street-address'] == '') {
+        $error['street-address'] = 'blank';
+    }
 
     // -------------------------------------------------------------------------------
     // マンション名ほか
@@ -79,7 +84,7 @@ if(!empty($_POST)){
     // 必須チェックなし
 
     // エラーなしの場合
-    if(empty($error)){
+    if (empty($error)) {
         $strAddress = '〒' . $_POST['postal-code'] . $_POST['region'] . $_POST['locality'] . $_POST['street-address'];
 
         // =======================================================
@@ -88,7 +93,7 @@ if(!empty($_POST)){
         $updUser = $db->prepare($sqlUpdUser);
         $updUser->bindparam(1, $strAddress, PDO::PARAM_STR);    // 住所
         $updUser->bindparam(2, $userId, PDO::PARAM_INT);        // ユーザーID
-        $updUser -> execute();
+        $updUser->execute();
     }
 }
 
@@ -117,6 +122,7 @@ $strAddress = $user["address"];
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/stepbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/buy_address.css">
 
 </head>
 
@@ -163,7 +169,7 @@ $strAddress = $user["address"];
                 </ol>
             </div>
 
-            <div>
+            <div id="box">
                 <h2>お届け情報</h2>
 
                 <hr>
@@ -171,14 +177,13 @@ $strAddress = $user["address"];
                 <!-- デフォルトはユーザの住所 -->
                 <h3>お届け先</h3>
                 <?php
-                    if(empty($strAddress)){
-                        // 入力なし
-                        print ("<p style='color: red'>登録がありません</p>");
-                    }
-                    else{
-                        // 入力あり
-                        print( "<p>" . $strAddress . "</p>" );
-                    }
+                if (empty($strAddress)) {
+                    // 入力なし
+                    print("<p style='color: red'>登録がありません</p>");
+                } else {
+                    // 入力あり
+                    print("<p>" . $strAddress . "</p>");
+                }
                 ?>
 
                 <h3>新しいお届け先を登録する</h3>
@@ -193,96 +198,67 @@ $strAddress = $user["address"];
                             <tr>
                                 <th>郵便番号</th>
                                 <td>
-                                    〒<input
-                                        type="text"
-                                        name="postal-code"
-                                        class="p-postal-code"
-                                        size="8"
-                                        maxlength="8"
-                                        placeholder="郵便番号"
-                                         />
+                                    〒<input type="text" name="postal-code" class="p-postal-code" size="8" maxlength="8" placeholder="郵便番号" />
                                 </td>
                                 <td>
                                     <?php
-                                       if(isset($error['postal-code'])){
-                                            if($error['postal-code'] == 'blank' ){
-                                                print '<p style="color: red;">入力がありません</p>';
-                                            }
-                                       } 
+                                    if (isset($error['postal-code'])) {
+                                        if ($error['postal-code'] == 'blank') {
+                                            print '<p style="color: red;">入力がありません</p>';
+                                        }
+                                    }
                                     ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>都道府県</th>
                                 <td>
-                                    <input
-                                        type="text"
-                                        name="region"
-                                        class="p-region"
-                                        placeholder="都道府県"
-                                        readonly
-                                        style="background-color: #eee;"
-                                         />
+                                    <input type="text" name="region" class="p-region" placeholder="都道府県" readonly style="background-color: #eee;" />
                                 </td>
                                 <td>
                                     <?php
-                                       if(isset($error['region'])){
-                                            if($error['region'] == 'blank' ){
-                                                print '<p style="color: red;">正しい郵便番号を入力してください</p>';
-                                            }
-                                       } 
+                                    if (isset($error['region'])) {
+                                        if ($error['region'] == 'blank') {
+                                            print '<p style="color: red;">正しい郵便番号を入力してください</p>';
+                                        }
+                                    }
                                     ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>市区町村</th>
                                 <td>
-                                    <input
-                                        type="text"
-                                        name="locality"
-                                        class="p-locality"
-                                        placeholder="市区町村"
-                                        readonly
-                                        style="background-color: #eee;"
-                                         />
+                                    <input type="text" name="locality" class="p-locality" placeholder="市区町村" readonly style="background-color: #eee;" />
                                 </td>
                                 <td>
                                     <?php
-                                       if(isset($error['locality'])){
-                                            if($error['locality'] == 'blank' ){
-                                                print '<p style="color: red;">正しい郵便番号を入力してください</p>';
-                                            }
-                                       } 
+                                    if (isset($error['locality'])) {
+                                        if ($error['locality'] == 'blank') {
+                                            print '<p style="color: red;">正しい郵便番号を入力してください</p>';
+                                        }
+                                    }
                                     ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>町名番地</th>
                                 <td>
-                                    <input
-                                        type="text"
-                                        name="street-address"
-                                        class="p-street-address p-extended-address"
-                                        placeholder="町名番地" />
+                                    <input type="text" name="street-address" class="p-street-address p-extended-address" placeholder="町名番地" />
                                 </td>
                                 <td>
                                     <?php
-                                       if(isset($error['street-address'])){
-                                            if($error['street-address'] == 'blank' ){
-                                                print '<p style="color: red;">入力がありません</p>';
-                                            }
-                                       } 
+                                    if (isset($error['street-address'])) {
+                                        if ($error['street-address'] == 'blank') {
+                                            print '<p style="color: red;">入力がありません</p>';
+                                        }
+                                    }
                                     ?>
                                 </td>
                             </tr>
                             <tr>
                                 <th>マンション名ほか</th>
                                 <td>
-                                    <input 
-                                        type="text"
-                                        name="others"
-                                        placeholder="マンション名ほか"
-                                        />
+                                    <input type="text" name="others" placeholder="マンション名ほか" />
                                 </td>
                             </tr>
                         </table>
@@ -291,10 +267,10 @@ $strAddress = $user["address"];
                 </form>
 
                 <?php
-                    if(!empty($strAddress)){
-                        // 住所が取得できた時だけ次のページへのリンクを表示
-                        print( '<div><a href="buy_pay.php">次へ:お支払方法</a></div>' );
-                    }
+                if (!empty($strAddress)) {
+                    // 住所が取得できた時だけ次のページへのリンクを表示
+                    print('<div><a href="buy_pay.php">次へ:お支払方法</a></div>');
+                }
                 ?>
                 <!-- <div class="back"><a href="my_page.php">マイページへ</a></div> -->
 
