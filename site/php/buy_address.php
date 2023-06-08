@@ -179,10 +179,10 @@ $strAddress = $user["address"];
                 <?php
                 if (empty($strAddress)) {
                     // 入力なし
-                    print("<p style='color: red'>登録がありません</p>");
+                    print("<p class='address' style='color: red'>登録がありません</p>");
                 } else {
                     // 入力あり
-                    print("<p>" . $strAddress . "</p>");
+                    print("<p class='address'>" . $strAddress . "</p>");
                 }
                 ?>
 

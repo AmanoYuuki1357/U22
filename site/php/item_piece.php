@@ -354,7 +354,7 @@ if (isset($_SESSION['cart'][$itemId]['num'])) {
                                 </div>";
                                 }
 
-                                print "<a id=`go_review` href='review.php?id={$itemId}&page=1'>レビューを見る</a>";
+                                print "<a id='go_review' href='review.php?id={$itemId}&page=1'>レビューを見る</a>";
                             }
                             ?>
                         </div>
