@@ -91,19 +91,19 @@ if(!empty($_POST)){
         $updUser = $db->prepare($sqlUpdUser);
         $updUser->bindparam(1, $strAddress, PDO::PARAM_STR);    // 住所
         $updUser->bindparam(2, $userId, PDO::PARAM_INT);        // ユーザーID
-        $updUser -> execute();
+        $updUser->execute();
     }
 }
 
-// ===================================================================================
-// DB検索
-// ===================================================================================
-// ユーザー情報取得
-$contents = $db->prepare($sqlUser);
-$contents->bindparam(1, $userId, PDO::PARAM_INT);
-$contents->execute();
-$user = $contents->fetch();
-$strAddress = $user["address"];
+    // ===================================================================================
+    // DB検索
+    // ===================================================================================
+    // ユーザー情報取得
+    $contents = $db->prepare($sqlUser);
+    $contents->bindparam(1, $userId, PDO::PARAM_INT);
+    $contents->execute();
+    $user = $contents->fetch();
+    $strAddress = $user["address"];
 
 ?>
 
