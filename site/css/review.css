@@ -14,9 +14,6 @@ main{
     width: 100vh;
     height: 100%;
 }
-img{
-    width: 50px;
-}
 #gomenu {
     width: 100%;
     border-bottom: solid;
@@ -42,5 +39,5 @@ img{
     display: block;
 }
 #piece_img{
-    width: 100px;
+    height: 90px;
 }

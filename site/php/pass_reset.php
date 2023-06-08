@@ -40,7 +40,7 @@
                 <!-- ユーザーメニュー -->
                 <div id="user">
                     <label>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                         <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
                     </label>
                     <div>
