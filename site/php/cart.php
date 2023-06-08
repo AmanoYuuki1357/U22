@@ -79,7 +79,7 @@ $carts->execute(array($user['f_user_id']));
                 } else {
                 ?>
                     <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                         <form action="my_page.php">
                             <input type="hidden" name="user_id" value="<?php $_SESSION["id"] ?>">
                             <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
@@ -91,7 +91,7 @@ $carts->execute(array($user['f_user_id']));
 
                 <!-- どちらの場合でもカートは出す -->
                 <div>
-                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
+                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
                 </div>
             </div>
 

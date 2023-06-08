@@ -52,7 +52,7 @@ if (isset($_SESSION["id"])) {
                 } else {
                 ?>
                     <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                         <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                     </div>
                 <?php

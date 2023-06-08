@@ -1,17 +1,17 @@
 <?php
-// require('common.php');
-// error_reporting(E_ALL & ~E_NOTICE);
-// if (!isset($_SESSION)) {
-//     session_start();
-// }
-// if (isset($_SESSION["id"])) {
-//     $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-//     $users->execute(array($_SESSION["id"]));
-//     $user = $users->fetch();
-// } else {
-//     header('Location: login.php');
-//     exit();
-// }
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
 ?>
 
@@ -34,62 +34,28 @@
 <body>
     <div id="wrap">
         <header>
-            <h1>ミールフレンド</h1>
-            <nav>
+
+            <div>
+                <a href="menu.php">商品一覧</a>
+            </div>
+
+            <div>
+                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+            </div>
+
+            <div id="header-right">
+                <!-- ログインしている時 -->
                 <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
+                    <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
+                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                 </div>
-
-                <div id="header-right">
-                    <?php
-                    if (!isset($_SESSION["id"])) {
-                    ?>
-                        <a href="login.php">ログイン/会員登録</a>
-                    <?php
-                    } else {
-                    ?>
-
-                        <div>
-                            <img src="../images/icon.jpg" alt="アイコン">
-                        </div>
-                        <?php print($user["f_user_name"]); ?>
-                    <?php
-                    }
-                    ?>
+                <!-- どちらの場合でもカートは出す -->
+                <div>
+                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
                 </div>
-            </nav>
+            </div>
+
         </header>
-
-        <!-- ハンバーガーメニュー -->
-        <!-- <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <nav class="globalMenuSp">
-                    <ul>
-                        <li><a href="home.php">ホーム</a></li>
-                        <li><a href="ranking.php">ランキング</a></li>
-                        <li><a href="recommendation.php">おすすめ</a></li>
-                        <li><a href="new.php">新着</a></li>
-                    </ul>
-                </nav> -->
-
-        <!-- <div id=icon>
-                    <a href="home.php"><img src="images/pigsiv.jpg" alt="アイコン"></a>
-                </div> -->
-
-        <!-- 検索 -->
-        <!-- <div id="search">
-                    <form method="get" action="search.php">
-                        <input type="text" name="search" size="15" placeholder="作品を検索">
-                    </form>
-                </div> -->
-
-        <!-- 投稿ボタン -->
-        <!-- <div id="contribute">
-                    <a href="post.php">作品を投稿</a>
-                </div> -->
 
         </header>
 
