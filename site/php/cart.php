@@ -136,7 +136,7 @@ $carts->execute(array($user['f_user_id']));
                     <?php print('<p id="buySum">' . $sum . '円</p>'); ?>
                 </div>
                 <div id="button">
-                    <a href="buy_address.html">レジに進む</a>
+                    <a href="buy_address.php">レジに進む</a>
                     <!-- ここはformのinputのbutton -->
                 </div>
 
