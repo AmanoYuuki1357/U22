@@ -65,3 +65,7 @@ h2{
 table{
     border-bottom: 1px solid;
 }
+#go_review{
+    margin-bottom: 50px;
+    border-bottom: 1px #000;
+}
