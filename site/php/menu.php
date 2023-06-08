@@ -11,27 +11,6 @@ if (isset($_SESSION["id"])) {
     $user = $users->fetch();
 }
 
-
-// // セッションにユーザー情報があり、ログイン後に行動してから60分以内であるとき
-// if(isset($_SESSION['id']) && $_SESSION['time'] + 3600>time()){
-//     // ログインした時間を現在の時間に更新
-//     $_SESSION['time']=time();
-//     // セッション変数のidを使って、ユーザーの情報を呼び出す
-//     $members=$db->prepare('SELECT * FROM user_info WHERE id=?');
-//     $members->execute(array($_SESSION['id']));
-//     $member=$members->fetch();
-//     // ログインしていないとき
-// }else{
-//     // 即時にログイン画面に転送する
-//     header('Location: login.php');
-//     exit();
-// }
-
-// ヘッダーのアイコン
-// $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-// $icons->execute(array($_SESSION['id']));
-// $icon=$icons->fetch();
-
 // ジャンルを取り出す
 $sql = 'SELECT f_item_genre_name FROM t_item_genre';
 $genres = $db->query($sql);
@@ -40,6 +19,15 @@ $genres = $db->query($sql);
 // 本当は販売履歴と結合してランキングにする
 $sql2 = 'SELECT f_item_id,f_item_name,f_item_price,f_item_image FROM t_items';
 $items = $db->query($sql2);
+
+// カートのitem_idを取り出す
+$sql3 = 'SELECT f_item_id FROM t_carts WHERE f_user_id=?';
+$carts = $db->prepare($sql3);
+$carts->execute(array($user["f_user_id"]));
+$cartItemId = [];
+while ($cart = $carts->fetch()) {
+    array_push($cartItemId, $cart["f_item_id"]);
+}
 
 ?>
 
@@ -62,9 +50,9 @@ $items = $db->query($sql2);
     <div id="wrap">
         <header>
 
-            <!-- <div>
-                    <a href="menu.php">商品一覧</a>
-                </div> -->
+            <div>
+                <a href="menu.php">商品一覧</a>
+            </div>
 
             <div>
                 <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
@@ -83,6 +71,7 @@ $items = $db->query($sql2);
                     <div>
                         <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                         <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                        <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
                     </div>
                 <?php
                 }
@@ -132,17 +121,26 @@ $items = $db->query($sql2);
                     <table>
 
                         <?php
+                        // print("<h1>");
+                        // print_r($cartItemId);
+                        // print("<h1>");
                         for ($i = 0; $item = $items->fetch(); $i++) {
                             if ($i % 4 == 0) {
                                 print('<tr>');
                             }
                             print('<td>');
-                            print('<a href="item_piece.php?id=' . $item['f_item_id'] . '">');
+                            print('<a href="item_piece.php?id=' . $item['f_item_id'] . '" id="itemId' . $item['f_item_id'] . '">');
                             print('<img id="menu_img" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
                             print('<p>' . $item['f_item_name'] . '</p>');
                             print('<p>' . $item['f_item_price'] . '円</p>');
                             print('</a>');
-                            print('<button>カートに入れる</button>');
+                            if(isset($user["f_user_id"])){
+                                if(in_array($i+1,$cartItemId)){
+                                    print('<a href="./cart.php">カートに移動する</a>');
+                                }else{
+                                    print('<button onClick="inCart(this)">カートに入れる</button>');
+                                }
+                            }
                             print('</td>');
                             if ($i % 4 == 3) {
                                 print('</tr>');
@@ -167,8 +165,8 @@ $items = $db->query($sql2);
 
 
     <!-- jQuery -->
-    <!-- <script src="js/jQuery.js"></script> -->
-    <!-- <script src="js/main.js"></script> -->
+    <script src="../js/jQuery.js"></script>
+    <script src="../js/menu.js"></script>
 
 </body>
 
