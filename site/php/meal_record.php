@@ -86,33 +86,21 @@
                     <div id="food_list">
 
                     </div>
-
-
-                    <?php
-                    // $menus=$db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
-                    // $menus->execute();
-                    // $menu=$menus->fetch();
-                    ?>
-
                 </div>
 
-                <div id="table">
-                    <p>日付</p>
-                    <!-- table作成 -->
-                    <table border="1">
-                        <tr>
-                            <th>メニュー</th>
-                            <th>削除</th>
-                        </tr>
-                        <tr>
-                            <td>朝食</td>
-                            <td><button>佐久間</button></td>
-                        </tr>
-                    </table>
-                    <button>
-                        <a>登録</a>
-                    </button>
-                </div>
+            <div id="table">
+                <p>日付</p>
+                <!-- table作成 -->
+                <table border="1" id="menu">
+                    <tr>
+                        <th>メニュー</th>
+                        <th>削除</th>
+                    </tr>
+                </table>
+                <button>
+                    <a>登録</a>
+                </button>
+            </div>
 
 
 
