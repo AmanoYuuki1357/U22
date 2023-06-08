@@ -7,3 +7,6 @@ main{
     position: relative;
     top: -50px;
 }
+.address{
+    border: solid;
+}
