@@ -1,21 +1,15 @@
-<!-- <?php
-
+<?php
     require('dbconnect.php');
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+
+    // ===================================================================================
+    // セッション開始
+    // ===================================================================================
     if(!isset($_SESSION)){
         session_start();
     }
-
-    // ヘッダーのアイコン
-    $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-    $icons->execute(array($_SESSION['id']));
-    $icon=$icons->fetch();
-
-?> -->
-
-
-
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -43,8 +37,6 @@
                 </div>
 
                 <div id="header-right">
-                    <!-- ログインしていない時 -->
-                    <a href="login.php">ログイン/会員登録</a>
                     <!-- ログインしている時 -->
                     <!-- ユーザーメニュー -->
                     <div id="user">
