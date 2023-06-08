@@ -17,12 +17,6 @@ error_reporting(E_ALL & ~E_NOTICE);
             f_user_id = ? ;';
 
     // ===================================================================================
-    // 初期値
-    // ===================================================================================
-    // $userId     = 0;        // ユーザーID(ゲストユーザー)
-    $userId     = 1;        // REVIEW: ユーザーID(テスト用)
-
-    // ===================================================================================
     // セッション開始
     // ===================================================================================
     if(!isset($_SESSION)){
@@ -33,20 +27,22 @@ error_reporting(E_ALL & ~E_NOTICE);
     if(isset($_SESSION['id'])){
         // ログインユーザーのIDを取得
         $userId = $_SESSION['id'];
+
+        // ===================================================================================
+        // DB検索
+        // ===================================================================================
+        // ユーザー情報取得
+        $contents = $db->prepare($sqlcredit);
+        $contents->bindparam(1, $userId, PDO::PARAM_INT);
+        $contents->execute();
+        $credit = $contents->fetch();
     }
     else{
         // ログインページへ
-        // header('Location: login.php');
+        header('Location: login.php');
     }    
 
-    // ===================================================================================
-    // DB検索
-    // ===================================================================================
-    // ユーザー情報取得
-    $contents = $db->prepare($sqlcredit);
-    $contents->bindparam(1, $userId, PDO::PARAM_INT);
-    $contents->execute();
-    $credit = $contents->fetch();
+
 
 ?>
 
@@ -110,16 +106,33 @@ error_reporting(E_ALL & ~E_NOTICE);
 
                 <div>
                     <p>カード番号</p>
-                    <p>
-                        <?php echo h( '**** **** **** ' . substr($credit['number'], 12, 4) ); ?>
-                    </p>
+                    <?php
+                        if(isset($credit)){
+                            print "<p style='color: red;'>登録されていません</p>";
+                        }
+                        else{
+                            print "<p>" . h( '**** **** **** ' . substr($credit['number'], 12, 4) ) . "</p>";
+                        }
+                    ?>
                     <p>カード名義人</p>
-                    <p>
-                        <?php echo h($credit['name']); ?>
-                    </p>
+                    <?php
+                        if(isset($credit)){
+                            print "<p style='color: red;'>登録されていません</p>";
+                        }
+                        else{
+                            print "<p>" . h($credit['name']) . "</p>";
+                        }
+                    ?>
                     <p>有効期限(月/年)</p>
                     <p>
-                        <?php echo h(substr($credit['expiry'], 0, 2) . "/". substr($credit['expiry'], 2)); ?>
+                        <?php
+                            if(isset($credit)){
+                                print "<p style='color: red;'>登録されていません</p>";
+                            }
+                            else{
+                                print "<p>" . h(substr($credit['expiry'], 0, 2) . "/". substr($credit['expiry'], 2)) ."</p>" ;
+                            }
+                        ?>
                     </p>
                     <p>セキュリティコード</p>
                     <p>
