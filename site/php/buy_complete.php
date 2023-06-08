@@ -1,7 +1,22 @@
 <?php
-    require('dbconnect.php');
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+    // ===================================================================================
+    // SQL
+    // ===================================================================================
+    $sqlUser = '
+    SELECT
+        f_user_nick_name    AS nick_name
+    FROM
+        t_users
+    WHERE
+        f_user_id = ? ;';
+
+    // ===================================================================================
+    // 初期値
+    // ===================================================================================
+    // $userId     = 0;        // ユーザーID(ゲストユーザー)
+    $userId     = 1;        // REVIEW: ユーザーID(テスト用)
 
     // ===================================================================================
     // セッション開始
@@ -9,6 +24,26 @@
     if(!isset($_SESSION)){
         session_start();
     }
+
+    // ユーザーID取得
+    if(isset($_SESSION['id'])){
+        // ログインユーザーのIDを取得
+        $userId = $_SESSION['id'];
+    }
+    else{
+        // ログインページへ
+        // header('Location: login.php');
+    }
+
+    // ===================================================================================
+    // DB検索
+    // ===================================================================================
+    // ユーザー情報取得
+    $contents = $db->prepare($sqlUser);
+    $contents->bindparam(1, $userId, PDO::PARAM_INT);
+    $contents->execute();
+    $user = $contents->fetch();
+
 ?>
 
 <!DOCTYPE html>
@@ -41,12 +76,10 @@
                     <!-- ユーザーメニュー -->
                     <div id="user">
                         <label>
-                            <!-- <img src="../images/icon.jpg" alt="アイコン"> -->
-                            <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                            <img src="../images/icon.jpg" alt="アイコン">
                         </label>
                         <div>
-                            <a href="my_page.html">ニックネーム</a>
-                            <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                            <a href="my_page.php"><?php print(h($user["nick_name"])) ?></a>
                         </div>
                     </div>
                 </div>
@@ -77,10 +110,6 @@
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
     </div>
-
-    <!-- jQuery -->
-    <!-- <script src="js/JQuery.js"></script> -->
-    <!-- <script src="js/main.js"></script> -->
 
 </body>
 
