@@ -1,5 +1,9 @@
+
+<!DOCTYPE html>
+
 <?php
 require "common.php";
+require "test.php";
 error_reporting(E_ALL & ~E_NOTICE);
 
 // ===================================================================================
@@ -146,50 +150,11 @@ function imageUrl($str)
     return "../images/items/" . $str . ".jpg";
 }
 
-// REVIEW: コンソールにテスト出力
-function debug($data)
-{
-    echo '<script>console.debug(' . json_encode($data) . ')</script>';
-}
-function error($data)
-{
-    echo '<script>console.error(' . json_encode($data) . ')</script>';
-}
-function warn($data)
-{
-    echo '<script>console.warn(' . json_encode($data) . ')</script>';
-}
-function info($data)
-{
-    echo '<script>console.info(' . json_encode($data) . ')</script>';
-}
-
-function review_db($flg, $str)
-{
-    if ($flg) {
-        warn("[DB取得:データなし]{$str}情報");
-    } else {
-        info("[DB取得]{$str}情報");
-    }
-}
-
-// ===================================================================================
-// 初期値
-// ===================================================================================
-$userId     = 0;        // ユーザーID(ゲストユーザー)
-// $userId     = 1;        // REVIEW: ユーザーID(テスト用)
-
 // ===================================================================================
 // セッション開始
 // ===================================================================================
 if (!isset($_SESSION)) {
     session_start();
-}
-
-// ユーザーID取得
-if (isset($_SESSION['id'])) {
-    // ログインユーザーのIDを取得
-    $userId = $_SESSION['id'];
 }
 
 // ===================================================================================
@@ -204,6 +169,9 @@ if (isset($_GET['id'])) {
     header('Location: ./menu.php');
 }
 
+// REVIEW: オブジェクト生成
+$test = new test();
+
 // ===================================================================================
 // DB検索
 // ===================================================================================
@@ -212,51 +180,34 @@ $genres     = showByItemId($db, $sqlGenres, $itemId);           // 食品ジャ�
 $allergens  = showByItemId($db, $sqlAllergens, $itemId)[0];     // 食品アレルゲン検索
 $reviews    = showByItemId($db, $sqlreviews, $itemId);          // 食品レビュー検索
 
-// REVIEW: 確認ログ
-review_db(empty($item), "商品");
-review_db(empty($genres), "ジャンル");
-review_db(empty($allergens), "アレルゲン");
-review_db(empty($reviews), "レビュー");
-
 if (empty($item)) {
     // 商品情報が取得できないときは商品一覧へ遷移する
     header('Location: ./menu.php');
 }
 
-if (isset($_SESSION['cart'][$itemId]['num'])) {
-    // 既にセッション内にカート情報がある
+// ログインしている場合、カートTBLから情報を取得する
+if (isset($_SESSION['id'])) {
+    // ログインユーザーのIDを取得
+    $userId = $_SESSION['id'];
 
-    // REVIEW: 確認ログ
-    info("[session取得]セッション内のカート情報：{$_SESSION['cart'][$itemId]['num']}");
-} else {
-    // まだセッション内にカート情報がない
-
-    // REVIEW: 確認ログ
-    info("[セッション:データなし]セッション内のカート情報");
-
-    // ログインしている場合、カートTBLから情報を取得する
-    if ($userId != 0) {
-        // カート内情報検索
-        $cart = showCart($db, $sqlCarts, $itemId, $userId);
-
-        // REVIEW: 確認ログ
-        review_db(empty($cart), "カート情報");
-
-        if (!empty($cart)) {
-            // DBに保存されたカート情報をセッションに格納
-            $_SESSION['cart'][$itemId]['num'] = $cart['item_num'];
-        }
-    } else {
-        // REVIEW: 確認ログ
-        warn("[データなし]ゲストユーザー");
-    }
+    // カート内情報検索
+    $cart = showCart($db, $sqlCarts, $itemId, $userId);
 }
+else{
+    // REVIEW: 確認ログ
+    $test->warn("[NG]ユーザーなし");
+}
+
+// REVIEW: 確認ログ
+$test->get(empty($item), "食品TBL");
+$test->get(empty($genres), "ジャンルTBL");
+$test->get(empty($allergens), "アレルゲンTBL");
+$test->get(empty($reviews), "レビューTBL");
+$test->get(empty($cart), "カート情報");
 
 ?>
 
-<!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -308,8 +259,6 @@ if (isset($_SESSION['cart'][$itemId]['num'])) {
 
 
         <main>
-
-
 
             <div>
                 <div id="meal_genre">
@@ -457,11 +406,7 @@ if (isset($_SESSION['cart'][$itemId]['num'])) {
                             <button>
                                 +
                             </button>
-                            <?php
-                            print isset($_SESSION['cart'][$itemId]['num'])
-                                ? h($_SESSION['cart'][$itemId]['num'])
-                                : 0;
-                            ?>
+                            <?php print isset($cart['num'])? h($cart['num']): 0; ?>
                             <button>
                                 -
                             </button>
@@ -470,7 +415,6 @@ if (isset($_SESSION['cart'][$itemId]['num'])) {
 
                 </div>
             </div>
-
 
         </main>
 
@@ -481,7 +425,3 @@ if (isset($_SESSION['cart'][$itemId]['num'])) {
 </body>
 
 </html>
-
-<?php
-// セッションのカート情報をDBに入れる
-?>
