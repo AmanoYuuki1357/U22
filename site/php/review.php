@@ -169,20 +169,19 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
             <div id="header-right">
                 <!-- マイページ/ログイン -->
                 <?php
-                    if(isset($_SESSION['id'])){
-                        print '
+                if (isset($_SESSION['id'])) {
+                    print '
                         <div id="user">
                             <label>
-                                <img src="../images/icon.jpg" alt="アイコン">
+                                <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
                             </label>
                             <div>
                                 <a href="my_page.php">' . h($user["userNickName"]) . '</a>
                             </div>
                         </div>';
-                    }
-                    else{
-                        print "<a href='login.php'>ログイン/会員登録</a>";
-                    }
+                } else {
+                    print "<a href='login.php'>ログイン/会員登録</a>";
+                }
                 ?>
             </div>
 

@@ -65,3 +65,8 @@ h2{
 table{
     border-bottom: 1px solid;
 }
+#go_review{
+    padding: 3px;
+    background-color: #bbb;
+    line-height: 400%;
+}

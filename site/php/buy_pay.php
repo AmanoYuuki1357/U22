@@ -1,6 +1,6 @@
 <?php
-    require('common.php');
-    error_reporting(E_ALL & ~E_NOTICE);
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
 
     // ===================================================================================
     // SQL
@@ -83,14 +83,15 @@
                 <!-- ユーザーメニュー -->
                 <div id="user">
                     <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                     </div>
                     <div>
                         <a href="my_page.php"><?php print(h($credit["nick_name"])) ?></a>
                     </div>
                 </div>
 
-                <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
+                <!-- どちらの場合でもカートは出す -->
+                <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
             </div>
 
         </header>

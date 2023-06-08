@@ -56,7 +56,7 @@
                 } else {
                 ?>
                     <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
+                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                         <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
                     </div>
                 <?php
@@ -86,27 +86,15 @@
                     <div id="food_list">
 
                     </div>
-
-
-                    <?php
-                        // $menus=$db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
-                        // $menus->execute();
-                        // $menu=$menus->fetch();
-                    ?>
-
                 </div>
 
             <div id="table">
                 <p>日付</p>
                 <!-- table作成 -->
-                <table border="1">
+                <table border="1" id="menu">
                     <tr>
                         <th>メニュー</th>
                         <th>削除</th>
-                    </tr>
-                    <tr>
-                        <td>朝食</td>
-                        <td><button>佐久間</button></td>
                     </tr>
                 </table>
                 <button>

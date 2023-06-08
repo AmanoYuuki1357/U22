@@ -109,16 +109,18 @@ $insertCarts = 'INSERT INTO t_carts VALUES( ?, ?, ? );';
 // 関数
 // ===================================================================================
 // 食品IDによる検索(汎用)
-function showByItemId($db, $sql, $itemId){
+function showByItemId($db, $sql, $itemId)
+{
     $contents = $db->prepare($sql);
     $contents->bindparam(1, $itemId, PDO::PARAM_INT);
     $contents->execute();
-    
+
     return $contents->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // カート検索
-function showCart($db, $sql, $itemId, $userId){
+function showCart($db, $sql, $itemId, $userId)
+{
     $contents = $db->prepare($sql);
     $contents->bindparam(1, $itemId, PDO::PARAM_INT);
     $contents->bindparam(2, $userId, PDO::PARAM_INT);
@@ -145,14 +147,30 @@ function imageUrl($str)
 }
 
 // REVIEW: コンソールにテスト出力
-function debug($data){ echo '<script>console.debug('.json_encode($data).')</script>'; }
-function error($data){ echo '<script>console.error('.json_encode($data).')</script>'; }
-function warn($data){ echo '<script>console.warn('.json_encode($data).')</script>'; }
-function info($data){ echo '<script>console.info('.json_encode($data).')</script>'; }
+function debug($data)
+{
+    echo '<script>console.debug(' . json_encode($data) . ')</script>';
+}
+function error($data)
+{
+    echo '<script>console.error(' . json_encode($data) . ')</script>';
+}
+function warn($data)
+{
+    echo '<script>console.warn(' . json_encode($data) . ')</script>';
+}
+function info($data)
+{
+    echo '<script>console.info(' . json_encode($data) . ')</script>';
+}
 
-function review_db($flg, $str){
-    if ($flg) { warn("[DB取得:データなし]{$str}情報"); }
-    else{ info("[DB取得]{$str}情報"); }
+function review_db($flg, $str)
+{
+    if ($flg) {
+        warn("[DB取得:データなし]{$str}情報");
+    } else {
+        info("[DB取得]{$str}情報");
+    }
 }
 
 // ===================================================================================
@@ -169,7 +187,7 @@ if (!isset($_SESSION)) {
 }
 
 // ユーザーID取得
-if(isset($_SESSION['id'])){
+if (isset($_SESSION['id'])) {
     // ログインユーザーのIDを取得
     $userId = $_SESSION['id'];
 }
@@ -205,20 +223,19 @@ if (empty($item)) {
     header('Location: ./menu.php');
 }
 
-if (isset($_SESSION['cart'][$itemId]['num'])){
+if (isset($_SESSION['cart'][$itemId]['num'])) {
     // 既にセッション内にカート情報がある
 
     // REVIEW: 確認ログ
     info("[session取得]セッション内のカート情報：{$_SESSION['cart'][$itemId]['num']}");
-}
-else{
+} else {
     // まだセッション内にカート情報がない
 
     // REVIEW: 確認ログ
     info("[セッション:データなし]セッション内のカート情報");
 
     // ログインしている場合、カートTBLから情報を取得する
-    if( $userId != 0 ){
+    if ($userId != 0) {
         // カート内情報検索
         $cart = showCart($db, $sqlCarts, $itemId, $userId);
 
@@ -229,8 +246,7 @@ else{
             // DBに保存されたカート情報をセッションに格納
             $_SESSION['cart'][$itemId]['num'] = $cart['item_num'];
         }
-    }
-    else{
+    } else {
         // REVIEW: 確認ログ
         warn("[データなし]ゲストユーザー");
     }
@@ -268,20 +284,19 @@ else{
                 <div id="header-right">
                     <!-- マイページ/ログイン -->
                     <?php
-                        if(isset($_SESSION['id'])){
-                            print '
+                    if (isset($_SESSION['id'])) {
+                        print '
                             <div id="user">
                                 <label>
-                                    <img src="../images/icon.jpg" alt="アイコン">
+                                    <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
                                 </label>
                                 <div>
                                     <a href="my_page.php">' . h($user["userNickName"]) . '</a>
                                 </div>
                             </div>';
-                        }
-                        else{
-                            print "<a href='login.php'>ログイン/会員登録</a>";
-                        }
+                    } else {
+                        print "<a href='login.php'>ログイン/会員登録</a>";
+                    }
                     ?>
                 </div>
             </nav>
@@ -339,7 +354,7 @@ else{
                                 </div>";
                                 }
 
-                                print "<a href='review.php?id={$itemId}&page=1'>レビューを見る</a>";
+                                print "<a id='go_review' href='review.php?id={$itemId}&page=1'>レビューを見る</a>";
                             }
                             ?>
                         </div>
@@ -443,9 +458,9 @@ else{
                                 +
                             </button>
                             <?php
-                                print isset($_SESSION['cart'][$itemId]['num'])
-                                    ? h($_SESSION['cart'][$itemId]['num'])
-                                    : 0;
+                            print isset($_SESSION['cart'][$itemId]['num'])
+                                ? h($_SESSION['cart'][$itemId]['num'])
+                                : 0;
                             ?>
                             <button>
                                 -
