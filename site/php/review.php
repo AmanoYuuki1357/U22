@@ -5,6 +5,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 // ===================================================================================
 // SQL
 // ===================================================================================
+$sqlusers = '
+    SELECT
+        f_user_nick_name        AS nick_name
+    FROM
+        t_users
+    WHERE
+        f_user_id = ? ;';
 $sqlItems = '
         SELECT
             f_item_name                 AS name,
@@ -45,11 +52,11 @@ $sqlReviews = '
 // ===================================================================================
 // 関数
 // ===================================================================================
-// 食品IDによる検索(汎用)
-function showByItemId($db, $sql, $itemId)
+// IDによる検索(汎用)
+function showById($db, $sql, $id)
 {
     $contents = $db->prepare($sql);
-    $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+    $contents->bindparam(1, $id, PDO::PARAM_INT);
     $contents->execute();
 
     return $contents->fetchAll(PDO::FETCH_ASSOC);
@@ -65,17 +72,6 @@ function showPage($db, $sql, $itemId, $start, $amount)
     $contents->execute();
 
     return $contents;
-}
-
-// 点数を☆に変換
-function strNumToStar($point)
-{
-    $strStars =  "☆☆☆☆☆";
-    for ($i = 0; $i < $point; $i++) {
-        $strStars = "★" . $strStars;
-    }
-
-    return mb_substr($strStars, 0, 5);
 }
 
 // ページURLのテキストを返す
@@ -95,6 +91,15 @@ function imageUrl($str)
 // ===================================================================================
 if (!isset($_SESSION)) {
     session_start();
+}
+
+// ログインしている場合、カートTBLから情報を取得する
+if (isset($_SESSION['id'])) {
+    // ログインユーザーのIDを取得
+    $userId = $_SESSION['id'];
+
+    // カート内情報検索
+    $user = showById($db, $sqlusers, $userId)[0];
 }
 
 // ===================================================================================
@@ -123,8 +128,8 @@ $revStart   = $pageRevs * ($page - 1);  // 表示対象開始の数
 // ===================================================================================
 // DB検索
 // ===================================================================================
-$item       = showByItemId($db, $sqlItems, $searchItemId)[0];                   // 食品詳細情報
-$revCnt     = showByItemId($db, $sqlReviewCnt, $searchItemId)[0];               // 総レビュー件数
+$item       = showById($db, $sqlItems, $searchItemId)[0];                       // 食品詳細情報
+$revCnt     = showById($db, $sqlReviewCnt, $searchItemId)[0];                   // 総レビュー件数
 $reviews    = showPage($db, $sqlReviews, $searchItemId, $revStart, $pageRevs);  // 表示対象のレビュー情報
 
 // 検索失敗時
@@ -140,6 +145,7 @@ $pageEnd = $revCnt['cnt'] / $pageRevs;
 if ($revCnt['cnt'] % $pageRevs != 0) {
     $pageEnd += 1;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -176,8 +182,11 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
                                 <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
                             </label>
                             <div>
-                                <a href="my_page.php">' . h($user["userNickName"]) . '</a>
+                                <a href="my_page.php">' . h($user["nick_name"]) . '</a>
                             </div>
+                        </div>
+                        <div>
+                            <a href="cart.php"><img style="width: 50px;" src="../images/cart.jpg" alt="カート"></a>
                         </div>';
                 } else {
                     print "<a href='login.php'>ログイン/会員登録</a>";

@@ -23,4 +23,15 @@
     // ソート情報
     $sorts=["カロリー","たんぱく質","糖質","脂質","食物繊維","塩分"];
 
+    // 点数を☆に変換
+    function strNumToStar($point)
+    {
+        $strStars = "☆☆☆☆☆";
+        for ($i = 0; $i < $point; $i++) {
+            $strStars = "★" . $strStars;
+        }
+
+        return mb_substr($strStars, 0, 5);
+    }
+
 ?>

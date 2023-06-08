@@ -9,6 +9,15 @@ error_reporting(E_ALL & ~E_NOTICE);
 // ===================================================================================
 // SQL
 // ===================================================================================
+// ユーザー検索SQL
+$sqlusers = '
+    SELECT
+        f_user_nick_name        AS nick_name
+    FROM
+        t_users
+    WHERE
+        f_user_id = ? ;';
+
 // 食品検索SQL
 $sqlItems = '
         SELECT
@@ -98,7 +107,7 @@ $sqlreviews = '
 // カート検索SQL
 $sqlCarts = '
         SELECT
-            f_item_num      AS item_num
+            f_item_num      AS num
         FROM
             t_carts
         WHERE
@@ -112,11 +121,11 @@ $insertCarts = 'INSERT INTO t_carts VALUES( ?, ?, ? );';
 // ===================================================================================
 // 関数
 // ===================================================================================
-// 食品IDによる検索(汎用)
-function showByItemId($db, $sql, $itemId)
+// IDによる検索(汎用)
+function showById($db, $sql, $id)
 {
     $contents = $db->prepare($sql);
-    $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+    $contents->bindparam(1, $id, PDO::PARAM_INT);
     $contents->execute();
 
     return $contents->fetchAll(PDO::FETCH_ASSOC);
@@ -131,17 +140,6 @@ function showCart($db, $sql, $itemId, $userId)
     $contents->execute();
 
     return $contents->fetch(PDO::FETCH_ASSOC);
-}
-
-// 点数を☆に変換
-function strNumToStar($point)
-{
-    $strStars = "☆☆☆☆☆";
-    for ($i = 0; $i < $point; $i++) {
-        $strStars = "★" . $strStars;
-    }
-
-    return mb_substr($strStars, 0, 5);
 }
 
 // 画像URLのテキストを返す
@@ -175,10 +173,10 @@ $test = new test();
 // ===================================================================================
 // DB検索
 // ===================================================================================
-$item       = showByItemId($db, $sqlItems, $itemId)[0];         // 食品詳細検索
-$genres     = showByItemId($db, $sqlGenres, $itemId);           // 食品ジャンル検索
-$allergens  = showByItemId($db, $sqlAllergens, $itemId)[0];     // 食品アレルゲン検索
-$reviews    = showByItemId($db, $sqlreviews, $itemId);          // 食品レビュー検索
+$item       = showById($db, $sqlItems, $itemId)[0];         // 食品詳細検索
+$genres     = showById($db, $sqlGenres, $itemId);           // 食品ジャンル検索
+$allergens  = showById($db, $sqlAllergens, $itemId)[0];     // 食品アレルゲン検索
+$reviews    = showById($db, $sqlreviews, $itemId);          // 食品レビュー検索
 
 if (empty($item)) {
     // 商品情報が取得できないときは商品一覧へ遷移する
@@ -192,6 +190,7 @@ if (isset($_SESSION['id'])) {
 
     // カート内情報検索
     $cart = showCart($db, $sqlCarts, $itemId, $userId);
+    $user = showById($db, $sqlusers, $userId)[0];
 }
 else{
     // REVIEW: 確認ログ
@@ -203,8 +202,8 @@ $test->get(empty($item), "食品TBL");
 $test->get(empty($genres), "ジャンルTBL");
 $test->get(empty($allergens), "アレルゲンTBL");
 $test->get(empty($reviews), "レビューTBL");
-$test->get(empty($cart), "カート情報");
-
+$test->get(empty($cart), "カートTBL");
+$test->get(empty($user), "ユーザーTBL");
 ?>
 
 <html lang="ja">
@@ -242,8 +241,11 @@ $test->get(empty($cart), "カート情報");
                                     <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
                                 </label>
                                 <div>
-                                    <a href="my_page.php">' . h($user["userNickName"]) . '</a>
+                                    <a href="my_page.php">' . h($user['nick_name']) . '</a>
                                 </div>
+                            </div>
+                            <div>
+                                <a href="cart.php"><img style="width: 50px;" src="../images/cart.jpg" alt="カート"></a>
                             </div>';
                     } else {
                         print "<a href='login.php'>ログイン/会員登録</a>";
