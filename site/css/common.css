@@ -94,3 +94,21 @@ div#header-right{
   width: auto;
   font-size: large;
 } */
+
+
+.attention{
+  color: red;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#regist div p{
+  margin: 0;
+  text-align: left;
+}
+
+#regist div input{
+  margin-bottom: 10px;
+  text-align: left;
+}
+
