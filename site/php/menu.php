@@ -42,8 +42,7 @@ while ($cart = $carts->fetch()) {
     <title>商品一覧</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/menu.css">
@@ -51,42 +50,68 @@ while ($cart = $carts->fetch()) {
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
 
-            <div>
-                <a href="menu.php">商品一覧</a>
-            </div>
 
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
+        <header class="py-3 mb-3 border-bottom flex-top">
+            <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
+                <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    
+                    <!-- ロゴ画像を置く -->
+                    <img src="../images/logo.png" class="bi me-2" width="140" height="32">
+                </a>
 
-            <div id="header-right">
-                <!-- ログインしていない時 -->
-                <?php
-                if (!isset($_SESSION["id"])) {
-                ?>
-                    <a href="login.php">ログイン/会員登録</a>
-                    <!-- ログインしている時 -->
-                <?php
-                } else {
-                ?>
+
+                <div class="d-flex justify-content-end">
+
+
+
+
+                    <!-- ログインしていないときに表示 -->
+                    <?php
+                    if (!isset($_SESSION["id"])) {
+                    ?>
+                        <a class="text-end" href="../php/login.php">
+                            <button type="button" class="btn btn-outline-primary">Login/Sign-up</button>
+                        </a>
+                    <?php
+
+
+                    } else {
+                    ?>
+                    <!-- ログインしているときに表示 -->
+                        <div class="flex-shrink-0 dropdown">
+                            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <!-- ログインした人の画像 -->
+                                <img src="../images/icon.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+                            </a>
+                            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                                <li><a href="my_page.php"><?php print ($user["f_user_name"]) . "のマイページ"; ?></a></li>
+                                <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
+
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            </ul>
+                        </div>
+
+                    <?php
+                    }
+                    ?>
+
+
+
                     <div>
-                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                        <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
+                        <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
                     </div>
-                <?php
-                }
-                ?>
-                <!-- どちらの場合でもカートは出す -->
-                <div>
-                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
                 </div>
             </div>
-
         </header>
+
+
+
 
         <main>
 
@@ -138,10 +163,10 @@ while ($cart = $carts->fetch()) {
                             print('<p>' . $item['f_item_name'] . '</p>');
                             print('<p>' . $item['f_item_price'] . '円</p>');
                             print('</a>');
-                            if(isset($user["f_user_id"])){
-                                if(in_array($i+1,$cartItemId)){
+                            if (isset($user["f_user_id"])) {
+                                if (in_array($i + 1, $cartItemId)) {
                                     print('<a href="./cart.php">カートに移動する</a>');
-                                }else{
+                                } else {
                                     print('<button onClick="inCart(this)">カートに入れる</button>');
                                 }
                             }
@@ -165,7 +190,7 @@ while ($cart = $carts->fetch()) {
             <small>&copy; 2023 ミールフレンド all right reserved</small>
         </footer>
 
-    </div>
+
 
 
     <!-- jQuery -->
@@ -174,9 +199,7 @@ while ($cart = $carts->fetch()) {
 
 
     <!-- bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
