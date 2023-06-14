@@ -101,8 +101,7 @@ $sqlReviews = '
         where
             review.f_item_id = ?
         ORDER BY
-            f_review_date DESC
-        LIMIT 0, 2';
+            f_review_date DESC';
 
 // カート検索SQL
 $sqlCarts = '
@@ -309,7 +308,7 @@ $test->get(empty($user), "ユーザーTBL");
                                 </div>";
                                 }
 
-                                print "<a id='go_review' href='review.php?id={$itemId}&page=1'>レビューを見る</a>";
+                                print "<a id='go_review' href=''>レビューを書く</a>";
                             }
                             ?>
                         </div>
@@ -414,7 +413,6 @@ $test->get(empty($user), "ユーザーTBL");
                                 }
                             }
                             ?>
-                            <!-- <p>カートに入れる</p> -->
                         </div>
                     </div>
 
