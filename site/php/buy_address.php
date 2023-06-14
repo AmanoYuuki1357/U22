@@ -7,7 +7,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 // ===================================================================================
 $sqlUser = '
     SELECT
-        f_user_nick_name    AS nick_name,
+        f_user_id,
+        f_user_name,
+        f_user_nick_name,
         f_user_address      AS address
     FROM
         t_users

@@ -12,7 +12,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 // ユーザー検索SQL
 $sqlUser = '
     SELECT
-        f_user_nick_name        AS nick_name
+        f_user_id,
+        f_user_name,
+        f_user_nick_name
     FROM
         t_users
     WHERE
@@ -226,204 +228,204 @@ $test->get(empty($user), "ユーザーTBL");
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
-            <h1>ミールフレンド</h1>
-            <nav>
-                <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                </div>
+    <!-- ヘッダー部分 -->
+    <!-- FIXME: 画面右の料理詳細によって覆われているため、アイコンイベントが発生しない -->
+    <?php //require('header.php'); ?>
 
-                <div id="header-right">
-                    <!-- マイページ/ログイン -->
-                    <?php
-                    if (isset($_SESSION['id'])) {
-                        print '
-                            <div id="user">
-                                <label>
-                                    <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
-                                </label>
-                                <div>
-                                    <a href="my_page.php">' . h($user['nick_name']) . '</a>
-                                </div>
-                            </div>
+    <header>
+        <nav>
+            <div>
+                <a href="menu.php"><img src="../images/MFlogo.png" alt="ロゴ"></a>
+            </div>
+
+            <div id="header-right">
+                <!-- マイページ/ログイン -->
+                <?php
+                if (isset($_SESSION['id'])) {
+                    print '
+                        <div id="user">
+                            <label>
+                                <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
+                            </label>
                             <div>
-                                <a href="cart.php"><img style="width: 50px;" src="../images/cart.jpg" alt="カート"></a>
-                            </div>';
-                    } else {
-                        print "<a href='login.php'>ログイン/会員登録</a>";
+                                <a href="my_page.php">' . h($user['f_user_nick_name']) . '</a>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="cart.php"><img style="width: 50px;" src="../images/cart.jpg" alt="カート"></a>
+                        </div>';
+                } else {
+                    print "<a href='login.php'>ログイン/会員登録</a>";
+                }
+                ?>
+            </div>
+        </nav>
+
+    </header>
+
+    <div id="gomenu">
+        <a href="./menu.php">＜メニュー一覧</a>
+    </div>
+
+    <main>
+
+        <div>
+            <div id="meal_genre">
+                <p>食品ジャンル:</p>
+                <ul>
+                    <?php
+                    if (!empty($genres)) {
+                        // ジャンル情報が取得できた場合
+                        foreach ($genres as $genre) {
+                            print "<li>" . h($genre['name']) . "|</li>";
+                        }
                     }
                     ?>
-                </div>
-            </nav>
+                </ul>
+            </div>
+            <div id="itemimg">
+                <!-- 画像表示 -->
+                <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
 
-        </header>
-        <div id="gomenu">
-            <a href="./menu.php">＜メニュー一覧</a>
-        </div>
-
-
-        <main>
-
-            <div>
-                <div id="meal_genre">
-                    <p>食品ジャンル:</p>
-                    <ul>
-                        <?php
-                        if (!empty($genres)) {
-                            // ジャンル情報が取得できた場合
-                            foreach ($genres as $genre) {
-                                print "<li>" . h($genre['name']) . "|</li>";
-                            }
-                        }
-                        ?>
-                    </ul>
-                </div>
-                <div id="itemimg">
-                    <!-- 画像表示 -->
-                    <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
-
-                    <div id="review">
-                        <h2>レビュー</h2>
-
-                        <div>
-                            <?php
-                            if (empty($reviews)) {
-                                // レビュー情報が取得できない場合
-                                print "<p>まだレビューはありません</p>";
-                            } else {
-                                // レビュー情報が取得できた場合
-                                foreach ($reviews as $review) {
-
-                                    print "
-                                <div>
-                                    <dl>
-                                        <dt>日付</dt>
-                                            <dd>" . h($review['date']) . "</dd>
-                                        <dt>評価</dt>
-                                            <dd>" . strNumToStar($review['point']) . "</dd>
-                                        <dt>コメント</dt>
-                                            <dd>" . h($review['review']) . "</dd>
-                                    </dl>
-                                </div>";
-                                }
-
-                                print "<a id='go_review' href=''>レビューを書く</a>";
-                            }
-                            ?>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div id="iteminfo">
-                    <!-- 商品名 -->
-                    <h2><?php print h($item['name']); ?></h2>
-
-                    <dl>
-                        <dt>値段</dt>
-                        <dd><?php print h($item['price']); ?>円</dd>
-                    </dl>
-
-                    <dl>
-                        <dt>商品説明</dt>
-                        <dd><?php print h($item['ex']); ?></dd>
-                    </dl>
-
-                    <p>アレルゲン</p>
-                    <ul>
-                        <?php
-                        // TODO:該当食品だけ表示
-                        print $allergens['wheat'] ? "<li>小麦</li>" : "";
-                        print $allergens['egg'] ? "<li>卵</li>" : "";
-                        print $allergens['milk'] ? "<li>乳</li>" : "";
-                        print $allergens['soba'] ? "<li>そば</li>" : "";
-                        print $allergens['shrimp'] ? "<li>えび</li>" : "";
-                        print $allergens['crab'] ? "<li>かに</li>" : "";
-                        print $allergens['peanut'] ? "<li>落花生</li>" : "";
-                        print $allergens['pork'] ? "<li>豚肉</li>" : "";
-                        print $allergens['chicken'] ? "<li>鶏肉</li>" : "";
-                        print $allergens['beef'] ? "<li>牛肉</li>" : "";
-                        print $allergens['salmon'] ? "<li>さけ</li>" : "";
-                        print $allergens['mackerel'] ? "<li>さば</li>" : "";
-                        print $allergens['soy'] ? "<li>大豆</li>" : "";
-                        print $allergens['squid'] ? "<li>いか</li>" : "";
-                        print $allergens['yamaimo'] ? "<li>やまいも</li>" : "";
-                        print $allergens['orange'] ? "<li>オレンジ</li>" : "";
-                        print $allergens['sesame'] ? "<li>ごま</li>" : "";
-                        print $allergens['cashew_nuts'] ? "<li>カシューナッツ</li>" : "";
-                        print $allergens['abalone'] ? "<li>あわび</li>" : "";
-                        print $allergens['ikura'] ? "<li>いくら</li>" : "";
-                        print $allergens['kiwi'] ? "<li>キウイフルーツ</li>" : "";
-                        print $allergens['banana'] ? "<li>バナナ</li>" : "";
-                        print $allergens['peaches'] ? "<li>もも</li>" : "";
-                        print $allergens['apple'] ? "<li>りんご</li>" : "";
-                        print $allergens['walnut'] ? "<li>くるみ</li>" : "";
-                        print $allergens['matsutake'] ? "<li>まつたけ</li>" : "";
-                        print $allergens['gelatin'] ? "<li>ゼラチン</li>" : "";
-                        print $allergens['almond'] ? "<li>アーモンド</li>" : "";
-                        ?>
-                    </ul>
-
-                    <table>
-                        <tr>
-                            <th>カロリー</th>
-                            <th>たんぱく質</th>
-                            <th>糖質</th>
-                            <th>脂質</th>
-                            <th>食物繊維</th>
-                            <th>塩分</th>
-                        </tr>
-                        <tr>
-                            <td><?php print h($item['calorie']); ?>kcal</td>
-                            <td><?php print h($item['protein_vol']); ?>g</td>
-                            <td><?php print h($item['sugar_vol']); ?>g</td>
-                            <td><?php print h($item['lipid_vol']); ?>g</td>
-                            <td><?php print h($item['dietary_fiber_vol']); ?>g</td>
-                            <td><?php print h($item['salt_vol']); ?>g</td>
-                        </tr>
-                    </table>
-
-                    <dl>
-                        <dt>原材料</dt>
-                        <dd><?php print h($item['materials']); ?></dd>
-                    </dl>
-
-                    <dl>
-                        <dt>保存方法</dt>
-                        <dd><?php print h($item['save_way']); ?></dd>
-                    </dl>
-
-                    <dl>
-                        <dt>賞味期限</dt>
-                        <dd><?php print h($item['use_by_date']); ?></dd>
-                    </dl>
+                <div id="review">
+                    <h2>レビュー</h2>
 
                     <div>
-                        <!-- <div><button>お気に入り</button></div> -->
+                        <?php
+                        if (empty($reviews)) {
+                            // レビュー情報が取得できない場合
+                            print "<p>まだレビューはありません</p>";
+                        } else {
+                            // レビュー情報が取得できた場合
+                            foreach ($reviews as $review) {
 
-                        <div id="itemId<?php print($itemId); ?>">
-                            <p id="userId" style="display: none;"><?php print($userId); ?></p>
-                            <?php
-                            if(isset($userId)){
-                                if(isset($cart['num'])){
-                                    print('<a href="./cart.php">カートに移動する</a>');
-                                }else{
-                                    print('<button onClick="inCart(this)">カートに入れる</button>');
-                                }
+                                print "
+                            <div>
+                                <dl>
+                                    <dt>日付</dt>
+                                        <dd>" . h($review['date']) . "</dd>
+                                    <dt>評価</dt>
+                                        <dd>" . strNumToStar($review['point']) . "</dd>
+                                    <dt>コメント</dt>
+                                        <dd>" . h($review['review']) . "</dd>
+                                </dl>
+                            </div>";
                             }
-                            ?>
-                        </div>
+
+                            print "<a id='go_review' href=''>レビューを書く</a>";
+                        }
+                        ?>
                     </div>
 
                 </div>
             </div>
 
-        </main>
+            <div id="iteminfo">
+                <!-- 商品名 -->
+                <h2><?php print h($item['name']); ?></h2>
 
-        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+                <dl>
+                    <dt>値段</dt>
+                    <dd><?php print h($item['price']); ?>円</dd>
+                </dl>
 
-    </div>
+                <dl>
+                    <dt>商品説明</dt>
+                    <dd><?php print h($item['ex']); ?></dd>
+                </dl>
+
+                <p>アレルゲン</p>
+                <ul>
+                    <?php
+                    // TODO:該当食品だけ表示
+                    print $allergens['wheat'] ? "<li>小麦</li>" : "";
+                    print $allergens['egg'] ? "<li>卵</li>" : "";
+                    print $allergens['milk'] ? "<li>乳</li>" : "";
+                    print $allergens['soba'] ? "<li>そば</li>" : "";
+                    print $allergens['shrimp'] ? "<li>えび</li>" : "";
+                    print $allergens['crab'] ? "<li>かに</li>" : "";
+                    print $allergens['peanut'] ? "<li>落花生</li>" : "";
+                    print $allergens['pork'] ? "<li>豚肉</li>" : "";
+                    print $allergens['chicken'] ? "<li>鶏肉</li>" : "";
+                    print $allergens['beef'] ? "<li>牛肉</li>" : "";
+                    print $allergens['salmon'] ? "<li>さけ</li>" : "";
+                    print $allergens['mackerel'] ? "<li>さば</li>" : "";
+                    print $allergens['soy'] ? "<li>大豆</li>" : "";
+                    print $allergens['squid'] ? "<li>いか</li>" : "";
+                    print $allergens['yamaimo'] ? "<li>やまいも</li>" : "";
+                    print $allergens['orange'] ? "<li>オレンジ</li>" : "";
+                    print $allergens['sesame'] ? "<li>ごま</li>" : "";
+                    print $allergens['cashew_nuts'] ? "<li>カシューナッツ</li>" : "";
+                    print $allergens['abalone'] ? "<li>あわび</li>" : "";
+                    print $allergens['ikura'] ? "<li>いくら</li>" : "";
+                    print $allergens['kiwi'] ? "<li>キウイフルーツ</li>" : "";
+                    print $allergens['banana'] ? "<li>バナナ</li>" : "";
+                    print $allergens['peaches'] ? "<li>もも</li>" : "";
+                    print $allergens['apple'] ? "<li>りんご</li>" : "";
+                    print $allergens['walnut'] ? "<li>くるみ</li>" : "";
+                    print $allergens['matsutake'] ? "<li>まつたけ</li>" : "";
+                    print $allergens['gelatin'] ? "<li>ゼラチン</li>" : "";
+                    print $allergens['almond'] ? "<li>アーモンド</li>" : "";
+                    ?>
+                </ul>
+
+                <table>
+                    <tr>
+                        <th>カロリー</th>
+                        <th>たんぱく質</th>
+                        <th>糖質</th>
+                        <th>脂質</th>
+                        <th>食物繊維</th>
+                        <th>塩分</th>
+                    </tr>
+                    <tr>
+                        <td><?php print h($item['calorie']); ?>kcal</td>
+                        <td><?php print h($item['protein_vol']); ?>g</td>
+                        <td><?php print h($item['sugar_vol']); ?>g</td>
+                        <td><?php print h($item['lipid_vol']); ?>g</td>
+                        <td><?php print h($item['dietary_fiber_vol']); ?>g</td>
+                        <td><?php print h($item['salt_vol']); ?>g</td>
+                    </tr>
+                </table>
+
+                <dl>
+                    <dt>原材料</dt>
+                    <dd><?php print h($item['materials']); ?></dd>
+                </dl>
+
+                <dl>
+                    <dt>保存方法</dt>
+                    <dd><?php print h($item['save_way']); ?></dd>
+                </dl>
+
+                <dl>
+                    <dt>賞味期限</dt>
+                    <dd><?php print h($item['use_by_date']); ?></dd>
+                </dl>
+
+                <div>
+                    <!-- <div><button>お気に入り</button></div> -->
+
+                    <div id="itemId<?php print($itemId); ?>">
+                        <p id="userId" style="display: none;"><?php print($userId); ?></p>
+                        <?php
+                        if(isset($userId)){
+                            if(isset($cart['num'])){
+                                print('<a href="./cart.php">カートに移動する</a>');
+                            }else{
+                                print('<button onClick="inCart(this)">カートに入れる</button>');
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
     <script src="../js/jQuery.js"></script>
     <script src="../js/item_piece.js"></script>
