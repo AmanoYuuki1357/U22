@@ -14,19 +14,6 @@ $sqlUser = '
     WHERE
         f_user_id = ? ;';
 
-$sqlUpdUser = '
-    UPDATE
-        t_users
-    SET
-        f_user_address = ?
-    WHERE
-        f_user_id = ?;';
-
-// ===================================================================================
-// 初期値
-// ===================================================================================
-$strAddress = "";       // お届け先
-
 // ===================================================================================
 // セッション開始
 // ===================================================================================
@@ -38,6 +25,19 @@ if (!isset($_SESSION)) {
 if (isset($_SESSION['id'])) {
     // ログインユーザーのIDを取得
     $userId = $_SESSION['id'];
+
+    // ===================================================================================
+    // DB検索
+    // ===================================================================================
+    // ユーザー情報取得
+    $contents = $db->prepare($sqlUser);
+    $contents->bindparam(1, $userId, PDO::PARAM_INT);
+    $contents->execute();
+    $user = $contents->fetch();
+
+    if(!isset($_SESSION['buy']['address']) || empty($_SESSION['buy']['address'])){
+        $_SESSION['buy']['address'] = $user['address'];
+    }
 }
 else{
     // ログインページへ
@@ -86,27 +86,9 @@ if (!empty($_POST)) {
 
     // エラーなしの場合
     if (empty($error)) {
-        $strAddress = '〒' . $_POST['postal-code'] . $_POST['region'] . $_POST['locality'] . $_POST['street-address'];
-
-        // =======================================================
-        // ユーザーTBL更新
-        // =======================================================
-        $updUser = $db->prepare($sqlUpdUser);
-        $updUser->bindparam(1, $strAddress, PDO::PARAM_STR);    // 住所
-        $updUser->bindparam(2, $userId, PDO::PARAM_INT);        // ユーザーID
-        $updUser->execute();
+        $_SESSION['buy']['address'] = '〒' . $_POST['postal-code'] . ' ' . $_POST['region'] . $_POST['locality'] . $_POST['street-address'];
     }
 }
-
-// ===================================================================================
-// DB検索
-// ===================================================================================
-// ユーザー情報取得
-$contents = $db->prepare($sqlUser);
-$contents->bindparam(1, $userId, PDO::PARAM_INT);
-$contents->execute();
-$user = $contents->fetch();
-$strAddress = $user["address"];
 
 ?>
 
@@ -177,12 +159,12 @@ $strAddress = $user["address"];
                 <!-- デフォルトはユーザの住所 -->
                 <h3>お届け先</h3>
                 <?php
-                if (empty($strAddress)) {
+                if (empty($_SESSION['buy']['address'])) {
                     // 入力なし
                     print("<p class='address' style='color: red'>登録がありません</p>");
                 } else {
                     // 入力あり
-                    print("<p class='address'>" . $strAddress . "</p>");
+                    print("<p class='address'>" . $_SESSION['buy']['address'] . "</p>");
                 }
                 ?>
 
@@ -267,7 +249,7 @@ $strAddress = $user["address"];
                 </form>
 
                 <?php
-                if (!empty($strAddress)) {
+                if (!empty($_SESSION['buy']['address'])) {
                     // 住所が取得できた時だけ次のページへのリンクを表示
                     print('<div><a href="buy_pay.php">次へ:お支払方法</a></div>');
                 }
