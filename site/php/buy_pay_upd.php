@@ -6,12 +6,27 @@ error_reporting(E_ALL & ~E_NOTICE);
     // SQL
     // ===================================================================================
     $sqluser = '
-        SELECT
-            f_user_id,
-            f_user_name,
-            f_user_nick_name
-        FROM
+    SELECT
+        f_user_id,
+        f_user_name,
+        f_user_nick_name,
+        f_user_credit_number    AS number,
+        f_user_credit_name      AS name,
+        f_user_credit_expiry    AS expiry,
+        f_user_credit_code      AS code
+    FROM
+        t_users
+    WHERE
+        f_user_id = ? ;';
+
+    $sqlupdate = '
+        UPDATE
             t_users
+        SET
+            f_user_credit_number    = ?,
+            f_user_credit_name      = ?,
+            f_user_credit_expiry    = ?,
+            f_user_credit_code      = ?
         WHERE
             f_user_id = ? ;';
 
@@ -41,6 +56,27 @@ error_reporting(E_ALL & ~E_NOTICE);
         header('Location: login.php');
     }
 
+    // 更新するボタン押下時のイベント
+    if(isset($_POST["update"])){
+        // FIXME: 入力チェック未実装
+
+        // ユーザー情報更新
+        $contents = $db->prepare($sqlupdate);
+        $contents->bindparam(1, $_POST["number"], PDO::PARAM_INT);
+        $contents->bindparam(2, $_POST["name"], PDO::PARAM_STR);
+        $contents->bindparam(3, $_POST["expiry"], PDO::PARAM_STR);
+        $contents->bindparam(4, sha1($_POST["code"]), PDO::PARAM_STR);
+        $contents->bindparam(5, $userId, PDO::PARAM_INT);
+        $updateUser = $contents->execute();
+
+        // 更新失敗した場合
+        if($updateUser != 1){
+            // TODO: 更新失敗時の動作を考える
+        }
+
+        // 更新成功
+        header('Location: buy_pay.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -81,19 +117,42 @@ error_reporting(E_ALL & ~E_NOTICE);
 
             <hr>
 
+            <form action="" method="post">
             <div>
                 <p>カード番号</p>
-                <input type="text" value="xxxx" />
+                <input
+                    type="text"
+                    name="number"
+                    value="<?php print $user["number"] ?>"
+                    placeholder="カード番号(16桁)を入力してください"/>
+
                 <p>カード名義人</p>
-                <input type="text" value="xxxx" />
+                <input
+                    type="text"
+                    name="name"
+                    value="<?php print $user["name"] ?>"
+                    placeholder="カード名義人を入力してください" />
+
                 <p>有効期限(月/年)</p>
-                <input type="month" value="xxxx/xx"/>
+                <input
+                    type="month"
+                    name="expiry"
+                    value="<?php print $user["expiry"] ?>"
+                    placeholder="有効期限(mm/yyyy)を入力してください"/>
+
                 <p>セキュリティコード</p>
-                <input type="text" value=""/>
+                <input
+                    type="text"
+                    name="code"
+                    value=""
+                    placeholder="セキュリティコード(3~4桁)を入力してください"/>
+
             </div>
             <div>
-                <a href="buy_pay.php">更新する</a>
+                <!-- <a href="buy_pay.php">更新する</a> -->
+                <input type="submit" name="update" value="更新する" />
             </div>
+            </form>
 
         </div>
 
