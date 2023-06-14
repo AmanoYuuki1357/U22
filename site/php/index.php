@@ -1,3 +1,18 @@
+<?php
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -7,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/common.css">
+    <!-- <link rel="stylesheet" href="../css/common.css"> -->
 
 <!-- bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
