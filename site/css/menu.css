@@ -5,31 +5,31 @@ tr{
 tr td{
     padding: 5px;
 }
-#box{
+/* #box{
     border: 1px solid;
     padding: 10px;
     position: relative;
     top: 1300px;
     height: 100%;
-}
-header{
+} */
+/* header{
     width: 100%;
     position: absolute;
     top: 0;
-}
-main{
+} */
+/* main{
     display: flex;
     width: 100%;
     padding: 20px;
     height: 100%;
-}
-header nav{
+} */
+/* header nav{
     height: 100px;
-}
+} */
 #menu_img{
     height: 100px;
     padding: 5px;
 }
-.headerimg {
+/* .headerimg {
     width: 50px;
-}
+} */
