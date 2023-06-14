@@ -148,7 +148,7 @@ while ($cart = $carts->fetch()) {
                 <div class="container">
 
                     <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
-                    
+
                     <div class="row">
                     <?php
                     // print("<h1>");
@@ -158,17 +158,17 @@ while ($cart = $carts->fetch()) {
 
                         // print('<div class="row">');
 
-                        print('<div class="col-sm-6 col-md-3 col-lg-2">');
+                        print('<div class="col-sm-6 col-md-3 col-lg-2 item-box">');
                         print('<a href="item_piece.php?id=' . $item['f_item_id'] . '" id="itemId' . $item['f_item_id'] . '">');
                         print('<img id="menu_img" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
-                        print('<p>' . $item['f_item_name'] . '</p>');
-                        print('<p>' . $item['f_item_price'] . '円</p>');
+                        print('<p class="item-info">' . $item['f_item_name'] . '</p>');
+                        print('<p class="item-info">' . $item['f_item_price'] . '円</p>');
                         print('</a>');
                         if (isset($user["f_user_id"])) {
                             if (in_array($i + 1, $cartItemId)) {
-                                print('<a href="./cart.php">カートに移動する</a>');
+                                print('<a class="go-cart" href="./cart.php">カートに移動する</a>');
                             } else {
-                                print('<button onClick="inCart(this)">カートに入れる</button>');
+                                print('<button class="into-cart" onClick="inCart(this)">カートに入れる</button>');
                             }
                         }
                         print('</div>');

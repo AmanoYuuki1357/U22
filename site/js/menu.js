@@ -3,7 +3,7 @@ userId = parseInt(userId.innerHTML);
 
 function inCart(e){
     // aタグ生成
-    let move ='<a href="cart.php">カートに移動する</a>';
+    let move ='<a class="go-cart" href="cart.php">カートに移動する</a>';
     e.insertAdjacentHTML("afterend",move);
 
     // データベースに格納

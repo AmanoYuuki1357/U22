@@ -1,35 +1,87 @@
-tr{
-    border: 1px solid;
-    padding: 10px;
+/* メニューの囲い */
+
+.item-box{
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  transition: all 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
-tr td{
-    padding: 5px;
+
+#menu_img {
+  height: 100px;
+  padding: 5px;
 }
-/* #box{
-    border: 1px solid;
-    padding: 10px;
-    position: relative;
-    top: 1300px;
-    height: 100%;
-} */
-/* header{
-    width: 100%;
-    position: absolute;
-    top: 0;
-} */
-/* main{
-    display: flex;
-    width: 100%;
-    padding: 20px;
-    height: 100%;
-} */
-/* header nav{
-    height: 100px;
-} */
-#menu_img{
-    height: 100px;
-    padding: 5px;
+
+
+/* 商品名と価格 */
+
+a {
+  text-decoration: none;
 }
-/* .headerimg {
-    width: 50px;
-} */
+
+.item-info {
+  color: rgb(39, 39, 39);
+}
+
+.item-info:hover {
+  color: rgb(174, 101, 0);
+  font-weight: bold;
+}
+
+/* カート画面へ行くボタン */
+.go-cart {
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  background-color: #acb200;
+  transition: all 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #f1f1f1;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.go-cart:hover {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+  background-color: #f8f821e7;
+  color: #5e5e5e;
+}
+
+.go-cart:active {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+  background-color: #d0d0d0;
+}
+
+/* カートに入れるボタン */
+.into-cart {
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  background-color: #008c82;
+  transition: all 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #f7f7f7;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.into-cart:hover {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+  background-color: #00dacb;
+  color: #5e5e5e;
+}
+
+.into-cart:active {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+  background-color: #d0d0d0;
+}
