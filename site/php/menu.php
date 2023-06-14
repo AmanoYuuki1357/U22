@@ -74,8 +74,7 @@ while ($cart = $carts->fetch()) {
                 ?>
                     <div>
                         <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                        <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
+                        <a href="my_page.php"><?php print($user["f_user_nick_name"]); ?></a>
                     </div>
                 <?php
                 }
@@ -123,6 +122,8 @@ while ($cart = $carts->fetch()) {
 
                 <div>
                     <table>
+
+                        <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
                         <?php
                         // print("<h1>");

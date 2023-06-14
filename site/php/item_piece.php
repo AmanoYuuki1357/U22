@@ -401,21 +401,20 @@ $test->get(empty($user), "ユーザーTBL");
                     </dl>
 
                     <div>
-                        <div>
-                            <button>
-                                お気に入り
-                            </button>
-                        </div>
+                        <!-- <div><button>お気に入り</button></div> -->
 
-                        <div>
-                            <p>カートに入れる</p>
-                            <button>
-                                +
-                            </button>
-                            <?php print isset($cart['num'])? h($cart['num']): 0; ?>
-                            <button>
-                                -
-                            </button>
+                        <div id="itemId<?php print($itemId); ?>">
+                            <p id="userId" style="display: none;"><?php print($userId); ?></p>
+                            <?php
+                            if(isset($userId)){
+                                if(isset($cart['num'])){
+                                    print('<a href="./cart.php">カートに移動する</a>');
+                                }else{
+                                    print('<button onClick="inCart(this)">カートに入れる</button>');
+                                }
+                            }
+                            ?>
+                            <!-- <p>カートに入れる</p> -->
                         </div>
                     </div>
 
@@ -428,6 +427,8 @@ $test->get(empty($user), "ユーザーTBL");
 
     </div>
 
+    <script src="../js/jQuery.js"></script>
+    <script src="../js/item_piece.js"></script>
 
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
