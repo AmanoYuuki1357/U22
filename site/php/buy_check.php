@@ -62,6 +62,10 @@ error_reporting(E_ALL & ~E_NOTICE);
         header('Location: login.php');
     }
 
+    if(($_POST['settlement'])){
+        print "ok";
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -162,7 +166,11 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div>
-                <a href="buy_complete.php">次へ</a>
+                <!-- <a href="buy_complete.php">次へ</a> -->
+                <form action="" method="post">
+                    <input type="hidden" name="settlement" value="settlement" />
+                    <input type="submit" value="以上の内容で購入する" />
+                </form>
             </div>
 
             <div class="back">
