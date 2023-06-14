@@ -1,13 +1,13 @@
-
+/* 
 * {
     color: #000;
     text-decoration: none;
-}
-
+} */
+/* 
 #wrap{
     width: 100%;
-}
-
+} */
+/* 
 header{
     width: 100%;
     position: absolute;
@@ -20,27 +20,90 @@ main{
 }
 header nav{
     height: 100px;
-}
-#pay{
-    height: 200px;
-    border: 1px solid;
-    padding: 20px;
-    position: relative;
-    /* top: 50px; */
-    right: -500px;
-}
-#cart{
+} */
+
+/* #cart{
     width: 500px;
     position: relative;
     top: 50px;
     left: -100px;
     border: 1px solid;
     padding: 10px;
+} */
+
+
+
+/* 商品名と価格 */
+
+
+.item-box{
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    transition: all 0.3s;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+
+
+/* レジに進むボタン */
+.button{
+    /* background-color: #b5d4c2dd;
+    padding: 10px; */
+
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    background-color: #00b36c;
+    transition: all 0.3s;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #f7f7f7;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
 }
-#button{
-    background-color: #b5d4c2dd;
-    padding: 10px;
+.button a{
+    color: #efefef;
+    
 }
+.button:hover {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    background-color: #06ce74;
+    color: #5e5e5e;
+  }
+
+
+  /* 削除ボタン */
+  .delete-button{
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    background-color: #bd5050;
+    transition: all 0.3s;
+    display: inline-block;
+    padding:7px 17px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .delete-button:hover {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    background-color: #d45757;
+    color: #5e5e5e;
+  }
+
+
+
+
 #plus_minus{
     display: flex;
     text-align: center;
@@ -48,10 +111,21 @@ header nav{
 #plus_minus button{
     margin: 5px;
     padding: 8px 12px;
+    border-radius: 5px;
+
 }
 #plus_minus p{
-    height: 10px;
+    height: 20px;
 }
-img {
+/* img {
     width: 50px;
+} */
+
+#pay{
+    height: 100vh;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 50px;
+    /* position: relative; */
+    /* right: -500px; */
 }

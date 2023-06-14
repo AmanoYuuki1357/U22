@@ -34,38 +34,10 @@ if (isset($_SESSION["id"])) {
 
 <body>
 
-    <header class="py-3 mb-3 border-bottom flex-top">
-        <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-            <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none"
-                id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- ロゴ画像を置く -->
-                <img src="../images/nakao.jpg" class="bi me-2" width="40" height="32">
-            </a>
-
-            <div class="d-flex justify-content-end">
-                <a class="text-end" href="../php/login.php">
-                    <button type="button" class="btn btn-outline-primary">Login/Sign-up</button>
-                </a>
-
-                <div class="flex-shrink-0 dropdown">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <!-- ログインした人の画像 -->
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
 
 

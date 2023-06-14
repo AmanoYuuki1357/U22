@@ -51,68 +51,34 @@ $carts->execute(array($user['f_user_id']));
     <title>カート</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/cart.css"> <!-- cart.htmlで検証　こっちでもCSS適用されているかは未確認 -->
+    <link rel="stylesheet" type="text/css" href="../css/cart.css"> 
+    <!-- cart.htmlで検証　こっちでもCSS適用されているかは未確認 -->
 
 
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
 
-            <div>
-                <a href="menu.php">商品一覧</a>
-            </div>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <!-- ログインしていない時 -->
-                <?php
-                if (!empty($session["id"])) {
-                ?>
-                    <a href="login.php">ログイン/会員登録</a>
-                    <!-- ログインしている時 -->
-                <?php
-                } else {
-                ?>
-                    <div>
-                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <form action="my_page.php">
-                            <input type="hidden" name="user_id" value="<?php $_SESSION["id"] ?>">
-                            <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                        </form>
-                    </div>
-                <?php
-                }
-                ?>
-
-                <!-- どちらの場合でもカートは出す -->
-                <div>
-                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
-                </div>
-            </div>
-
-        </header>
-
-        <main>
-
-            <div id="cart">
-
-                <h3>ショッピングカート</h3>
+    <main class="d-flex">
 
 
+    <!-- ショッピングカート -->
+        <div id="cart" class="container">
+            <h3>ショッピングカート</h3>
+            <div class="row">
                 <?php
                 $sum = 0;
                 for ($i = 0; $cart = $carts->fetch(); $i++) {
 
-                    print('<div>');
+                    print('<div class="col-sm-12 col-md-3 col-lg-2 item-box">');
                     // print('<button>pic</button>');
                     print('<p>' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
@@ -125,7 +91,7 @@ $carts->execute(array($user['f_user_id']));
                     print('<form action="" method="post" enctype="multipart/form-data">');
                 ?><input type="hidden" name="delete" value="<?php print($cart['f_item_id']); ?>">
                 <?php
-                    print('<input type="submit" value="削除" />');
+                    print('<input class="delete-button" type="submit" value="削除" />');
                     print('</form>');
                     print('</div>');
                     $sum += $cart['f_item_price'] * $cart['f_item_num'];
@@ -133,34 +99,35 @@ $carts->execute(array($user['f_user_id']));
                 ?>
 
             </div>
+        </div>
 
-            <div id="pay">
-                <div>
-                    <p>合計</p>
-                    <?php print('<p id="buySum">' . $sum . '円</p>'); ?>
-                </div>
-                <div id="button">
-                    <a href="buy_address.php">レジに進む</a>
-                    <!-- ここはformのinputのbutton -->
-                </div>
 
+
+        <!-- 購入 -->
+        <div id="pay">
+            <div>
+                <h2>合計</h2>
+                <?php print('<p id="buySum">' . $sum . '円</p>'); ?>
+            </div>
+            <div id="button" class="button">
+                <a href="buy_address.php">レジに進む</a>
+                <!-- ここはformのinputのbutton -->
             </div>
 
-        </main>
+        </div>
 
-        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+    </main>
 
-    </div>
+    <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
 
     <!-- jQuery -->
-    <!-- <script src="js/jQuery.js"></script> -->
+    <!-- <script src="js/jQuery.js"></scrip> -->
     <script src="../js/cart.js"></script>
 
 
     <!-- bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
