@@ -7,8 +7,8 @@ error_reporting(E_ALL & ~E_NOTICE);
     // ===================================================================================
     $sqlcredit = '
         SELECT
-            f_user_name             AS name,
-            f_user_nick_name        AS nick_name
+            f_user_name         AS name,
+            f_user_nick_name    AS nick_name
         FROM
             t_users
         WHERE
@@ -27,6 +27,25 @@ error_reporting(E_ALL & ~E_NOTICE);
             t_items	AS item
         ON
             cart.f_item_id = item.f_item_id
+        WHERE
+            f_user_id = ?;';
+    
+    $sqladd = '
+        INSERT INTO
+            t_buy_history
+        VALUES
+        (
+            NOW(),
+            ?,
+            ?,
+            ?,
+            ?
+        );';
+
+    $sqldelete = '
+        DELETE
+        FROM
+            t_carts
         WHERE
             f_user_id = ?;';
 
@@ -62,8 +81,40 @@ error_reporting(E_ALL & ~E_NOTICE);
         header('Location: login.php');
     }
 
-    if(($_POST['settlement'])){
-        print "ok";
+    // 購入確定ボタン押下イベント
+    if(isset($_POST['settlement'])){
+
+        // 購入履歴登録
+        foreach($carts as $cart){
+
+            // 購入履歴TBLへ登録
+            $contents = $db->prepare($sqladd);
+            $contents->bindParam(1, $userId, PDO::PARAM_INT);
+            $contents->bindParam(2, $cart["id"], PDO::PARAM_INT);
+            $contents->bindParam(3, $cart["num"], PDO::PARAM_INT);
+            $contents->bindParam(4, $_SESSION["buy"]["address"], PDO::PARAM_STR);
+            $insertHistory = $contents->execute();
+
+            // 登録失敗した場合
+            if($insertHistory != 1){
+                // TODO: 登録失敗時の動作を考える
+            }
+        }
+
+        // 登録成功
+        // カート内情報の削除
+        $contents = $db->prepare($sqldelete);
+        $contents->bindParam(1, $userId, PDO::PARAM_INT);
+        $deleteCarts = $contents->execute();
+
+        // 削除失敗
+        if($deleteCarts != 1){
+            // TODO: 削除失敗時の処理を考える
+        }
+
+        // 削除成功
+        header('Location: buy_complete.php');
+
     }
 
 ?>
