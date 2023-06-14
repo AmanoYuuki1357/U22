@@ -10,7 +10,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 // SQL
 // ===================================================================================
 // ユーザー検索SQL
-$sqlusers = '
+$sqlUser = '
     SELECT
         f_user_nick_name        AS nick_name
     FROM
@@ -27,7 +27,7 @@ $sqlItems = '
             f_item_explain              AS ex,
             f_item_calorie              AS calorie,
             f_item_protein_vol          AS protein_vol,
-            f_item_suger_vol            AS suger_vol,
+            f_item_sugar_vol            AS sugar_vol,
             f_item_lipid_vol            AS lipid_vol,
             f_item_dietary_fiber_vol    AS dietary_fiber_vol,
             f_item_salt_vol             AS salt_vol,
@@ -62,7 +62,7 @@ $sqlAllergens = '
             f_item_allergen_milk        AS milk,
             f_item_allergen_soba        AS soba,
             f_item_allergen_shrimp      AS shrimp,
-            f_item_allergen_clab        AS clab,
+            f_item_allergen_crab        AS crab,
             f_item_allergen_peanut      AS peanut,
             f_item_allergen_pork        AS pork,
             f_item_allergen_chicken     AS chicken,
@@ -70,7 +70,7 @@ $sqlAllergens = '
             f_item_allergen_salmon      AS salmon,
             f_item_allergen_mackerel    AS mackerel,
             f_item_allergen_soy         AS soy,
-            f_item_allergen_aquid       AS aquid,
+            f_item_allergen_squid       AS squid,
             f_item_allergen_yamaimo     AS yamaimo,
             f_item_allergen_orange      AS orange,
             f_item_allergen_sesame      AS sesame,
@@ -91,7 +91,7 @@ $sqlAllergens = '
             f_item_id = ? ;';
 
 // レビュー検索SQL
-$sqlreviews = '
+$sqlReviews = '
         SELECT
             f_review_date               AS date,
             f_review_point              AS point,
@@ -176,7 +176,7 @@ $test = new test();
 $item       = showById($db, $sqlItems, $itemId)[0];         // 食品詳細検索
 $genres     = showById($db, $sqlGenres, $itemId);           // 食品ジャンル検索
 $allergens  = showById($db, $sqlAllergens, $itemId)[0];     // 食品アレルゲン検索
-$reviews    = showById($db, $sqlreviews, $itemId);          // 食品レビュー検索
+$reviews    = showById($db, $sqlReviews, $itemId);          // 食品レビュー検索
 
 if (empty($item)) {
     // 商品情報が取得できないときは商品一覧へ遷移する
@@ -190,7 +190,7 @@ if (isset($_SESSION['id'])) {
 
     // カート内情報検索
     $cart = showCart($db, $sqlCarts, $itemId, $userId);
-    $user = showById($db, $sqlusers, $userId)[0];
+    $user = showById($db, $sqlUser, $userId)[0];
 }
 else{
     // REVIEW: 確認ログ
@@ -340,7 +340,7 @@ $test->get(empty($user), "ユーザーTBL");
                         print $allergens['milk'] ? "<li>乳</li>" : "";
                         print $allergens['soba'] ? "<li>そば</li>" : "";
                         print $allergens['shrimp'] ? "<li>えび</li>" : "";
-                        print $allergens['clab'] ? "<li>かに</li>" : "";
+                        print $allergens['crab'] ? "<li>かに</li>" : "";
                         print $allergens['peanut'] ? "<li>落花生</li>" : "";
                         print $allergens['pork'] ? "<li>豚肉</li>" : "";
                         print $allergens['chicken'] ? "<li>鶏肉</li>" : "";
@@ -348,7 +348,7 @@ $test->get(empty($user), "ユーザーTBL");
                         print $allergens['salmon'] ? "<li>さけ</li>" : "";
                         print $allergens['mackerel'] ? "<li>さば</li>" : "";
                         print $allergens['soy'] ? "<li>大豆</li>" : "";
-                        print $allergens['aquid'] ? "<li>いか</li>" : "";
+                        print $allergens['squid'] ? "<li>いか</li>" : "";
                         print $allergens['yamaimo'] ? "<li>やまいも</li>" : "";
                         print $allergens['orange'] ? "<li>オレンジ</li>" : "";
                         print $allergens['sesame'] ? "<li>ごま</li>" : "";
@@ -378,7 +378,7 @@ $test->get(empty($user), "ユーザーTBL");
                         <tr>
                             <td><?php print h($item['calorie']); ?>kcal</td>
                             <td><?php print h($item['protein_vol']); ?>g</td>
-                            <td><?php print h($item['suger_vol']); ?>g</td>
+                            <td><?php print h($item['sugar_vol']); ?>g</td>
                             <td><?php print h($item['lipid_vol']); ?>g</td>
                             <td><?php print h($item['dietary_fiber_vol']); ?>g</td>
                             <td><?php print h($item['salt_vol']); ?>g</td>

@@ -5,7 +5,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 // ===================================================================================
 // SQL
 // ===================================================================================
-$sqlusers = '
+$sqlUsers = '
     SELECT
         f_user_nick_name        AS nick_name
     FROM
@@ -18,7 +18,7 @@ $sqlItems = '
             f_item_explain              AS ex,
             f_item_calorie              AS calorie,
             f_item_protein_vol          AS protein_vol,
-            f_item_suger_vol            AS suger_vol,
+            f_item_sugar_vol            AS sugar_vol,
             f_item_lipid_vol            AS lipid_vol,
             f_item_dietary_fiber_vol    AS dietary_fiber_vol,
             f_item_salt_vol             AS salt_vol,
@@ -99,7 +99,7 @@ if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
 
     // カート内情報検索
-    $user = showById($db, $sqlusers, $userId)[0];
+    $user = showById($db, $sqlUsers, $userId)[0];
 }
 
 // ===================================================================================
@@ -258,7 +258,7 @@ if ($revCnt['cnt'] % $pageRevs != 0) {
                     <dt>たんぱく質</dt>
                     <dd><?php print h($item['protein_vol']); ?>g</dd>
                     <dt>糖質</dt>
-                    <dd><?php print h($item['suger_vol']); ?>g</dd>
+                    <dd><?php print h($item['sugar_vol']); ?>g</dd>
                     <dt>脂質</dt>
                     <dd><?php print h($item['lipid_vol']); ?>g</dd>
                     <dt>食物繊維</dt>
