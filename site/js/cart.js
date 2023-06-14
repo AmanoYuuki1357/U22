@@ -1,5 +1,5 @@
-buySum = document.getElementById("buySum");
-buyNum = parseInt(buySum.innerHTML.replace('円', ''));
+let buySum = document.getElementById("buySum");
+let buyNum = parseInt(buySum.innerHTML.replace('円', ''));
 
 function down(e) {
     console.log("down");
