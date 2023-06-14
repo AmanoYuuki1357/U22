@@ -40,9 +40,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     else{
         // ログインページへ
         header('Location: login.php');
-    }    
-
-
+    }
 
 ?>
 
@@ -150,7 +148,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div>
-                <a href="buy_complete.php">次へ</a>
+                <a href="buy_check.php">次へ</a>
             </div>
             <div class="back">
                 <a href="buy_address.php">戻る</a>

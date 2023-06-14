@@ -1,21 +1,46 @@
-<!-- <?php
+<?php
 
-    require('dbconnect.php');
     require('common.php');
     error_reporting(E_ALL & ~E_NOTICE);
+
+    // ===================================================================================
+    // SQL
+    // ===================================================================================
+    $sqlUser = '
+        SELECT
+            f_user_nick_name    AS nick_name
+        FROM
+            t_users
+        WHERE
+            f_user_id = ? ;';
+
+    // ===================================================================================
+    // セッション開始
+    // ===================================================================================
     if(!isset($_SESSION)){
         session_start();
     }
 
-    // ヘッダーのアイコン
-    $icons=$db->prepare('SELECT userIcon FROM user_info WHERE userID=?');
-    $icons->execute(array($_SESSION['id']));
-    $icon=$icons->fetch();
+    // ユーザーID取得
+    if (isset($_SESSION['id'])) {
+        // ログインユーザーのIDを取得
+        $userId = $_SESSION['id'];
 
-?> -->
+        // ===================================================================================
+        // DB検索
+        // ===================================================================================
+        // ユーザー情報取得
+        $contents = $db->prepare($sqlUser);
+        $contents->bindparam(1, $userId, PDO::PARAM_INT);
+        $contents->execute();
+        $user = $contents->fetch();
+    }
+    else{
+        // ログインページへ
+        header('Location: login.php');
+    }
 
-
-
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -43,18 +68,13 @@
                 </div>
 
                 <div id="header-right">
-                    <!-- ログインしていない時 -->
-                    <a href="login.php">ログイン/会員登録</a>
-                    <!-- ログインしている時 -->
                     <!-- ユーザーメニュー -->
                     <div id="user">
                         <label>
-                            <!-- <img src="../images/icon.jpg" alt="アイコン"> -->
-                            <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
+                            <img src="../images/icon.jpg" alt="アイコン">
                         </label>
                         <div>
-                            <a href="my_page.html">ニックネーム</a>
-                            <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
+                            <a href="my_page.php"><?php print(h($user["nick_name"])) ?></a>
                         </div>
                     </div>
                 </div>
