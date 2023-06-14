@@ -48,7 +48,7 @@ function search(){
             for(i=0; i<count; i++){
 
                 let list = document.getElementById("food_list");
-                let f_name = document.createElement("a");
+                let f_name = document.createElement("p");
                 f_name.onclick = function(){add(this);}
                 f_name.textContent = Data[i][0];
                 list.appendChild(f_name);
