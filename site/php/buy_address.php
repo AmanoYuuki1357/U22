@@ -109,41 +109,16 @@ if (!empty($_POST)) {
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/stepbar.css">
-    <link rel="stylesheet" type="text/css" href="../css/buy_address.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/buy_address.css"> -->
 
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
 
-            <div>
-                <a href="menu.php">商品一覧</a>
-            </div>
-
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <div>
-                        <img src="../images/icon.jpg" alt="アイコン">
-                    </div>
-                    <div>
-                        <a href="my_page.php"><?php print(h($user["nick_name"])) ?></a>
-                    </div>
-                </div>
-
-                <div>
-                    <a href="cart.php"><img src="../images/cart.jpg" alt="カート"></a>
-                </div>
-            </div>
-
-
-        </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
         <main>
             <!-- 進行度バー -->
@@ -154,6 +129,42 @@ if (!empty($_POST)) {
                     <li><span></span><br />完了</li>
                 </ol>
             </div>
+
+
+            <!-- https://coliss.com/articles/build-websites/operation/css/pure-css-progress-bar.html
+        ここ参考に進める予定 -->
+
+
+            <div class="step-bar">
+  <div class="step">
+    ステップ1
+  </div>
+  <div class="step">
+    ステップ2
+  </div>
+  <div class="step">
+    ステップ3
+  </div>
+</div>
+
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemax="3"></div>
+</div>
+
+
+
+<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: 33.33%;" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100">お届け先</div>
+
+</div>
+
+<div class="progress">
+
+  <div class="progress-bar" role="progressbar" style="width: 66.66%;" aria-valuenow="66.66" aria-valuemin="0" aria-valuemax="100">お支払い</div>
+</div>
+
+
 
             <div id="box">
                 <h2>お届け情報</h2>
@@ -266,7 +277,6 @@ if (!empty($_POST)) {
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->

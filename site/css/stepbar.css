@@ -1,4 +1,4 @@
-#wrap {
+/* #wrap {
     width: 100%;
     text-align: center;
 }
@@ -9,20 +9,20 @@ header{
 }
 #gomypage{
     text-align: left;
-}
+} */
 
 .stepbar-row {
     padding: 0 64px;
     width: 100%;
     display: flex;
     justify-content: center;
-    position: relative;
+    /* position: relative; */
     top: -50px;
 }
 
 .stepbar {
     display: flex;
-    position: relative;
+    /* position: relative; */
     padding: 0;
     text-align: center;
 }
@@ -75,6 +75,6 @@ header{
 .stepbar .done span {
     background-color: #E65100;
 }
-img {
+/* img {
     width: 50px;
-}
+} */
