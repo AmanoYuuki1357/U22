@@ -7,14 +7,28 @@ error_reporting(E_ALL & ~E_NOTICE);
     // ===================================================================================
     $sqlcredit = '
         SELECT
-            f_user_nick_name        AS nick_name,
-            f_user_credit_number    AS number,
-            f_user_credit_name      AS name,
-            f_user_credit_expiry    AS expiry
+            f_user_name             AS name,
+            f_user_nick_name        AS nick_name
         FROM
             t_users
         WHERE
             f_user_id = ? ;';
+    
+    $sqlcart = '
+        SELECT
+            item.f_item_id      AS id,
+            item.f_item_name    AS name,
+            item.f_item_price   AS price,
+            item.f_item_image   AS image,
+            cart.f_item_num     AS num
+        FROM
+            t_carts	AS cart
+        JOIN
+            t_items	AS item
+        ON
+            cart.f_item_id = item.f_item_id
+        WHERE
+            f_user_id = ?;';
 
     // ===================================================================================
     // セッション開始
@@ -28,14 +42,20 @@ error_reporting(E_ALL & ~E_NOTICE);
         // ログインユーザーのIDを取得
         $userId = $_SESSION['id'];
 
-        // ===================================================================================
+        // ===============================================================================
         // DB検索
-        // ===================================================================================
+        // ===============================================================================
         // ユーザー情報取得
         $contents = $db->prepare($sqlcredit);
         $contents->bindparam(1, $userId, PDO::PARAM_INT);
         $contents->execute();
-        $credit = $contents->fetch();
+        $user = $contents->fetch();
+
+        // カート情報取得
+        $contents = $db->prepare($sqlcart);
+        $contents->bindparam(1, $userId, PDO::PARAM_INT);
+        $contents->execute();
+        $carts = $contents->fetchAll();
     }
     else{
         // ログインページへ
@@ -77,19 +97,17 @@ error_reporting(E_ALL & ~E_NOTICE);
 
             <div id="header-right">
 
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
+                <!-- ログイン時のみ遷移可能なため、常にユーザー情報が表示されている -->
                 <div id="user">
                     <div>
                         <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
                     </div>
                     <div>
-                        <a href="my_page.php"><?php print(h($credit["nick_name"])) ?></a>
+                        <a href="my_page.php"><?php print(h($user["nick_name"])) ?></a>
                     </div>
                 </div>
-
-                <!-- どちらの場合でもカートは出す -->
                 <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
+
             </div>
 
         </header>
@@ -105,53 +123,50 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div>
-
+                <h3>お支払内容確認</h3>
                 <div>
-                    <p>カード番号</p>
-                    <?php
-                        if(isset($credit)){
-                            print "<p style='color: red;'>登録されていません</p>";
-                        }
-                        else{
-                            print "<p>" . h( '**** **** **** ' . substr($credit['number'], 12, 4) ) . "</p>";
-                        }
-                    ?>
-                    <p>カード名義人</p>
-                    <?php
-                        if(isset($credit)){
-                            print "<p style='color: red;'>登録されていません</p>";
-                        }
-                        else{
-                            print "<p>" . h($credit['name']) . "</p>";
-                        }
-                    ?>
-                    <p>有効期限(月/年)</p>
-                    <p>
+
+                    <p>お受取情報</p>
+
+                    <p>お名前</p>
+                    <p><?php print(h($user["name"] . " 様")) ?></p>
+                    <p>宛先</p>
+                    <p><?php print(h($_SESSION['buy']['address'])) ?></p>
+
+                    <p>購入商品</p>
+                    <table>
+                        <tr>
+                            <th>商品名</th>
+                            <th>価格</th>
+                            <th>個数</th>
+                            <th>小計</th>
+                        </tr>
                         <?php
-                            if(isset($credit)){
-                                print "<p style='color: red;'>登録されていません</p>";
-                            }
-                            else{
-                                print "<p>" . h(substr($credit['expiry'], 0, 2) . "/". substr($credit['expiry'], 2)) ."</p>" ;
+                            $sum = 0;
+                            foreach($carts as $cart){
+                                $sum += $cart['price'] * $cart['num'];
+                                print "<tr>";
+                                print "<td>" . h($cart['name']) . "</td>";
+                                print "<td>" . h($cart['price']) . "円</td>";
+                                print "<td>" . h($cart['num']) . "個</td>";
+                                print "<td>" . h($cart['price'] * $cart['num']) ."円</td>";
+                                print "</tr>";
                             }
                         ?>
-                    </p>
-                    <p>セキュリティコード</p>
-                    <p>
-                        【表示されません】
-                    </p>
+                        <tr>
+                            <th>合計</th>
+                            <td colspan="2"><?php print h($sum) . "円" ?></td>
+                        </tr>
+                    </table>
                 </div>
-                <div>
-                    <a href="">クレジットカード情報を編集する</a>
-                </div>
-
             </div>
 
             <div>
-                <a href="buy_check.php">次へ</a>
+                <a href="buy_complete.php">次へ</a>
             </div>
+
             <div class="back">
-                <a href="buy_address.php">戻る</a>
+                <a href="buy_pay.php">戻る</a>
             </div>
 
         </main>
