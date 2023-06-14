@@ -18,6 +18,7 @@ function add(e){
     cell1.appendChild(newtext);
     cell2.appendChild(delet);
     cell2.onclick = function(){delet_row(this);};
+    cell2.addEventListener("mouseover", function() {   this.style.cursor = "pointer"; });
 }
 
 function delet_row(e){
@@ -48,8 +49,9 @@ function search(){
             for(i=0; i<count; i++){
 
                 let list = document.getElementById("food_list");
-                let f_name = document.createElement("a");
+                let f_name = document.createElement("p");
                 f_name.onclick = function(){add(this);}
+                f_name.addEventListener("mouseover", function() {   this.style.cursor = "pointer"; });
                 f_name.textContent = Data[i][0];
                 list.appendChild(f_name);
             }
