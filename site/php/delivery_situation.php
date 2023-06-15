@@ -37,86 +37,59 @@ $items->execute(array($user["f_user_id"]));
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
-            <h1>ミールフレンド</h1>
-            <nav>
-                <div>
-                    <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-                </div>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
-                <div id="header-right">
-                    <!-- ログインしていない時 -->
-                    <a href="login.php">ログイン/会員登録</a>
-                    <!-- ログインしている時 -->
-                    <!-- ユーザーメニュー -->
-                    <div id="user">
-                        <label>
-                            <img class="headerimg" src="../images/icon.jpg"
-                                alt="アイコン"><!-- アイコンのサイズとりあえずstyleで小さくしてます -->
-
-                            <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                        </label>
-                        <div>
-                            <a href="my_page.php">ニックネーム</a>
-                            <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                        </div>
-                    </div>
-                </div>
-                <div id="gomypage">
-                    <a href="my_page.php">＜マイページ</a>
-                </div>
-            </nav>
-        </header>
-
-        <main>
-            <!-- <p><?php print_r($buyHistory); ?></p> -->
-            <h2>配送状況</h2>
-            <div class="situation">
-                <p>購入履歴:○○年○○月○○日</p>
-                <div class="info">
-                    <p>商品：</p>
-                    <ul>
-                        <li>商品名</li>
-                        <li>商品名</li>
-                    </ul>
-                    <p>配送予定：○○年○○月○○日</p>
-                    <p>ステータス:配送済み</p>
-                    <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
-                </div>
+    <main>
+        <!-- <p><?php print_r($buyHistory); ?></p> -->
+        <h2>配送状況</h2>
+        <div class="situation">
+            <p>購入履歴:○○年○○月○○日</p>
+            <div class="info">
+                <p>商品：</p>
+                <ul>
+                    <li>商品名</li>
+                    <li>商品名</li>
+                </ul>
+                <p>配送予定：○○年○○月○○日</p>
+                <p>ステータス:配送済み</p>
+                <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
             </div>
+        </div>
 
-            <div class="situation">
-                <p>購入履歴:○○年○○月○○日</p>
-                <div class="info">
-                    <p>商品：</p>
-                    <ul>
-                        <li>商品名</li>
-                        <li>商品名</li>
-                    </ul>
-                    <p>配送予定：○○年○○月○○日</p>
-                    <p>ステータス:配送済み</p>
-                    <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
-                </div>
+        <div class="situation">
+            <p>購入履歴:○○年○○月○○日</p>
+            <div class="info">
+                <p>商品：</p>
+                <ul>
+                    <li>商品名</li>
+                    <li>商品名</li>
+                </ul>
+                <p>配送予定：○○年○○月○○日</p>
+                <p>ステータス:配送済み</p>
+                <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
             </div>
+        </div>
 
-            <div class="situation">
-                <p>購入履歴:○○年○○月○○日</p>
-                <div class="info">
-                    <p>商品：</p>
-                    <ul>
-                        <li>商品名</li>
-                        <li>商品名</li>
-                    </ul>
-                    <p>配送予定：○○年○○月○○日</p>
-                    <p>ステータス:配送済み</p>
-                    <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
-                </div>
+        <div class="situation">
+            <p>購入履歴:○○年○○月○○日</p>
+            <div class="info">
+                <p>商品：</p>
+                <ul>
+                    <li>商品名</li>
+                    <li>商品名</li>
+                </ul>
+                <p>配送予定：○○年○○月○○日</p>
+                <p>ステータス:配送済み</p>
+                <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
             </div>
-        </main>
+        </div>
+    </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
-    </div>
+
 
 
     <!-- bootstrap CDN -->
