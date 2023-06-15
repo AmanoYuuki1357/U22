@@ -28,6 +28,10 @@ function delet_row(e){
 
 
 function search(){
+    if(document.getElementById("search").value == ""){
+        alert("検索ワードを入力してください");
+        return;
+    }
     let e = document.getElementById("search");
     let food_name = e.value;
     console.log(food_name);
@@ -61,6 +65,8 @@ function search(){
 }
 
 function regist(a){
+    let data = document.getElementById("datetime").value;
+    console.log(data);
     let table = document.getElementById("menu");
     let count = table.rows.length;
     let i;
@@ -68,7 +74,12 @@ function regist(a){
     for(i=1; i<count; i++){
         food_name[i-1] = table.rows[i].cells[0].textContent;
     }
+    if(food_name.length == 0){
+        alert("食事を選択してください");
+        return;
+    }
     console.log(a);
+    console.log(food_name);
     $.ajax({
         type: "POST",
         dateType: "text",

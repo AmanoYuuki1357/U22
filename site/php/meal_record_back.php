@@ -12,14 +12,12 @@
 
     if (isset($_POST['val2'])) {
 
-        foreach ($_POST['val2'] as $i){
+        for($i = 0; $i < count($_POST['val2']); $i++) {
             $anser .= $i;
-
-            $food_name = $i;
+            $anser .= $_POST['val2'][$i];
             $searchs = $db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
-            $searchs->execute(array($food_name));
+            $searchs->execute(array($_POST['val2'][$i]));
             $search = $searchs->fetch();
-            $anser .= $search['f_item_name'];
             $adds = $db->prepare('INSERT INTO t_intakes( f_user_id, f_intake_date,f_intake_name, f_intake_calorie, f_intake_protein_vol, f_intake_sugar_vol, f_intake_lipid_vol, f_intake_dietary_fiber_vol, f_intake_salt_vol, f_intake_image ) VALUES(?,NOW(),?,?,?,?,?,?,?,?)');
             $adds->execute(array(
                 $_POST['val3'],
@@ -32,9 +30,7 @@
                 $search['f_item_salt_vol'],
                 $search['f_item_image']
             ));
-
-
         }
-        echo json_encode($anser, JSON_UNESCAPED_UNICODE);
+        echo json_encode($errorInfo[2], JSON_UNESCAPED_UNICODE);
     }
 ?>
