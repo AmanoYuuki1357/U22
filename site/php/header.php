@@ -30,8 +30,9 @@
                             <li><a href="my_page.php"><?php print ($user["f_user_name"]) . "のマイページ"; ?></a></li>
                             <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <!-- 一時的にここに置く -->
+                            <li><a class="dropdown-item" href="./index.php">インデックス</a></li>
+                            <li><a class="dropdown-item" href="./menu.php">メニュー一覧</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
