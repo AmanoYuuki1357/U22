@@ -60,23 +60,93 @@ error_reporting(E_ALL & ~E_NOTICE);
     if(isset($_POST["update"])){
         // FIXME: 入力チェック未実装
 
-        // ユーザー情報更新
-        $contents = $db->prepare($sqlupdate);
-        $contents->bindparam(1, $_POST["number"], PDO::PARAM_INT);
-        $contents->bindparam(2, $_POST["name"], PDO::PARAM_STR);
-        $contents->bindparam(3, $_POST["expiry"], PDO::PARAM_STR);
-        $contents->bindparam(4, sha1($_POST["code"]), PDO::PARAM_STR);
-        $contents->bindparam(5, $userId, PDO::PARAM_INT);
-        $updateUser = $contents->execute();
-
-        // 更新失敗した場合
-        if($updateUser != 1){
-            // TODO: 更新失敗時の動作を考える
+        // カード番号
+        if($_POST["number"] == ""){
+            // 必須チェック
+            $error["number"] = "blank";
+        }
+        else if(mb_strlen($_POST["number"]) != 16){
+            // 桁数チェック
+            $error["number"] = "digits";
         }
 
-        // 更新成功
-        header('Location: buy_pay.php');
+        // カード名義人
+        if($_POST["name"] == ""){
+            // 必須チェック
+            $error["name"] = "blank";
+        }
+
+        // 有効期限(mm/yyyy)
+        if($_POST["expiry"] == ""){
+            // 必須チェック
+            $error["expiry"] = "blank";
+        }
+        else{
+            // 数字だけ取り出す
+            $numExpiry = str_replace('/', '', $_POST["expiry"]);
+
+            if(mb_strlen($numExpiry) != 6){
+                // 形式(桁数)チェック
+                $error["expiry"] = "digits";
+            }
+            else{
+                // 形式(月の指定が1~12)チェック
+                $month = substr($numExpiry, 0, 2);
+                if($month < 1 || $month > 12){
+                    $error["expiry"] = "digits";
+                }
+                // 整合性チェック
+                if(date("Ym") > swappingExpiry($numExpiry)){
+                    $error["expiry"] = "digits";
+                }
+            }
+        }
+
+        // セキュリティコード
+        if($_POST["code"] == ""){
+            // 必須チェック
+            $error["code"] = "blank";
+        }
+        else if($_POST["code"]){
+            // 桁数チェック
+        }
+
+        // REVIEW: 取得地の確認
+        print_r($_POST);
+        print_r($error);
+
+        if(empty($error)){
+            // ユーザー情報更新
+            $contents = $db->prepare($sqlupdate);
+            $contents->bindparam(1, $_POST["number"], PDO::PARAM_INT);
+            $contents->bindparam(2, $_POST["name"], PDO::PARAM_STR);
+            $contents->bindparam(3, $numExpiry, PDO::PARAM_INT);
+            $contents->bindparam(4, sha1($_POST["code"]), PDO::PARAM_STR);
+            $contents->bindparam(5, $userId, PDO::PARAM_INT);
+            $updateUser = $contents->execute();
+
+            // 更新失敗した場合
+            if($updateUser != 1){
+                // TODO: 更新失敗時の動作を考える
+            }
+
+            // 更新成功
+            header('Location: buy_pay.php');
+        }
     }
+
+    // ===================================================================================
+    // 関数
+    // ===================================================================================
+    // 有効期限をmm/yyyyの形式にフォーマット
+    function formatingExpiry($expiry):string{
+        return substr($expiry, 0, 2) . "/". substr($expiry, 2);
+    }
+
+    function swappingExpiry($expiry):string{
+        return substr($expiry, 2) . substr($expiry, 0, 2);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -123,22 +193,65 @@ error_reporting(E_ALL & ~E_NOTICE);
                 <input
                     type="text"
                     name="number"
-                    value="<?php print $user["number"] ?>"
-                    placeholder="カード番号(16桁)を入力してください"/>
+                    value="<?php print isset($_POST["update"])? $_POST["number"]: h($user["number"]) ?>"
+                    placeholder="カード番号(16桁)を入力してください"
+                    require />
+                <?php
+                    // エラーメッセージ
+                    if(isset($_POST["number"])){
+                        
+                        switch($error["number"]){
+                            case "blank":
+                                print "<p style='color: red;'>入力がありません</p>";
+                                break;
+                            case "digits":
+                                print "<p style='color: red;'>16桁で入力してください</p>";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                ?>
 
                 <p>カード名義人</p>
                 <input
                     type="text"
                     name="name"
-                    value="<?php print $user["name"] ?>"
+                    value="<?php print isset($_POST["update"])? $_POST["name"]: h($user["name"]) ?>"
                     placeholder="カード名義人を入力してください" />
+                <?php
+                    // エラーメッセージ
+                    if(isset($_POST["name"])){
+                        if ($error['name'] == 'blank') {
+                            print '<p style="color: red;">入力がありません</p>';
+                        }
+                    }
+                ?>
 
                 <p>有効期限(月/年)</p>
                 <input
                     type="month"
                     name="expiry"
-                    value="<?php print $user["expiry"] ?>"
-                    placeholder="有効期限(mm/yyyy)を入力してください"/>
+                    value="<?php print isset($_POST["update"])? $_POST["expiry"]: h(formatingExpiry($user["expiry"])); ?>"
+                    placeholder="有効期限(mm/yyyy)を入力してください" />
+                <?php
+                    // エラーメッセージ
+                    if(isset($_POST["update"])){
+                        switch($error["number"]){
+                            case "expiry":
+                                print "<p style='color: red;'>入力がありません</p>";
+                                break;
+                            case "digits":
+                                print "<p style='color: red;'>16桁で入力してください</p>";
+                                break;
+                            case "digits":
+                                print "<p style='color: red;'>16桁で入力してください</p>";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                ?>
 
                 <p>セキュリティコード</p>
                 <input
@@ -146,12 +259,23 @@ error_reporting(E_ALL & ~E_NOTICE);
                     name="code"
                     value=""
                     placeholder="セキュリティコード(3~4桁)を入力してください"/>
+                
+                <?php
+                    // エラーメッセージ
+                    if(isset($_POST["update"])){
+                        if ($error['code'] == 'blank') {
+                            print '<p style="color: red;">入力がありません</p>';
+                        }
+                    }
+                ?>
 
             </div>
+
             <div>
                 <!-- <a href="buy_pay.php">更新する</a> -->
                 <input type="submit" name="update" value="更新する" />
             </div>
+
             </form>
 
         </div>
