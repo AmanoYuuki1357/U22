@@ -12,15 +12,15 @@
 
     if (isset($_POST['val2'])) {
 
-        for($i = 0; $i < count($_POST['val2']); $i++) {
+        foreach ($_POST['val2'] as $i){
             $anser .= $i;
 
-            $food_name = $_POST['val2'][$i];
+            $food_name = $i;
             $searchs = $db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
             $searchs->execute(array($food_name));
             $search = $searchs->fetch();
             $anser .= $search['f_item_name'];
-            $adds = $db->prepare('INSERT INTO t_intakes( f_user_id, f_intake_date,f_intake_name, f_intake_calorie, f_intake_protein_vol, f_intake_suger_vol, f_intake_lipid_vol, f_intake_dietary_fiber_vol, f_intake_salt_vol, f_intake_image ) VALUES(?,NOW(),?,?,?,?,?,?,?,?)');
+            $adds = $db->prepare('INSERT INTO t_intakes( f_user_id, f_intake_date,f_intake_name, f_intake_calorie, f_intake_protein_vol, f_intake_sugar_vol, f_intake_lipid_vol, f_intake_dietary_fiber_vol, f_intake_salt_vol, f_intake_image ) VALUES(?,NOW(),?,?,?,?,?,?,?,?)');
             $adds->execute(array(
                 $_POST['val3'],
                 $search['f_item_name'],
