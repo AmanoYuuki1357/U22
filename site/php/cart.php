@@ -54,7 +54,7 @@ $carts->execute(array($user['f_user_id']));
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/cart.css"> 
+    <link rel="stylesheet" type="text/css" href="../css/cart.css">
     <!-- cart.htmlで検証　こっちでもCSS適用されているかは未確認 -->
 
 
@@ -73,6 +73,9 @@ require('header.php');
     <!-- ショッピングカート -->
         <div id="cart" class="container">
             <h3>ショッピングカート</h3>
+
+            <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
+
             <div class="row">
                 <?php
                 $sum = 0;
@@ -80,7 +83,7 @@ require('header.php');
 
                     print('<div class="col-sm-12 col-md-3 col-lg-2 item-box">');
                     // print('<button>pic</button>');
-                    print('<p>' . $cart['f_item_name'] . '</p>');
+                    print('<p id="itemId' . $cart['f_item_id'] . '">' . $cart['f_item_name'] . '</p>');
                     print('<p>' . $cart['f_item_price'] . '円</p>');
                     print('<div id=plus_minus>'); //+-ボタン横並びにするためのid指定
                     print('<button onClick="down(this)">-</button>');
@@ -122,7 +125,7 @@ require('header.php');
 
 
     <!-- jQuery -->
-    <!-- <script src="js/jQuery.js"></scrip> -->
+    <script src="../js/jQuery.js"></script>
     <script src="../js/cart.js"></script>
 
 

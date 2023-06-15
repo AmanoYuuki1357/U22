@@ -36,30 +36,10 @@ if (isset($_SESSION["id"])) {
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
-
-            <div>
-                <a href="menu.php">商品一覧</a>
-            </div>
-
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <!-- ログインしている時 -->
-                <div>
-                    <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                </div>
-                <!-- どちらの場合でもカートは出す -->
-                <div>
-                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
-                </div>
-            </div>
-
-        </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
         </header>
 
@@ -81,7 +61,7 @@ if (isset($_SESSION["id"])) {
                         </a>
                     </div>
                     <div>
-                        <a href="meal_analize.php">
+                        <a href="meal_analyze.php">
                             <img alt="食事分析pic">
                             <p>食事分析</p>
                         </a>
@@ -89,11 +69,11 @@ if (isset($_SESSION["id"])) {
                 </div>
 
                 <div class="outline">
-                    <a href="buy_history.html">あなたの購入履歴></a>
+                    <a href="buy_history.php">あなたの購入履歴></a>
                 </div>
 
                 <div class="outline">
-                    <a href="delivery_situation.html">あなたの配送状況></a>
+                    <a href="delivery_situation.php">あなたの配送状況></a>
                 </div>
 
                 <!-- <?php
@@ -135,7 +115,6 @@ if (isset($_SESSION["id"])) {
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->

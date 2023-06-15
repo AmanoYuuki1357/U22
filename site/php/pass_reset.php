@@ -26,35 +26,11 @@
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
 
-            <h2>
-                ミールフレンド
-            </h2>
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <!-- ログインしていない時 -->
-                <a href="login.php">ログイン/会員登録</a>
-
-                <!-- ログインしている時 -->
-                <!-- ユーザーメニュー -->
-                <div id="user">
-                    <label>
-                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <!-- <img src=icon_images/<?php print(h($icon["userIcon"])) ?> alt="アイコン"> -->
-                    </label>
-                    <div>
-                        <a href="my_page.php">ニックネーム</a>
-                        <!-- <a href="my_page.php"><?php print(h($user["userNickName"])) ?></a> -->
-                    </div>
-                </div>
-            </div>
-
-        </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
         <main>
             <p>パスワード再設定</p>
@@ -92,7 +68,7 @@
         </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
-    </div>
+
 
 
     <!-- bootstrap CDN -->
