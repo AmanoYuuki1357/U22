@@ -41,8 +41,6 @@ if (isset($_SESSION["id"])) {
 require('header.php');
 ?>
 
-        </header>
-
         <main>
 
             <div>
