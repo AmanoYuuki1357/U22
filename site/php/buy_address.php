@@ -1,5 +1,6 @@
 <?php
 require('common.php');
+require('test.php');
 error_reporting(E_ALL & ~E_NOTICE);
 
 // ===================================================================================
@@ -23,6 +24,9 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+// REVIEW: オブジェクト生成
+$test = new test();
+
 // ユーザーID取得
 if (isset($_SESSION['id'])) {
     // ログインユーザーのIDを取得
@@ -39,6 +43,9 @@ if (isset($_SESSION['id'])) {
 
     if(!isset($_SESSION['buy']['address']) || empty($_SESSION['buy']['address'])){
         $_SESSION['buy']['address'] = $user['address'];
+
+        // REVIEW: 確認ログ
+        $test->info("[OK]DB:address取得");
     }
 }
 else{
@@ -89,6 +96,7 @@ if (!empty($_POST)) {
     // エラーなしの場合
     if (empty($error)) {
         $_SESSION['buy']['address'] = '〒' . $_POST['postal-code'] . ' ' . $_POST['region'] . $_POST['locality'] . $_POST['street-address'];
+        $test->info("[OK]SESSION:address取得");
     }
 }
 
