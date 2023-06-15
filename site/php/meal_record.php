@@ -32,43 +32,17 @@ if (isset($_SESSION["id"])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/meal_record.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/meal_record.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/meal_record.js"></script>
 
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
-
-            <h2>
-                ミールフレンド
-            </h2>
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <!-- ログインしていない時 -->
-
-            <div id="header-right">
-                <?php
-                if (!isset($_SESSION["id"])) {
-                ?>
-                    <a href="login.php">ログイン/会員登録</a>
-                <?php
-                } else {
-                ?>
-                    <div>
-                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    </div>
-                <?php
-                }
-                ?>
-            </div>
-
-        </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
         <div id="gomypage">
             <a href="my_page.php">＜マイページ</a>
@@ -106,7 +80,6 @@ if (isset($_SESSION["id"])) {
         </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
-    </div>
 
 
     <!-- bootstrap CDN -->

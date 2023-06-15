@@ -87,22 +87,17 @@ if (!empty($_POST)) {
         <!-- bootstrap CDN -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- <link rel="stylesheet" href="../css/common.css"> -->
+    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/login.css">
 
 
 </head>
 
 <body>
-    <header class="py-3 mb-3 border-bottom flex-top">
-        <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-            <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none"
-                id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
-                <!-- ロゴ画像を置く -->
-                <img src="../images/nakao.jpg" class="bi me-2" width="40" height="32">
-            </a>
-        </div>
-    </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
 
         <main>

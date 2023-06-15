@@ -4,6 +4,7 @@
 
     $userId = $_POST['val1'];
     $itemId = $_POST['val2'];
+    $itemNum = $_POST['val3'];
 
 
     // $sql1 = 'SELECT * FROM t_carts WHERE f_user_id=? AND f_item_id=?';
@@ -12,10 +13,9 @@
     // $cart = $stmt->fetch();
 
     // if()
-    $sql = 'INSERT INTO t_carts(f_user_id,f_item_id,f_item_num) VALUES(?,?,1)';
+    $sql = 'UPDATE t_carts SET f_item_num=? WHERE f_user_id=? AND f_item_id=?';
     $stmt = $db->prepare($sql);
-    $stmt->execute(array($userId,$itemId));
-    // print_r($cart);
+    $stmt->execute(array($itemNum,$userId,$itemId));
 
     // print("ajax");
 
