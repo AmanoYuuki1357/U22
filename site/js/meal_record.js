@@ -59,3 +59,27 @@ function search(){
         }
     });
 }
+
+function regist(a){
+    let table = document.getElementById("menu");
+    let count = table.rows.length;
+    let i;
+    let food_name = new Array();
+    for(i=1; i<count; i++){
+        food_name[i-1] = table.rows[i].cells[0].textContent;
+    }
+    console.log(a);
+    $.ajax({
+        type: "POST",
+        dateType: "text",
+
+        url: "../php/meal_record_back.php",
+        data: { val2: food_name, val3: a},
+
+        success: function (data) {
+            console.log(data);
+            alert("登録しました");
+        }
+    });
+
+}

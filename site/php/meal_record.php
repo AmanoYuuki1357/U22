@@ -1,19 +1,19 @@
 <?php
-// require('common.php');
-// error_reporting(E_ALL & ~E_NOTICE);
-// if (!isset($_SESSION)) {
-//     session_start();
-// }
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 
-// if (isset($_SESSION["id"])) {
-//     $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-//     $users->execute(array($_SESSION["id"]));
-//     $user = $users->fetch();
-// } else {
-//     header('Location: login.php');
-//     exit();
-// }
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
 ?>
 
@@ -102,7 +102,7 @@
                     </tr>
                 </table>
                 <button>
-                    <a>登録</a>
+                    <a onclick="regist(<?php print $user['f_user_id'] ?>)">登録</a>
                 </button>
             </div>
 
