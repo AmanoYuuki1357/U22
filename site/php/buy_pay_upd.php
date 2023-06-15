@@ -58,8 +58,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 
     // 更新するボタン押下時のイベント
     if(isset($_POST["update"])){
-        // FIXME: 入力チェック未実装
-
+        // ===================================================================================
+        // 入力チェック
+        // ===================================================================================
         // カード番号
         if($_POST["number"] == ""){
             // 必須チェック
@@ -90,14 +91,14 @@ error_reporting(E_ALL & ~E_NOTICE);
                 $error["expiry"] = "digits";
             }
             else{
-                // 形式(月の指定が1~12)チェック
                 $month = substr($numExpiry, 0, 2);
                 if($month < 1 || $month > 12){
-                    $error["expiry"] = "digits";
+                    // 形式(月の指定が1~12)チェック
+                    $error["expiry"] = "format";
                 }
-                // 整合性チェック
-                if(date("Ym") > swappingExpiry($numExpiry)){
-                    $error["expiry"] = "digits";
+                elseif(date("Ym") > swappingExpiry($numExpiry)){
+                    // 整合性チェック
+                    $error["expiry"] = "expired";
                 }
             }
         }
@@ -107,8 +108,9 @@ error_reporting(E_ALL & ~E_NOTICE);
             // 必須チェック
             $error["code"] = "blank";
         }
-        else if($_POST["code"]){
+        else if(mb_strlen($_POST["code"]) != 3){
             // 桁数チェック
+            $error["code"] = "digits";
         }
 
         // REVIEW: 取得地の確認
@@ -198,8 +200,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                     require />
                 <?php
                     // エラーメッセージ
-                    if(isset($_POST["number"])){
-                        
+                    if(isset($error["number"])){
                         switch($error["number"]){
                             case "blank":
                                 print "<p style='color: red;'>入力がありません</p>";
@@ -221,7 +222,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                     placeholder="カード名義人を入力してください" />
                 <?php
                     // エラーメッセージ
-                    if(isset($_POST["name"])){
+                    if(isset($error['name'])){
                         if ($error['name'] == 'blank') {
                             print '<p style="color: red;">入力がありません</p>';
                         }
@@ -236,16 +237,19 @@ error_reporting(E_ALL & ~E_NOTICE);
                     placeholder="有効期限(mm/yyyy)を入力してください" />
                 <?php
                     // エラーメッセージ
-                    if(isset($_POST["update"])){
-                        switch($error["number"]){
-                            case "expiry":
+                    if(isset($error["expiry"])){
+                        switch($error["expiry"]){
+                            case "blank":
                                 print "<p style='color: red;'>入力がありません</p>";
                                 break;
                             case "digits":
                                 print "<p style='color: red;'>16桁で入力してください</p>";
                                 break;
-                            case "digits":
-                                print "<p style='color: red;'>16桁で入力してください</p>";
+                            case "format":
+                                print "<p style='color: red;'>1月から12月のいずれかの月を入力してください</p>";
+                                break;
+                            case "expired":
+                                print "<p style='color: red;'>有効期限が切れています</p>";
                                 break;
                             default:
                                 break;
