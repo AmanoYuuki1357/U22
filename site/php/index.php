@@ -22,12 +22,11 @@ if (isset($_SESSION["id"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css -->
     <link rel="stylesheet" href="../css/reset.css">
-    <!-- <link rel="stylesheet" href="../css/common.css"> -->
-
 <!-- bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="../css/common.css">
 
     <title>ミールフレンド</title>
 </head>
@@ -56,7 +55,7 @@ require('header.php');
 
         <div class="row align-items-md-stretch">
             <div class="col-md-6">
-                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                <div class="h-100 p-5 text-white bg-light rounded-3">
                     <h2>食事を作るのが苦手な方のための配食サービス</h2>
                     <p>ミールフレンドは、食事を作るのが苦手な方のための配食サービスです。温かく美味しいお弁当を、ご自宅までお届けします。また、栄養士が監修した献立なので、安心してお召し上がりいただけます。また、お弁当の配達の際には、お買い物や掃除などのお手伝いも行いますので、ご自宅で安心して生活することができます。ご興味のある方は、ぜひお問い合わせください。
                     </p>
@@ -64,7 +63,7 @@ require('header.php');
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="h-100 p-5 bg-light border rounded-3">
+                <div class="h-100 p-5 bg-light rounded-3">
                     <h2>健康的な食事をしたい方のための配食サービス</h2>
                     <p>ミールフレンドは、健康的な食事をしたい方のための配食サービスです。温かく美味しいお弁当を、ご自宅までお届けします。また、栄養士が監修した献立なので、安心してお召し上がりいただけます。また、お弁当の配達の際には、安否確認も行いますので、安心してご利用いただけます。ご興味のある方は、ぜひお問い合わせください。
                     </p>

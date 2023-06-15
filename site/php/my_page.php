@@ -36,30 +36,10 @@ if (isset($_SESSION["id"])) {
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
-
-            <div>
-                <a href="menu.php">商品一覧</a>
-            </div>
-
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <!-- ログインしている時 -->
-                <div>
-                    <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                    <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                </div>
-                <!-- どちらの場合でもカートは出す -->
-                <div>
-                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
-                </div>
-            </div>
-
-        </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
         </header>
 
@@ -135,7 +115,6 @@ if (isset($_SESSION["id"])) {
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-    </div>
 
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
