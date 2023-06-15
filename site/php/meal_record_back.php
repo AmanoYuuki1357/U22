@@ -18,9 +18,10 @@
             $searchs = $db->prepare('SELECT * FROM t_items WHERE f_item_name=?');
             $searchs->execute(array($_POST['val2'][$i]));
             $search = $searchs->fetch();
-            $adds = $db->prepare('INSERT INTO t_intakes( f_user_id, f_intake_date,f_intake_name, f_intake_calorie, f_intake_protein_vol, f_intake_sugar_vol, f_intake_lipid_vol, f_intake_dietary_fiber_vol, f_intake_salt_vol, f_intake_image ) VALUES(?,NOW(),?,?,?,?,?,?,?,?)');
+            $adds = $db->prepare('INSERT INTO t_intakes( f_user_id, f_intake_date,f_intake_name, f_intake_calorie, f_intake_protein_vol, f_intake_sugar_vol, f_intake_lipid_vol, f_intake_dietary_fiber_vol, f_intake_salt_vol, f_intake_image ) VALUES(?,?,?,?,?,?,?,?,?,?)');
             $adds->execute(array(
                 $_POST['val3'],
+                $_POST['val4'],
                 $search['f_item_name'],
                 $search['f_item_calorie'],
                 $search['f_item_protein_vol'],
