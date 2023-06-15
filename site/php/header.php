@@ -1,17 +1,12 @@
-
-<header class="py-3 mb-3 border-bottom flex-top">
+    <header class="py-3 mb-3 border-bottom flex-top">
         <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-            <a href="../php/menu.php" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
 
-                <!-- ロゴ画像を置く -->
+            <!-- ロゴ画像を置く -->
+            <a href="./menu.php" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="../images/logo.png" class="bi me-2" width="140" height="32">
             </a>
 
-
             <div class="d-flex justify-content-end">
-
-
-
 
                 <!-- ログインしていないときに表示 -->
                 <?php
@@ -35,8 +30,9 @@
                             <li><a href="my_page.php"><?php print ($user["f_user_name"]) . "のマイページ"; ?></a></li>
                             <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <!-- 一時的にここに置く -->
+                            <li><a class="dropdown-item" href="./index.php">インデックス</a></li>
+                            <li><a class="dropdown-item" href="./menu.php">メニュー一覧</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

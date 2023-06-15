@@ -54,12 +54,6 @@ require('header.php');
                     <h2>献立</h2>
                     <input type="text" name="search" size="15" id="search" placeholder="料理名を検索">
                     <button onclick="search()">検索</button>
-                    <div>
-                        <input type="radio" name="time" value="朝食">朝食
-                        <input type="radio" name="time" value="昼飯">昼食
-                        <input type="radio" name="time" value="夕飯">夕食
-                        <input type="radio" name="time" value="その他" checked>その他
-                    </div>
 
                     <div id="food_list">
 
@@ -67,7 +61,8 @@ require('header.php');
                 </div>
 
             <div id="table">
-                <p>日付</p>
+                <label for="datetime">日時を選択してください:</label>
+                <input type="datetime-local" id="datetime" name="datetime">
                 <!-- table作成 -->
                 <table border="1" id="menu">
                     <tr>
