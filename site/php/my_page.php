@@ -61,7 +61,7 @@ require('header.php');
                         </a>
                     </div>
                     <div>
-                        <a href="meal_analize.php">
+                        <a href="meal_analyze.php">
                             <img alt="食事分析pic">
                             <p>食事分析</p>
                         </a>
@@ -69,11 +69,11 @@ require('header.php');
                 </div>
 
                 <div class="outline">
-                    <a href="buy_history.html">あなたの購入履歴></a>
+                    <a href="buy_history.php">あなたの購入履歴></a>
                 </div>
 
                 <div class="outline">
-                    <a href="delivery_situation.html">あなたの配送状況></a>
+                    <a href="delivery_situation.php">あなたの配送状況></a>
                 </div>
 
                 <!-- <?php

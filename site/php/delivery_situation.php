@@ -1,3 +1,22 @@
+<?php
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+}
+
+$sql = 'SELECT * FROM t_buy_history WHERE f_user_id=?';
+$items = $db->prepare($sql);
+$items->execute(array($user["f_user_id"]));
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -51,6 +70,7 @@
         </header>
 
         <main>
+            <!-- <p><?php print_r($buyHistory); ?></p> -->
             <h2>配送状況</h2>
             <div class="situation">
                 <p>購入履歴:○○年○○月○○日</p>
