@@ -95,7 +95,7 @@ if (!empty($_POST)) {
 
     // エラーなしの場合
     if (empty($error)) {
-        $_SESSION['buy']['address'] = '〒' . $_POST['postal-code'] . ' ' . $_POST['region'] . $_POST['locality'] . $_POST['street-address'];
+        $_SESSION['buy']['address'] = '〒' . $_POST['postal-code'] . ' ' . $_POST['region'] . $_POST['locality'] . $_POST['street-address'] . $_POST['others'];
         $test->info("[OK]SESSION:address取得");
     }
 }

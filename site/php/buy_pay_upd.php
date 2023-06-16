@@ -108,14 +108,14 @@ error_reporting(E_ALL & ~E_NOTICE);
             // 必須チェック
             $error["code"] = "blank";
         }
-        else if(mb_strlen($_POST["code"]) != 3){
+        else if(mb_strlen($_POST["code"]) != 3 || mb_strlen($_POST["code"]) != 4){
             // 桁数チェック
             $error["code"] = "digits";
         }
 
         // REVIEW: 取得地の確認
-        print_r($_POST);
-        print_r($error);
+        // print_r($_POST);
+        // print_r($error);
 
         if(empty($error)){
             // ユーザー情報更新
@@ -145,6 +145,7 @@ error_reporting(E_ALL & ~E_NOTICE);
         return substr($expiry, 0, 2) . "/". substr($expiry, 2);
     }
 
+    // 有効期限をyyyymmの形式にフォーマット
     function swappingExpiry($expiry):string{
         return substr($expiry, 2) . substr($expiry, 0, 2);
     }
@@ -243,7 +244,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                                 print "<p style='color: red;'>入力がありません</p>";
                                 break;
                             case "digits":
-                                print "<p style='color: red;'>16桁で入力してください</p>";
+                                print "<p style='color: red;'>入力値が不正です</p>";
                                 break;
                             case "format":
                                 print "<p style='color: red;'>1月から12月のいずれかの月を入力してください</p>";
@@ -266,9 +267,16 @@ error_reporting(E_ALL & ~E_NOTICE);
                 
                 <?php
                     // エラーメッセージ
-                    if(isset($_POST["update"])){
-                        if ($error['code'] == 'blank') {
-                            print '<p style="color: red;">入力がありません</p>';
+                    if(isset($error['code'])){
+                        switch($error['code']){
+                            case "blank":
+                                print "<p style='color: red;'>入力がありません</p>";
+                                break;
+                            case "digits":
+                                print "<p style='color: red;'>3または4桁で入力してください</p>";
+                                break;
+                            default:
+                                break;
                         }
                     }
                 ?>
