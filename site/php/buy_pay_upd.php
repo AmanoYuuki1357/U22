@@ -108,9 +108,11 @@ error_reporting(E_ALL & ~E_NOTICE);
             // 必須チェック
             $error["code"] = "blank";
         }
-        else if(mb_strlen($_POST["code"]) != 3 || mb_strlen($_POST["code"]) != 4){
-            // 桁数チェック
-            $error["code"] = "digits";
+        else if(mb_strlen($_POST["code"]) != 3){
+            if(mb_strlen($_POST["code"]) != 4){
+                // 桁数チェック
+                $error["code"] = "digits";
+            }
         }
 
         // REVIEW: 取得地の確認
