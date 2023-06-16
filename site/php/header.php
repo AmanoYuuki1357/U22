@@ -2,7 +2,7 @@
         <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
 
             <!-- ロゴ画像を置く -->
-            <a href="./menu.php" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" id="dropdownNavLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <a href="../php/menu.php" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 text-decoration-none">
                 <img src="../images/logo.png" class="bi me-2" width="140" height="32">
             </a>
 
@@ -22,7 +22,7 @@
                 ?>
                     <!-- ログインしているときに表示 -->
                     <div class="flex-shrink-0 dropdown icon">
-                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown">
                             <!-- ログインした人の画像 -->
                             <img src="../images/icon.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>

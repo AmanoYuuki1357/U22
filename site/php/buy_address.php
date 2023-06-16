@@ -276,7 +276,7 @@ require('header.php');
                 <?php
                 if (!empty($_SESSION['buy']['address'])) {
                     // 住所が取得できた時だけ次のページへのリンクを表示
-                    print('<div><a href="buy_pay.php">次へ:お支払方法</a></div>');
+                    print('<div><a href="buy_address.php">次へ:お支払方法</a></div>');
                 }
                 ?>
                 <!-- <div class="back"><a href="my_page.php">マイページへ</a></div> -->

@@ -1,18 +1,10 @@
-
+/* 
 header{
     width: 100%;
     position: absolute;
     top: 0;
-}
-main{
-    display: flex;
-    /* border: 1px solid; */
-    padding: 20px;
-    position: relative;
-    top: 150px;
-    width: 100%;
-    height: 100%;
-}
+} */
+
 main div{
     width: 100%;
 }
@@ -38,26 +30,11 @@ header label img{
 #itemimg{
     float: left;
 }
-#iteminfo{
-    position: relative;
-    right: -500px;
-    top: -800px;
-    display: block;
-}
+
 #review{
     float: left;
 }
-#gomenu {
-    width: 100%;
-    border-bottom: solid;
-    background-color: #fff;
-    opacity: 50%;
-    padding: 5px;
-    position: absolute;
-    top: 100px;
-    left: 0;
-    z-index: 100;
-}
+
 #box{
     position: relative;
     left: 0;
