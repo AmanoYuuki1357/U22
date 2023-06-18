@@ -32,3 +32,27 @@ function inCart(e){
     e.remove();
 
 }
+
+// ========================================================================
+// モーダルイベント
+// ========================================================================
+var reviewModal = document.getElementById('reviewModal')
+
+reviewModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    // モーダルをトリガーしたボタン
+    var button = event.relatedTarget
+
+    // Extract info from data-bs-* attributes
+    // data-bs-* 属性から情報を抽出する
+    var recipient = button.getAttribute('data-bs-whatever')
+
+    // If necessary, you could initiate an AJAX request here and then do the updating in a callback.
+    // 必要に応じて、ここで AJAX リクエストを開始し、コールバックで更新を実行できます。
+    // Update the modal's content.
+    var modalTitle      = exampleModal.querySelector('.modal-title')
+    var modalBodyInput  = exampleModal.querySelector('.modal-body input')
+
+    modalTitle.textContent  = recipient + 'のレビューを書きましょう'
+    modalBodyInput.value    = recipient
+})

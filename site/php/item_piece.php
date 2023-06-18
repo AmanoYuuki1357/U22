@@ -116,9 +116,6 @@ $sqlCarts = '
         AND
             f_user_id = ?;';
 
-// カート登録SQL
-$insertCarts = 'INSERT INTO t_carts VALUES( ?, ?, ? );';
-
 // ===================================================================================
 // 関数
 // ===================================================================================
@@ -298,24 +295,25 @@ $test->get(empty($user), "ユーザーTBL");
                         } else {
                             // レビュー情報が取得できた場合
                             foreach ($reviews as $review) {
-
                                 print "
-                            <div>
-                                <dl>
-                                    <dt>日付</dt>
-                                        <dd>" . h($review['date']) . "</dd>
-                                    <dt>評価</dt>
-                                        <dd>" . strNumToStar($review['point']) . "</dd>
-                                    <dt>コメント</dt>
-                                        <dd>" . h($review['review']) . "</dd>
-                                </dl>
-                            </div>";
+                                    <div>
+                                        <dl>
+                                            <dt>日付</dt>
+                                                <dd>" . h($review['date']) . "</dd>
+                                            <dt>評価</dt>
+                                                <dd>" . strNumToStar($review['point']) . "</dd>
+                                            <dt>コメント</dt>
+                                                <dd>" . h($review['review']) . "</dd>
+                                        </dl>
+                                    </div>";
                             }
-
-                            print "<a id='go_review' href=''>レビューを書く</a>";
                         }
                         ?>
                     </div>
+
+                    <!-- Todo: 購入履歴に応じてレビュー登録ボタンを表示する -->
+                    <!-- <a id='go_review' href=''>レビューを書く</a> -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">レビューを書く</button>
 
                 </div>
             </div>
@@ -426,6 +424,50 @@ $test->get(empty($user), "ユーザーTBL");
     </main>
 
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    <!-- レビュー記入ウィンドウ -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><?php print $item['name'] ?>のレビューを書きましょう</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- 商品情報 -->
+                <div class="mb-3">
+                    <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                    <p><?php print $item['name'] ?></p>
+                    <p><?php print $item['ex'] ?></p>
+                    <p>ニックネーム</p>
+                    <p><?php print $user['f_user_nick_name'] ?>さん</p>
+                </div>
+
+                <!-- レビュー入力フォーム -->
+                <form>
+                <!-- レビュー点数 -->
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">点数</label>
+                    <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <!-- レビュー内容 -->
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">コメント</label>
+                    <textarea class="form-control" id="message-text"></textarea>
+                </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary">投稿する</button>
+            </div>
+        </div>
+
+    </div>
+    </div>
 
     <script src="../js/jQuery.js"></script>
     <script src="../js/item_piece.js"></script>
