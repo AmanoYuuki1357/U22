@@ -229,36 +229,10 @@ $test->get(empty($user), "ユーザーTBL");
     <!-- FIXME: 画面右の料理詳細によって覆われているため、アイコンイベントが発生しない -->
     <?php //require('header.php'); ?>
 
-    <header>
-        <nav>
-            <div>
-                <a href="menu.php"><img src="../images/MFlogo.png" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <!-- マイページ/ログイン -->
-                <?php
-                if (isset($_SESSION['id'])) {
-                    print '
-                        <div id="user">
-                            <label>
-                                <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
-                            </label>
-                            <div>
-                                <a href="my_page.php">' . h($user['f_user_nick_name']) . '</a>
-                            </div>
-                        </div>
-                        <div>
-                            <a href="cart.php"><img style="width: 50px;" src="../images/cart.jpg" alt="カート"></a>
-                        </div>';
-                } else {
-                    print "<a href='login.php'>ログイン/会員登録</a>";
-                }
-                ?>
-            </div>
-        </nav>
-
-    </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
     <div id="gomenu">
         <a href="./menu.php">＜メニュー一覧</a>
