@@ -130,10 +130,11 @@ require('header.php');
         <h1 class="visually-hidden">Heroes examples</h1>
 
         <div class="px-4 py-5 my-5 text-center">
-            <h2 class="display-5 fw-bold">ぜひ登録してください</h1>
-            <div class="col-lg-6 mx-auto">
-                <button type="button" class="btn btn-outline-primary btn-lg">Login/Sign-up</button>
-            </div>
+            <h2 class="display-5 fw-bold">ぜひご登録ください！</h1>
+
+            <a class="text-end px-4 py-5 my-5 text-center" href="../php/login.php">
+                        <button type="button" class="btn btn-outline-primary btn-lg">Login/Sign-up</button>
+                    </a>
         </div>
 
 

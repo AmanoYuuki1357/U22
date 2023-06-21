@@ -116,9 +116,6 @@ $sqlCarts = '
         AND
             f_user_id = ?;';
 
-// カート登録SQL
-$insertCarts = 'INSERT INTO t_carts VALUES( ?, ?, ? );';
-
 // ===================================================================================
 // 関数
 // ===================================================================================
@@ -228,40 +225,11 @@ $test->get(empty($user), "ユーザーTBL");
 </head>
 
 <body>
-    <!-- ヘッダー部分 -->
-    <!-- FIXME: 画面右の料理詳細によって覆われているため、アイコンイベントが発生しない -->
-    <?php //require('header.php'); ?>
 
-    <header>
-        <nav>
-            <div>
-                <a href="menu.php"><img src="../images/MFlogo.png" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <!-- マイページ/ログイン -->
-                <?php
-                if (isset($_SESSION['id'])) {
-                    print '
-                        <div id="user">
-                            <label>
-                                <img class="headerimg"  src="../images/icon.jpg" alt="アイコン">
-                            </label>
-                            <div>
-                                <a href="my_page.php">' . h($user['f_user_nick_name']) . '</a>
-                            </div>
-                        </div>
-                        <div>
-                            <a href="cart.php"><img style="width: 50px;" src="../images/cart.jpg" alt="カート"></a>
-                        </div>';
-                } else {
-                    print "<a href='login.php'>ログイン/会員登録</a>";
-                }
-                ?>
-            </div>
-        </nav>
-
-    </header>
+<!-- ヘッダー部分 -->
+<?php
+require('header.php');
+?>
 
     <div id="gomenu">
         <a href="./menu.php">＜メニュー一覧</a>
@@ -298,24 +266,34 @@ $test->get(empty($user), "ユーザーTBL");
                         } else {
                             // レビュー情報が取得できた場合
                             foreach ($reviews as $review) {
-
                                 print "
-                            <div>
-                                <dl>
-                                    <dt>日付</dt>
-                                        <dd>" . h($review['date']) . "</dd>
-                                    <dt>評価</dt>
-                                        <dd>" . strNumToStar($review['point']) . "</dd>
-                                    <dt>コメント</dt>
-                                        <dd>" . h($review['review']) . "</dd>
-                                </dl>
-                            </div>";
+                                    <div>
+                                        <dl>
+                                            <dt>日付</dt>
+                                                <dd>" . h($review['date']) . "</dd>
+                                            <dt>評価</dt>
+                                                <dd>" . strNumToStar($review['point']) . "</dd>
+                                            <dt>コメント</dt>
+                                                <dd>" . h($review['review']) . "</dd>
+                                        </dl>
+                                    </div>";
                             }
-
-                            print "<a id='go_review' href=''>レビューを書く</a>";
                         }
                         ?>
                     </div>
+
+                    <!-- Todo: 購入履歴に応じてレビュー登録ボタンを表示する -->
+                    <!-- <a id='go_review' href=''>レビューを書く</a> -->
+                    <?php 
+                        if(isset($_SESSION["id"])){
+                            print '<button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        data-bs-whatever="@getbootstrap">レビューを書く</button>';
+                        }
+                    ?>
 
                 </div>
             </div>
@@ -426,6 +404,55 @@ $test->get(empty($user), "ユーザーTBL");
     </main>
 
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    <!-- レビュー記入ウィンドウ -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <!-- ヘッダー -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><?php print $item['name'] ?>のレビューを書きましょう</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- 商品情報 -->
+                <div class="mb-3">
+                    <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                    <p><?php print $item['name'] ?></p>
+                    <p><?php print $item['ex'] ?></p>
+                    <p>ニックネーム</p>
+                    <p><?php print $user['f_user_nick_name'] ?>さん</p>
+                </div>
+
+                <!-- レビュー入力 -->
+                <form>
+                <input type="hidden" id="review_itemid" value="<?php print $item['id'] ?>" >
+                <input type="hidden" id="review_userid" value="<?php print $user['f_user_id'] ?>" >
+
+                <!-- レビュー点数 -->
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">点数</label>
+                    <input type="number" class="form-control" id="review_point" maxlength="5" >
+                </div>
+
+                <!-- レビュー内容 -->
+                <div class="mb-3">
+                    <label for="message-text" class="col-form-label">コメント</label>
+                    <textarea class="form-control" id="review_comment"></textarea>
+                </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button>
+                <button type="button" class="btn btn-primary" id="button_review_post" data-bs-dismiss="modal">投稿する</button>
+            </div>
+        </div>
+
+    </div>
+    </div>
 
     <script src="../js/jQuery.js"></script>
     <script src="../js/item_piece.js"></script>
