@@ -36,23 +36,25 @@ function inCart(e){
 // ========================================================================
 // モーダルイベント
 // ========================================================================
-var reviewModal = document.getElementById('reviewModal')
+var buttonPost  = document.getElementById('button_review_post')
 
-reviewModal.addEventListener('show.bs.modal', function (event) {
-    // Button that triggered the modal
-    // モーダルをトリガーしたボタン
-    var button = event.relatedTarget
+// 投稿ボタン押下イベント
+buttonPost.addEventListener('click', function (event) {
+    var itemId      = document.getElementById('review_itemid').value
+    var userId      = document.getElementById('review_userid').value
+    var point       = document.getElementById('review_point').value
+    var comment     = document.getElementById('review_comment').value
 
-    // Extract info from data-bs-* attributes
-    // data-bs-* 属性から情報を抽出する
-    var recipient = button.getAttribute('data-bs-whatever')
+    console.log("食品ID:" + itemId)
+    console.log("ユーザーID:" + userId)
+    console.log("点数:" + point)
+    console.log("コメント:" + comment)
 
-    // If necessary, you could initiate an AJAX request here and then do the updating in a callback.
-    // 必要に応じて、ここで AJAX リクエストを開始し、コールバックで更新を実行できます。
-    // Update the modal's content.
-    var modalTitle      = exampleModal.querySelector('.modal-title')
-    var modalBodyInput  = exampleModal.querySelector('.modal-body input')
-
-    modalTitle.textContent  = recipient + 'のレビューを書きましょう'
-    modalBodyInput.value    = recipient
+    $.ajax({
+        type: "POST",
+        dateType: "text",
+        url: "../php/db_review.php",
+        data: { itemId: userId, userId: userId, point: point, comment: comment },
+        success: (data) => console.log(data)
+    })
 })

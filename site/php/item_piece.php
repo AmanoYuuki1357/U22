@@ -225,9 +225,6 @@ $test->get(empty($user), "ユーザーTBL");
 </head>
 
 <body>
-    <!-- ヘッダー部分 -->
-    <!-- FIXME: 画面右の料理詳細によって覆われているため、アイコンイベントが発生しない -->
-    <?php //require('header.php'); ?>
 
 <!-- ヘッダー部分 -->
 <?php
@@ -287,7 +284,16 @@ require('header.php');
 
                     <!-- Todo: 購入履歴に応じてレビュー登録ボタンを表示する -->
                     <!-- <a id='go_review' href=''>レビューを書く</a> -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">レビューを書く</button>
+                    <?php 
+                        if(isset($_SESSION["id"])){
+                            print '<button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        data-bs-whatever="@getbootstrap">レビューを書く</button>';
+                        }
+                    ?>
 
                 </div>
             </div>
@@ -400,10 +406,11 @@ require('header.php');
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
     <!-- レビュー記入ウィンドウ -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
         <div class="modal-content">
+            <!-- ヘッダー -->
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><?php print $item['name'] ?>のレビューを書きましょう</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -419,24 +426,28 @@ require('header.php');
                     <p><?php print $user['f_user_nick_name'] ?>さん</p>
                 </div>
 
-                <!-- レビュー入力フォーム -->
+                <!-- レビュー入力 -->
                 <form>
+                <input type="hidden" id="review_itemid" value="<?php print $item['id'] ?>" >
+                <input type="hidden" id="review_userid" value="<?php print $user['f_user_id'] ?>" >
+
                 <!-- レビュー点数 -->
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">点数</label>
-                    <input type="text" class="form-control" id="recipient-name">
+                    <input type="number" class="form-control" id="review_point" maxlength="5" >
                 </div>
+
                 <!-- レビュー内容 -->
                 <div class="mb-3">
                     <label for="message-text" class="col-form-label">コメント</label>
-                    <textarea class="form-control" id="message-text"></textarea>
+                    <textarea class="form-control" id="review_comment"></textarea>
                 </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary">投稿する</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button>
+                <button type="button" class="btn btn-primary" id="button_review_post" data-bs-dismiss="modal">投稿する</button>
             </div>
         </div>
 
