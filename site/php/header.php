@@ -1,4 +1,10 @@
-    <header class="py-3 mb-3 border-bottom flex-top">
+<script>
+    function sign_out(){
+        window.sessionStorage.clear();
+        document.location.reload()
+    }
+</script>
+<header class="py-3 mb-3 border-bottom flex-top">
         <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
 
             <!-- ロゴ画像を置く -->
@@ -22,7 +28,7 @@
                 ?>
                     <!-- ログインしているときに表示 -->
                     <div class="flex-shrink-0 dropdown icon">
-                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                             <!-- ログインした人の画像 -->
                             <img src="../images/icon.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
@@ -36,7 +42,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" onclick="sign_out()">Sign out</a></li>
                         </ul>
                     </div>
 
