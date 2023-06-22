@@ -95,11 +95,16 @@ $sqlAllergens = '
 // レビュー検索SQL
 $sqlReviews = '
         SELECT
-            f_review_date               AS date,
-            f_review_point              AS point,
-            f_review                    AS review
+            review.f_review_date    AS date,
+            user.f_user_nick_name   AS nick_name,
+            review.f_review_point   AS point,
+            review.f_review         AS review
         FROM
-            t_item_review    AS review
+            t_item_review           AS review
+        JOIN
+            t_users                 AS user
+        ON
+            review.f_user_id = user.f_user_id
         where
             review.f_item_id = ?
         ORDER BY
@@ -167,6 +172,40 @@ if (isset($_GET['id'])) {
 
 // REVIEW: オブジェクト生成
 $test = new test();
+
+
+// ===================================================================================
+// レビュー登録
+// ===================================================================================
+if(isset($_POST['post_review'])){
+    // POST送信された情報を取得
+    $itemId     = $_POST['review_itemid'];     // 食品ID
+    $userId     = $_POST['review_userid'];     // ユーザーID
+    $point      = $_POST['review_point'];      // ポイント
+    $comment    = $_POST['review_comment'];    // コメント
+
+    $sql = '
+        INSERT INTO
+            t_item_review
+        VALUES
+            (
+                NOW(),
+                ?,
+                ?,
+                ?,
+                ?
+            )';
+
+    // レビュー登録処理
+    $contents = $db->prepare($sql);
+    $contents->bindparam(1, $itemId, PDO::PARAM_INT);
+    $contents->bindparam(2, $userId, PDO::PARAM_INT);
+    $contents->bindparam(3, $point, PDO::PARAM_INT);
+    $contents->bindparam(4, $comment, PDO::PARAM_STR);
+    $updateUser = $contents->execute();
+
+    // TODO: 入力処理の成功失敗の制御をする
+}
 
 // ===================================================================================
 // DB検索
@@ -237,7 +276,7 @@ require('header.php');
 
     <main>
 
-        <div>
+        <div class="row">
             <div id="meal_genre">
                 <p>食品ジャンル:</p>
                 <ul>
@@ -251,14 +290,15 @@ require('header.php');
                     ?>
                 </ul>
             </div>
-            <div id="itemimg">
+            <div id="itemimg" class="col">
                 <!-- 画像表示 -->
                 <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
 
                 <div id="review">
                     <h2>レビュー</h2>
+                    <p>全<?php print count($reviews) ?>件</p>
 
-                    <div>
+                    <div class="overflow-scroll" style="height: 200px;">
                         <?php
                         if (empty($reviews)) {
                             // レビュー情報が取得できない場合
@@ -267,10 +307,11 @@ require('header.php');
                             // レビュー情報が取得できた場合
                             foreach ($reviews as $review) {
                                 print "
-                                    <div>
+                                    <div style='border-bottom: 1px #000 dotted'>
+                                        <p>" . h($review['date']) . "</p>
                                         <dl>
-                                            <dt>日付</dt>
-                                                <dd>" . h($review['date']) . "</dd>
+                                            <dt>投稿者名</dt>
+                                                <dd>" . h($review['nick_name']) . "</dd>
                                             <dt>評価</dt>
                                                 <dd>" . strNumToStar($review['point']) . "</dd>
                                             <dt>コメント</dt>
@@ -298,7 +339,7 @@ require('header.php');
                 </div>
             </div>
 
-            <div id="iteminfo">
+            <div id="iteminfo" class="col">
                 <!-- 商品名 -->
                 <h2><?php print h($item['name']); ?></h2>
 
@@ -347,14 +388,14 @@ require('header.php');
                     ?>
                 </ul>
 
-                <table>
+                <table class="table">
                     <tr>
-                        <th>カロリー</th>
-                        <th>たんぱく質</th>
-                        <th>糖質</th>
-                        <th>脂質</th>
-                        <th>食物繊維</th>
-                        <th>塩分</th>
+                        <th scope="col">カロリー</th>
+                        <th scope="col">たんぱく質</th>
+                        <th scope="col">糖質</th>
+                        <th scope="col">脂質</th>
+                        <th scope="col">食物繊維</th>
+                        <th scope="col">塩分</th>
                     </tr>
                     <tr>
                         <td><?php print h($item['calorie']); ?>kcal</td>
@@ -418,37 +459,46 @@ require('header.php');
             
             <div class="modal-body">
                 <!-- 商品情報 -->
-                <div class="mb-3">
-                    <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
-                    <p><?php print $item['name'] ?></p>
-                    <p><?php print $item['ex'] ?></p>
-                    <p>ニックネーム</p>
-                    <p><?php print $user['f_user_nick_name'] ?>さん</p>
+                <div class="mb-3 row">
+                    <figure class="col">
+                        <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                    </figure>
+                    <div class="col">
+                        <h3><?php print $item['name'] ?></h3>
+                        <p>価格</p>
+                        <p><?php print $item['price'] ?>円</p>
+                        <p>商品説明</p>
+                        <p><?php print $item['ex'] ?></p>
+                    </div>
                 </div>
 
+                <p>ニックネーム</p>
+                <p><?php print $user['f_user_nick_name'] ?>さん</p>
+
                 <!-- レビュー入力 -->
-                <form>
-                <input type="hidden" id="review_itemid" value="<?php print $item['id'] ?>" >
-                <input type="hidden" id="review_userid" value="<?php print $user['f_user_id'] ?>" >
+                <form action="" method="post">
+                <input type="hidden" name="review_itemid" value="<?php print $item['id'] ?>" >
+                <input type="hidden" name="review_userid" value="<?php print $user['f_user_id'] ?>" >
 
                 <!-- レビュー点数 -->
                 <div class="mb-3">
                     <label for="recipient-name" class="col-form-label">点数</label>
-                    <input type="number" class="form-control" id="review_point" maxlength="5" >
+                    <input type="number" class="form-control" name="review_point" maxlength="5" >
                 </div>
 
                 <!-- レビュー内容 -->
                 <div class="mb-3">
                     <label for="message-text" class="col-form-label">コメント</label>
-                    <textarea class="form-control" id="review_comment"></textarea>
+                    <textarea class="form-control" name="review_comment"></textarea>
                 </div>
-                </form>
             </div>
-
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button>
-                <button type="button" class="btn btn-primary" id="button_review_post" data-bs-dismiss="modal">投稿する</button>
+                <!-- <button type="button" class="btn btn-primary" id="button_review_post" data-bs-dismiss="modal">投稿する</button> -->
+                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="post_review" value="投稿する" />
             </div>
+            </form>
         </div>
 
     </div>
