@@ -11,9 +11,10 @@ if (isset($_SESSION["id"])) {
     $user = $users->fetch();
 }
 
-$sql = 'SELECT * FROM t_buy_history WHERE f_user_id=?';
+$sql = 'SELECT b.f_buy_history_date, b.f_buy_history_delivery_situation, f_buy_history_delivery_place, i.f_item_name FROM t_buy_history as b JOIN t_items as i ON b.f_item_id = i.f_item_id WHERE b.f_user_id=?';
 $items = $db->prepare($sql);
 $items->execute(array($user["f_user_id"]));
+$item = $items->fetchAll();
 
 ?>
 
@@ -43,49 +44,40 @@ require('header.php');
 ?>
 
     <main>
-        <!-- <p><?php print_r($buyHistory); ?></p> -->
+        <p><?php print_r($item); ?></p>
         <h2>配送状況</h2>
-        <div class="situation">
-            <p>購入履歴:○○年○○月○○日</p>
-            <div class="info">
-                <p>商品：</p>
-                <ul>
-                    <li>商品名</li>
-                    <li>商品名</li>
-                </ul>
-                <p>配送予定：○○年○○月○○日</p>
-                <p>ステータス:配送済み</p>
-                <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
-            </div>
-        </div>
 
-        <div class="situation">
-            <p>購入履歴:○○年○○月○○日</p>
-            <div class="info">
-                <p>商品：</p>
-                <ul>
-                    <li>商品名</li>
-                    <li>商品名</li>
-                </ul>
-                <p>配送予定：○○年○○月○○日</p>
-                <p>ステータス:配送済み</p>
-                <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
-            </div>
-        </div>
+        <?php
+            $ccc = "";
+            for($i=0; $i<count($item); $i++){
+                if($ccc != $item[$i]['f_buy_history_date']){
+                    print("<div class='situation'>");
+                    print("<p>購入履歴：".$item[$i]['f_buy_history_date']."</p>");
+                    print("<div class='info'>");
+                    print("<p>商品：</p>");
+                    print("<ul>");
+                    print("<li>".$item[$i]['f_item_name']."</li>");
+                }
 
-        <div class="situation">
-            <p>購入履歴:○○年○○月○○日</p>
-            <div class="info">
-                <p>商品：</p>
-                <ul>
-                    <li>商品名</li>
-                    <li>商品名</li>
-                </ul>
-                <p>配送予定：○○年○○月○○日</p>
-                <p>ステータス:配送済み</p>
-                <p>配達場所:○○○-○○○○<br>○○県○○市○○町○丁目○番地○</p>
-            </div>
-        </div>
+                for($j=0; $j<count($item); $j++){
+                    if($j != $i){
+                        if($ccc == $item[$j]['f_buy_history_date']){
+                            print("<li>".$itemC['f_item_name']."</li>");
+                        }
+                    }
+                }
+
+                if($ccc != $item[$i]['f_buy_history_date']){
+                print("</ul>");
+                print("<p>配送予定：".$item[$i]['f_buy_history_delivery_situation']."</p>");
+                print("<p>配達場所：".$item[$i]['f_buy_history_delivery_place']."</p>");
+                print("</div>");
+                print("</div>");
+                }
+                $ccc = $item['f_buy_history_date'];
+            }
+        ?>
+
     </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
