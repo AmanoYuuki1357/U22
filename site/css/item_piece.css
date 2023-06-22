@@ -8,6 +8,14 @@ header{
 main div{
     width: 100%;
 }
+
+.row{
+    /* justify-content: center; */
+    margin: 0 auto;
+    max-width: 900px;
+    /* height: 100%; */
+}
+
 #wrap{
     height: 100%;
     width: 100%;
@@ -44,7 +52,7 @@ header label img{
     width: 350px;
     padding: 10px;
 }
-#meal_genre,ul{
+.genre{
     display: flex;
 }
 h2{
@@ -58,3 +66,117 @@ table{
     background-color: #bbb;
     line-height: 400%;
 }
+
+
+/* =================================== */
+
+
+
+/* カート画面へ行くボタン */
+.go-cart {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    background-color: #acb200;
+    transition: all 0.3s;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #f1f1f1;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .go-cart:hover {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    background-color: #f8f821e7;
+    color: #5e5e5e;
+  }
+  
+  .go-cart:active {
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+    background-color: #d0d0d0;
+  }
+  
+  /* カートに入れるボタン */
+  .into-cart {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    background-color: #008c82;
+    transition: all 0.3s;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #f7f7f7;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .into-cart:hover {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    background-color: #00dacb;
+    color: #5e5e5e;
+  }
+  
+  .into-cart:active {
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+    background-color: #d0d0d0;
+  }
+  
+
+
+
+  /* ====================================== */
+
+
+
+
+  th{
+    width: 100px;
+    text-align: left;
+    /* border-bottom: 1px solid; */
+    text-align: center;
+  }
+
+  td{
+    text-align: center;
+  }
+
+
+  .Subheading{
+    font-weight: bold;
+  }
+
+
+
+
+  /* =============== */
+
+
+
+  /* rebyu-wokakubotann */
+    .review-btn {
+        border-radius: 5px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+        border: 1px solid #ccc;
+        background-color: #002faf;
+        transition: all 0.3s;
+        display: inline-block;
+        padding: 10px 20px;
+        color: #f7f7f7;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+      .review-btn:hover {
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+        background-color: #96d5ff;
+        color: #5e5e5e;
+      }
+      
+      .review-btn:active {
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+        background-color: #d0d0d0;
+      }

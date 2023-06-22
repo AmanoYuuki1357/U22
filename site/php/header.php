@@ -33,7 +33,7 @@
                             <img src="../images/icon.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                            <li><a href="my_page.php"><?php print ($user["f_user_name"]) . "のマイページ"; ?></a></li>
+                            <li><a href="my_page.php"><?php print ($user['f_user_nick_name']) . "様のマイページ"; ?></a></li>
                             <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
                             <!-- 一時的にここに置く -->

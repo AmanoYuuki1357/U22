@@ -276,15 +276,16 @@ require('header.php');
 
     <main>
 
-        <div class="row">
+    
+        <div class="row col-sm-6 col-md-12">
             <div id="meal_genre">
-                <p>食品ジャンル:</p>
-                <ul>
+                <p class="Subheading">食品ジャンル:</p>
+                <ul class='genre'>
                     <?php
                     if (!empty($genres)) {
                         // ジャンル情報が取得できた場合
                         foreach ($genres as $genre) {
-                            print "<li>" . h($genre['name']) . "|</li>";
+                            print "<li>" . h($genre['name']) . "　|　</li>";
                         }
                     }
                     ?>
@@ -329,7 +330,7 @@ require('header.php');
                         if(isset($_SESSION["id"])){
                             print '<button
                                         type="button"
-                                        class="btn btn-primary"
+                                        class="review-btn"
                                         data-bs-toggle="modal"
                                         data-bs-target="#reviewModal"
                                         data-bs-whatever="@getbootstrap">レビューを書く</button>';
@@ -344,16 +345,16 @@ require('header.php');
                 <h2><?php print h($item['name']); ?></h2>
 
                 <dl>
-                    <dt>値段</dt>
+                    <dt class="Subheading">値段</dt>
                     <dd><?php print h($item['price']); ?>円</dd>
                 </dl>
 
                 <dl>
-                    <dt>商品説明</dt>
+                    <dt class="Subheading">商品説明</dt>
                     <dd><?php print h($item['ex']); ?></dd>
                 </dl>
 
-                <p>アレルゲン</p>
+                <p class="Subheading">アレルゲン</p>
                 <ul>
                     <?php
                     // TODO:該当食品だけ表示
@@ -430,9 +431,9 @@ require('header.php');
                         <?php
                         if(isset($userId)){
                             if(isset($cart['num'])){
-                                print('<a href="./cart.php">カートに移動する</a>');
+                                print('<a class="go-cart" href="./cart.php">カートに移動する</a>');
                             }else{
-                                print('<button onClick="inCart(this)">カートに入れる</button>');
+                                print('<button class="into-cart" onClick="inCart(this)">カートに入れる</button>');
                             }
                         }
                         ?>

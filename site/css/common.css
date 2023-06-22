@@ -167,8 +167,8 @@ footer {
   color: rgb(57, 57, 57);
 
   /* 下に固定する設定 */
-  position: fixed;
-  bottom: 0;
+  /* position: fixed; */
+  /* bottom: 0; */
   width: 100%;
 }
 
