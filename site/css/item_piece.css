@@ -48,10 +48,15 @@ header label img{
     left: 0;
     justify-content: left;
 }
-#piece_img{
+.item-image{
     width: 350px;
-    padding: 10px;
+    /* padding: 10px; */
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.39);
 }
+
+
 .genre{
     display: flex;
 }
@@ -66,6 +71,15 @@ table{
     background-color: #bbb;
     line-height: 400%;
 }
+
+.Review-column {
+    max-height: 500px;
+    /* border: #5e5e5e solid 1px; */
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.171);
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 
 
 /* =================================== */
