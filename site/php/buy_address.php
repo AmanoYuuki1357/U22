@@ -209,11 +209,9 @@ require('header.php');
                                 </td>
                                 <td>
                                     <?php
-                                    if (isset($error['postal-code'])) {
-                                        if ($error['postal-code'] == 'blank') {
-                                            print '<p style="color: red;">入力がありません</p>';
+                                        if (isset($error['postal-code']) && $error['postal-code'] == 'blank') {
+                                                print '<p style="color: red;">入力がありません</p>';
                                         }
-                                    }
                                     ?>
                                 </td>
                             </tr>
@@ -224,11 +222,9 @@ require('header.php');
                                 </td>
                                 <td>
                                     <?php
-                                    if (isset($error['region'])) {
-                                        if ($error['region'] == 'blank') {
+                                        if ( isset($error['region']) && $error['region'] == 'blank' ) {
                                             print '<p style="color: red;">正しい郵便番号を入力してください</p>';
                                         }
-                                    }
                                     ?>
                                 </td>
                             </tr>
@@ -239,11 +235,9 @@ require('header.php');
                                 </td>
                                 <td>
                                     <?php
-                                    if (isset($error['locality'])) {
-                                        if ($error['locality'] == 'blank') {
+                                        if ( isset($error['locality']) && $error['locality'] == 'blank' ) {
                                             print '<p style="color: red;">正しい郵便番号を入力してください</p>';
                                         }
-                                    }
                                     ?>
                                 </td>
                             </tr>
@@ -254,11 +248,9 @@ require('header.php');
                                 </td>
                                 <td>
                                     <?php
-                                    if (isset($error['street-address'])) {
-                                        if ($error['street-address'] == 'blank') {
+                                        if ( isset($error['street-address']) && $error['street-address'] == 'blank') {
                                             print '<p style="color: red;">入力がありません</p>';
                                         }
-                                    }
                                     ?>
                                 </td>
                             </tr>
