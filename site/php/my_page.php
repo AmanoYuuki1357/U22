@@ -70,9 +70,9 @@ require('header.php');
                     <a href="buy_history.php">あなたの購入履歴></a>
                 </div>
 
-                <div class="outline">
-                    <a href="delivery_situation.php">あなたの配送状況></a>
-                </div>
+                <!-- <div class="outline"> -->
+                    <!-- <a href="delivery_situation.php">あなたの配送状況></a> -->
+                <!-- </div> -->
 
                 <!-- <?php
                         $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
