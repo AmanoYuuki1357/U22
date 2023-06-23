@@ -110,7 +110,7 @@ require('header.php');
         <div id="pay">
             <div>
                 <h2>合計</h2>
-                <?php print('<p id="buySum">' . $sum . '円</p>'); ?>
+                <?php print('<p id="buySum">' . number_format($sum) . '円</p>'); ?>
             </div>
             <div id="button" class="button">
                 <a href="buy_address.php">レジに進む</a>
