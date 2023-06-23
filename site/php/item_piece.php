@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <?php
@@ -177,7 +176,7 @@ $test = new test();
 // ===================================================================================
 // レビュー登録
 // ===================================================================================
-if(isset($_POST['post_review'])){
+if (isset($_POST['post_review'])) {
     // POST送信された情報を取得
     $itemId     = $_POST['review_itemid'];     // 食品ID
     $userId     = $_POST['review_userid'];     // ユーザーID
@@ -228,8 +227,7 @@ if (isset($_SESSION['id'])) {
     // カート内情報検索
     $cart = showCart($db, $sqlCarts, $itemId, $userId);
     $user = showById($db, $sqlUser, $userId)[0];
-}
-else{
+} else {
     // REVIEW: 確認ログ
     $test->warn("[NG]ユーザーなし");
 }
@@ -244,6 +242,7 @@ $test->get(empty($user), "ユーザーTBL");
 ?>
 
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -252,8 +251,7 @@ $test->get(empty($user), "ユーザーTBL");
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/item_piece.css">
@@ -265,10 +263,10 @@ $test->get(empty($user), "ユーザーTBL");
 
 <body>
 
-<!-- ヘッダー部分 -->
-<?php
-require('header.php');
-?>
+    <!-- ヘッダー部分 -->
+    <?php
+    require('header.php');
+    ?>
 
     <div id="gomenu">
         <a href="./menu.php">＜メニュー一覧</a>
@@ -276,15 +274,16 @@ require('header.php');
 
     <main>
 
-        <div class="row">
+
+        <div class="row col-sm-6 col-md-12">
             <div id="meal_genre">
-                <p>食品ジャンル:</p>
-                <ul>
+                <p class="Subheading">食品ジャンル:</p>
+                <ul class='genre'>
                     <?php
                     if (!empty($genres)) {
                         // ジャンル情報が取得できた場合
                         foreach ($genres as $genre) {
-                            print "<li>" . h($genre['name']) . "|</li>";
+                            print "<li>" . h($genre['name']) . "　|　</li>";
                         }
                     }
                     ?>
@@ -292,13 +291,14 @@ require('header.php');
             </div>
             <div id="itemimg" class="col">
                 <!-- 画像表示 -->
-                <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                <img class="item-image" id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
 
                 <div id="review">
                     <h2>レビュー</h2>
                     <p>全<?php print count($reviews) ?>件</p>
 
-                    <div class="overflow-scroll" style="height: 200px;">
+                    <!-- <div class="overflow-scroll" style="height: 200px;"> -->
+                    <div class="Review-column">
                         <?php
                         if (empty($reviews)) {
                             // レビュー情報が取得できない場合
@@ -325,15 +325,15 @@ require('header.php');
 
                     <!-- Todo: 購入履歴に応じてレビュー登録ボタンを表示する -->
                     <!-- <a id='go_review' href=''>レビューを書く</a> -->
-                    <?php 
-                        if(isset($_SESSION["id"])){
-                            print '<button
+                    <?php
+                    if (isset($_SESSION["id"])) {
+                        print '<button
                                         type="button"
-                                        class="btn btn-primary"
+                                        class="review-btn"
                                         data-bs-toggle="modal"
                                         data-bs-target="#reviewModal"
                                         data-bs-whatever="@getbootstrap">レビューを書く</button>';
-                        }
+                    }
                     ?>
 
                 </div>
@@ -344,16 +344,16 @@ require('header.php');
                 <h2><?php print h($item['name']); ?></h2>
 
                 <dl>
-                    <dt>値段</dt>
+                    <dt class="Subheading">値段</dt>
                     <dd><?php print h($item['price']); ?>円</dd>
                 </dl>
 
                 <dl>
-                    <dt>商品説明</dt>
+                    <dt class="Subheading">商品説明</dt>
                     <dd><?php print h($item['ex']); ?></dd>
                 </dl>
 
-                <p>アレルゲン</p>
+                <p class="Subheading">アレルゲン</p>
                 <ul>
                     <?php
                     // TODO:該当食品だけ表示
@@ -428,11 +428,11 @@ require('header.php');
                     <div id="itemId<?php print($itemId); ?>">
                         <p id="userId" style="display: none;"><?php print($userId); ?></p>
                         <?php
-                        if(isset($userId)){
-                            if(isset($cart['num'])){
-                                print('<a href="./cart.php">カートに移動する</a>');
-                            }else{
-                                print('<button onClick="inCart(this)">カートに入れる</button>');
+                        if (isset($userId)) {
+                            if (isset($cart['num'])) {
+                                print('<a class="go-cart" href="./cart.php">カートに移動する</a>');
+                            } else {
+                                print('<button class="into-cart" onClick="inCart(this)">カートに入れる</button>');
                             }
                         }
                         ?>
@@ -448,69 +448,81 @@ require('header.php');
 
     <!-- レビュー記入ウィンドウ -->
     <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+        <div class="modal-dialog">
 
-        <div class="modal-content">
-            <!-- ヘッダー -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><?php print $item['name'] ?>のレビューを書きましょう</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <div class="modal-body">
-                <!-- 商品情報 -->
-                <div class="mb-3 row">
-                    <figure class="col">
-                        <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
-                    </figure>
-                    <div class="col">
-                        <h3><?php print $item['name'] ?></h3>
-                        <p>価格</p>
-                        <p><?php print $item['price'] ?>円</p>
-                        <p>商品説明</p>
-                        <p><?php print $item['ex'] ?></p>
+            <div class="modal-content">
+                <!-- ヘッダー -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><?php print $item['name'] ?>のレビューを書きましょう</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- 商品情報 -->
+                    <div class="mb-3 row">
+                        <figure class="col">
+                            <img id="piece_img" src=<?php print imageUrl($item['image']); ?> alt="商品画像">
+                        </figure>
+                        <div class="col">
+                            <h3><?php print $item['name'] ?></h3>
+                            <p>価格</p>
+                            <p><?php print $item['price'] ?>円</p>
+                            <p>商品説明</p>
+                            <p><?php print $item['ex'] ?></p>
+                        </div>
                     </div>
+
+                    <p>ニックネーム</p>
+                    <p><?php print $user['f_user_nick_name'] ?>さん</p>
+
+                    <!-- レビュー入力 -->
+                    <form action="" method="post">
+                        <input type="hidden" name="review_itemid" value="<?php print $item['id'] ?>">
+                        <input type="hidden" name="review_userid" value="<?php print $user['f_user_id'] ?>">
+
+                        <!-- レビュー点数 -->
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">点数</label>
+                            <input type="number" class="form-control" name="review_point" maxlength="5">
+                        </div>
+
+                        <!-- レビュー内容 -->
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">コメント</label>
+                            <textarea class="form-control" name="review_comment"></textarea>
+                        </div>
                 </div>
 
-                <p>ニックネーム</p>
-                <p><?php print $user['f_user_nick_name'] ?>さん</p>
-
-                <!-- レビュー入力 -->
-                <form action="" method="post">
-                <input type="hidden" name="review_itemid" value="<?php print $item['id'] ?>" >
-                <input type="hidden" name="review_userid" value="<?php print $user['f_user_id'] ?>" >
-
-                <!-- レビュー点数 -->
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">点数</label>
-                    <input type="number" class="form-control" name="review_point" maxlength="5" >
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button>
+                    <!-- <button type="button" class="btn btn-primary" id="button_review_post" data-bs-dismiss="modal">投稿する</button> -->
+                    <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="post_review" value="投稿する" />
                 </div>
-
-                <!-- レビュー内容 -->
-                <div class="mb-3">
-                    <label for="message-text" class="col-form-label">コメント</label>
-                    <textarea class="form-control" name="review_comment"></textarea>
-                </div>
+                </form>
             </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button>
-                <!-- <button type="button" class="btn btn-primary" id="button_review_post" data-bs-dismiss="modal">投稿する</button> -->
-                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="post_review" value="投稿する" />
-            </div>
-            </form>
+
         </div>
+    </div>
 
-    </div>
-    </div>
+
+    <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
+    <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
+    
 
     <script src="../js/jQuery.js"></script>
     <script src="../js/item_piece.js"></script>
 
     <!-- bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
