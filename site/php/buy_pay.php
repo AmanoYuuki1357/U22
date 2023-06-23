@@ -10,7 +10,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             f_user_id,
             f_user_name,
             f_user_nick_name,
-            f_user_credit_number    AS number,
+            SUBSTRING(f_user_credit_number, 13)    AS number,
             f_user_credit_name      AS name,
             f_user_credit_expiry    AS expiry,
             f_user_credit_code      AS code
@@ -91,7 +91,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                         print "<p style='color: red;'>登録されていません</p>";
                     }
                     else{
-                        print "<p>" . h( '**** **** **** ' . substr($user["number"], 12, 4) ) . "</p>";
+                        print "<p>" . h( '**** **** **** ' . $user["number"] ) . "</p>";
                     }
                 ?>
                 <p>カード名義人</p>
@@ -103,14 +103,16 @@ error_reporting(E_ALL & ~E_NOTICE);
                         print "<p>" . h($user["name"]) . "</p>";
                     }
                 ?>
-                <p>有効期限(月/年)</p>
+                <p>有効期限(年-月)</p>
                 <p>
                 <?php
                     if(empty($user["expiry"])){
                         print "<p style='color: red;'>登録されていません</p>";
                     }
                     else{
-                        print "<p>" . h(substr($user["expiry"], 0, 2) . "/". substr($user["expiry"], 2)) ."</p>" ;
+                        $dates = str_split($user["expiry"], 4);
+                        // print_r($dates);
+                        print "<p>{$dates[0]}年{$dates[1]}月</p>" ;
                     }
                 ?>
                 </p>
