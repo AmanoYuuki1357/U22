@@ -9,11 +9,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     SELECT
         f_user_id,
         f_user_name,
-        f_user_nick_name,
-        f_user_credit_number    AS number,
-        f_user_credit_name      AS name,
-        f_user_credit_expiry    AS expiry,
-        f_user_credit_code      AS code
+        f_user_nick_name
     FROM
         t_users
     WHERE
@@ -82,25 +78,9 @@ error_reporting(E_ALL & ~E_NOTICE);
             // 必須チェック
             $error["expiry"] = "blank";
         }
-        else{
-            // 数字だけ取り出す
-            $numExpiry = str_replace('/', '', $_POST["expiry"]);
-
-            if(mb_strlen($numExpiry) != 6){
-                // 形式(桁数)チェック
-                $error["expiry"] = "digits";
-            }
-            else{
-                $month = substr($numExpiry, 0, 2);
-                if($month < 1 || $month > 12){
-                    // 形式(月の指定が1~12)チェック
-                    $error["expiry"] = "format";
-                }
-                elseif(date("Ym") > swappingExpiry($numExpiry)){
-                    // 整合性チェック
-                    $error["expiry"] = "expired";
-                }
-            }
+        elseif(strtotime(date("Ym")) > strtotime($_POST["expiry"])){
+            // 整合性チェック
+            $error["expiry"] = "expired";
         }
 
         // セキュリティコード
@@ -124,7 +104,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             $contents = $db->prepare($sqlupdate);
             $contents->bindparam(1, $_POST["number"], PDO::PARAM_INT);
             $contents->bindparam(2, $_POST["name"], PDO::PARAM_STR);
-            $contents->bindparam(3, $numExpiry, PDO::PARAM_INT);
+            $contents->bindparam(3, str_replace('-', '', $_POST["expiry"]), PDO::PARAM_INT);
             $contents->bindparam(4, sha1($_POST["code"]), PDO::PARAM_STR);
             $contents->bindparam(5, $userId, PDO::PARAM_INT);
             $updateUser = $contents->execute();
@@ -137,19 +117,6 @@ error_reporting(E_ALL & ~E_NOTICE);
             // 更新成功
             header('Location: buy_pay.php');
         }
-    }
-
-    // ===================================================================================
-    // 関数
-    // ===================================================================================
-    // 有効期限をmm/yyyyの形式にフォーマット
-    function formatingExpiry($expiry):string{
-        return substr($expiry, 0, 2) . "/". substr($expiry, 2);
-    }
-
-    // 有効期限をyyyymmの形式にフォーマット
-    function swappingExpiry($expiry):string{
-        return substr($expiry, 2) . substr($expiry, 0, 2);
     }
 
 ?>
@@ -198,7 +165,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                 <input
                     type="text"
                     name="number"
-                    value="<?php print isset($_POST["update"])? $_POST["number"]: h($user["number"]) ?>"
+                    value="<?php if(isset($_POST["update"])){ print $_POST["number"]; }?>"
                     placeholder="カード番号(16桁)を入力してください"
                     require />
                 <?php
@@ -221,7 +188,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                 <input
                     type="text"
                     name="name"
-                    value="<?php print isset($_POST["update"])? $_POST["name"]: h($user["name"]) ?>"
+                    value="<?php if(isset($_POST["update"])){ print $_POST["name"]; } ?>"
                     placeholder="カード名義人を入力してください" />
                 <?php
                     // エラーメッセージ
@@ -236,8 +203,8 @@ error_reporting(E_ALL & ~E_NOTICE);
                 <input
                     type="month"
                     name="expiry"
-                    value="<?php print isset($_POST["update"])? $_POST["expiry"]: h(formatingExpiry($user["expiry"])); ?>"
-                    placeholder="有効期限(mm/yyyy)を入力してください" />
+                    value="<?php if(isset($_POST["update"])){ print $_POST["expiry"]; } ?>"
+                    placeholder="有効期限(yyyy-mm)を入力してください" />
                 <?php
                     // エラーメッセージ
                     if(isset($error["expiry"])){
@@ -245,14 +212,8 @@ error_reporting(E_ALL & ~E_NOTICE);
                             case "blank":
                                 print "<p style='color: red;'>入力がありません</p>";
                                 break;
-                            case "digits":
-                                print "<p style='color: red;'>入力値が不正です</p>";
-                                break;
-                            case "format":
-                                print "<p style='color: red;'>1月から12月のいずれかの月を入力してください</p>";
-                                break;
                             case "expired":
-                                print "<p style='color: red;'>有効期限が切れています</p>";
+                                print "<p style='color: red;'>入力値が不正です</p>";
                                 break;
                             default:
                                 break;
@@ -262,7 +223,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
                 <p>セキュリティコード</p>
                 <input
-                    type="text"
+                    type="password"
                     name="code"
                     value=""
                     placeholder="セキュリティコード(3~4桁)を入力してください"/>
