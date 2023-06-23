@@ -44,13 +44,15 @@ require('header.php');
 ?>
 
     <main>
-        <p><?php print_r($item); ?></p>
+        <!-- <p><?php print_r($item); ?></p> -->
         <h2>配送状況</h2>
 
         <?php
-            $ccc = "";
+            $cccOld = "";
+            $cccNew = "";
             for($i=0; $i<count($item); $i++){
-                if($ccc != $item[$i]['f_buy_history_date']){
+                $cccNew = $item[$i]['f_buy_history_date'];
+                if($cccOld != $item[$i]['f_buy_history_date']){
                     print("<div class='situation'>");
                     print("<p>購入履歴：".$item[$i]['f_buy_history_date']."</p>");
                     print("<div class='info'>");
@@ -59,22 +61,22 @@ require('header.php');
                     print("<li>".$item[$i]['f_item_name']."</li>");
                 }
 
-                for($j=0; $j<count($item); $j++){
+                for($j=$i; $j<count($item); $j++){
                     if($j != $i){
-                        if($ccc == $item[$j]['f_buy_history_date']){
-                            print("<li>".$itemC['f_item_name']."</li>");
+                        if($cccNew == $item[$j]['f_buy_history_date']){
+                            print("<li>".$item[$j]['f_item_name']."</li>");
                         }
                     }
                 }
 
-                if($ccc != $item[$i]['f_buy_history_date']){
+                if($cccOld != $item[$i]['f_buy_history_date']){
                 print("</ul>");
                 print("<p>配送予定：".$item[$i]['f_buy_history_delivery_situation']."</p>");
                 print("<p>配達場所：".$item[$i]['f_buy_history_delivery_place']."</p>");
                 print("</div>");
                 print("</div>");
                 }
-                $ccc = $item['f_buy_history_date'];
+                $cccOld = $item[$i]['f_buy_history_date'];
             }
         ?>
 
