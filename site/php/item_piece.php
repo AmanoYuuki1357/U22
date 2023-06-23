@@ -58,34 +58,34 @@ $sqlGenres = '
 // アレルギー検索SQL
 $sqlAllergens = '
         SELECT
-            f_item_allergen_wheat       AS 小麦,
-            f_item_allergen_egg         AS egg,
-            f_item_allergen_milk        AS milk,
-            f_item_allergen_soba        AS soba,
-            f_item_allergen_shrimp      AS shrimp,
-            f_item_allergen_crab        AS crab,
-            f_item_allergen_peanut      AS peanut,
-            f_item_allergen_pork        AS pork,
-            f_item_allergen_chicken     AS chicken,
-            f_item_allergen_beef        AS beef,
-            f_item_allergen_salmon      AS salmon,
-            f_item_allergen_mackerel    AS mackerel,
-            f_item_allergen_soy         AS soy,
-            f_item_allergen_squid       AS squid,
-            f_item_allergen_yamaimo     AS yamaimo,
-            f_item_allergen_orange      AS orange,
-            f_item_allergen_sesame      AS sesame,
-            f_item_allergen_cashew_nuts AS cashew_nuts,
-            f_item_allergen_abalone     AS abalone,
-            f_item_allergen_ikura       AS ikura,
-            f_item_allergen_kiwi        AS kiwi,
-            f_item_allergen_banana      AS banana,
-            f_item_allergen_peaches     AS peaches,
-            f_item_allergen_apple       AS apple,
-            f_item_allergen_walnut      AS walnut,
-            f_item_allergen_matsutake   AS matsutake,
-            f_item_allergen_gelatin     AS gelatin,
-            f_item_allergen_almond      AS almond
+            f_item_allergen_wheat       AS "小麦",
+            f_item_allergen_egg         AS "卵",
+            f_item_allergen_milk        AS "乳",
+            f_item_allergen_soba        AS "そば",
+            f_item_allergen_shrimp      AS "えび",
+            f_item_allergen_crab        AS "かに",
+            f_item_allergen_peanut      AS "落花生",
+            f_item_allergen_pork        AS "豚肉",
+            f_item_allergen_chicken     AS "鶏肉",
+            f_item_allergen_beef        AS "牛肉",
+            f_item_allergen_salmon      AS "さけ",
+            f_item_allergen_mackerel    AS "さば",
+            f_item_allergen_soy         AS "大豆",
+            f_item_allergen_squid       AS "いか",
+            f_item_allergen_yamaimo     AS "やまいも",
+            f_item_allergen_orange      AS "オレンジ",
+            f_item_allergen_sesame      AS "ごま",
+            f_item_allergen_cashew_nuts AS "カシューナッツ",
+            f_item_allergen_abalone     AS "あわび",
+            f_item_allergen_ikura       AS "いくら",
+            f_item_allergen_kiwi        AS "キウイフルーツ",
+            f_item_allergen_banana      AS "バナナ",
+            f_item_allergen_peaches     AS "もも",
+            f_item_allergen_apple       AS "りんご",
+            f_item_allergen_walnut      AS "くるみ",
+            f_item_allergen_matsutake   AS "まつたけ",
+            f_item_allergen_gelatin     AS "ゼラチン",
+            f_item_allergen_almond      AS "アーモンド"
         FROM
             t_item_allergens
         WHERE
@@ -357,41 +357,9 @@ $test->get(empty($user), "ユーザーTBL");
                 <ul>
                     <?php
                     // TODO:該当食品だけ表示
-                    // print $allergens['wheat'] ? "<li>小麦</li>" : "";
-                    // print $allergens['egg'] ? "<li>卵</li>" : "";
-                    // print $allergens['milk'] ? "<li>乳</li>" : "";
-                    // print $allergens['soba'] ? "<li>そば</li>" : "";
-                    // print $allergens['shrimp'] ? "<li>えび</li>" : "";
-                    // print $allergens['crab'] ? "<li>かに</li>" : "";
-                    // print $allergens['peanut'] ? "<li>落花生</li>" : "";
-                    // print $allergens['pork'] ? "<li>豚肉</li>" : "";
-                    // print $allergens['chicken'] ? "<li>鶏肉</li>" : "";
-                    // print $allergens['beef'] ? "<li>牛肉</li>" : "";
-                    // print $allergens['salmon'] ? "<li>さけ</li>" : "";
-                    // print $allergens['mackerel'] ? "<li>さば</li>" : "";
-                    // print $allergens['soy'] ? "<li>大豆</li>" : "";
-                    // print $allergens['squid'] ? "<li>いか</li>" : "";
-                    // print $allergens['yamaimo'] ? "<li>やまいも</li>" : "";
-                    // print $allergens['orange'] ? "<li>オレンジ</li>" : "";
-                    // print $allergens['sesame'] ? "<li>ごま</li>" : "";
-                    // print $allergens['cashew_nuts'] ? "<li>カシューナッツ</li>" : "";
-                    // print $allergens['abalone'] ? "<li>あわび</li>" : "";
-                    // print $allergens['ikura'] ? "<li>いくら</li>" : "";
-                    // print $allergens['kiwi'] ? "<li>キウイフルーツ</li>" : "";
-                    // print $allergens['banana'] ? "<li>バナナ</li>" : "";
-                    // print $allergens['peaches'] ? "<li>もも</li>" : "";
-                    // print $allergens['apple'] ? "<li>りんご</li>" : "";
-                    // print $allergens['walnut'] ? "<li>くるみ</li>" : "";
-                    // print $allergens['matsutake'] ? "<li>まつたけ</li>" : "";
-                    // print $allergens['gelatin'] ? "<li>ゼラチン</li>" : "";
-                    // print $allergens['almond'] ? "<li>アーモンド</li>" : "";
-
-                    
-                    print_r($allergens);
-
-
+                    // print_r($allergens);
                     foreach ($allergens as $key => $allergen) {
-                        if ($allergen==1) {
+                        if ($allergen == 1) {
                             print "<li>" . h($key) . "</li>";
                         }
                     }
