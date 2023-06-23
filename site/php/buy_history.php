@@ -11,7 +11,7 @@ if (isset($_SESSION["id"])) {
     $user = $users->fetch();
 }
 
-$sql = 'SELECT b.f_buy_history_date, b.f_buy_history_delivery_situation, f_buy_history_delivery_place, i.f_item_name FROM t_buy_history as b JOIN t_items as i ON b.f_item_id = i.f_item_id WHERE b.f_user_id=?';
+$sql = 'SELECT b.f_buy_history_date, b.f_buy_history_num, b.f_buy_history_delivery_situation, f_buy_history_delivery_place, i.f_item_name FROM t_buy_history as b JOIN t_items as i ON b.f_item_id = i.f_item_id WHERE b.f_user_id=?';
 $items = $db->prepare($sql);
 $items->execute(array($user["f_user_id"]));
 $item = $items->fetchAll();
@@ -44,37 +44,39 @@ require('header.php');
 ?>
 
     <main>
-        <p><?php print_r($item); ?></p>
-        <h2>配送状況</h2>
+        <!-- <p><?php print_r($item); ?></p> -->
+        <h2>購入履歴</h2>
 
         <?php
-            $ccc = "";
+            $cccOld = "";
+            $cccNew = "";
             for($i=0; $i<count($item); $i++){
-                if($ccc != $item[$i]['f_buy_history_date']){
+                $cccNew = $item[$i]['f_buy_history_date'];
+                if($cccOld != $item[$i]['f_buy_history_date']){
                     print("<div class='situation'>");
-                    print("<p>購入履歴：".$item[$i]['f_buy_history_date']."</p>");
+                    print("<p>購入日：".$item[$i]['f_buy_history_date']."</p>");
                     print("<div class='info'>");
-                    print("<p>商品：</p>");
+                    print("<p>商品名</p>");
                     print("<ul>");
-                    print("<li>".$item[$i]['f_item_name']."</li>");
+                    print("<li>".$item[$i]['f_item_name']."×".$item[$i]['f_buy_history_num']."</li>");
                 }
 
-                for($j=0; $j<count($item); $j++){
+                for($j=$i; $j<count($item); $j++){
                     if($j != $i){
-                        if($ccc == $item[$j]['f_buy_history_date']){
-                            print("<li>".$itemC['f_item_name']."</li>");
+                        if($cccNew == $item[$j]['f_buy_history_date']){
+                            print("<li>".$item[$j]['f_item_name']."×".$item[$i]['f_buy_history_num']."</li>");
                         }
                     }
                 }
 
-                if($ccc != $item[$i]['f_buy_history_date']){
+                if($cccOld != $item[$i]['f_buy_history_date']){
                 print("</ul>");
                 print("<p>配送予定：".$item[$i]['f_buy_history_delivery_situation']."</p>");
                 print("<p>配達場所：".$item[$i]['f_buy_history_delivery_place']."</p>");
                 print("</div>");
                 print("</div>");
                 }
-                $ccc = $item['f_buy_history_date'];
+                $cccOld = $item[$i]['f_buy_history_date'];
             }
         ?>
 
