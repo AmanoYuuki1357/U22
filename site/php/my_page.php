@@ -133,8 +133,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 
-=======
->>>>>>> 6400a7a8fabf2612bb9f02fcec525251f9f8647c
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
