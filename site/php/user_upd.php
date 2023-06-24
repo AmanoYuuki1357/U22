@@ -141,7 +141,7 @@
                 <!-- <p><?php // print $user["f_user_point"] ?>点</p> -->
 
                 <p>身長</p>
-                <p><input type="text" name="height" value="<?php print $user["f_user_hight"]?>" placeholder="身長を入力してください" />cm</p>
+                <p><input type="text" name="height" value="<?php print $user["f_user_height"]?>" placeholder="身長を入力してください" />cm</p>
 
                 <p>体重</p>
                 <input type="text" name="weight" value="<?php print $user["f_user_weight"]?>" placeholder="体重を入力してください" />
