@@ -145,7 +145,7 @@ require('header.php');
         ここ参考に進める予定 -->
 
 
-            <div class="step-bar">
+            <!-- <div class="step-bar">
   <div class="step">
     ステップ1
   </div>
@@ -172,7 +172,7 @@ require('header.php');
 <div class="progress">
 
   <div class="progress-bar" role="progressbar" style="width: 66.66%;" aria-valuenow="66.66" aria-valuemin="0" aria-valuemax="100">お支払い</div>
-</div>
+</div> -->
 
 
 
@@ -278,6 +278,19 @@ require('header.php');
         </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+
+
+        <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
 
 
     <!-- jQuery -->
