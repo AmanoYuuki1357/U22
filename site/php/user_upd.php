@@ -41,7 +41,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/mypage.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/mypage.css"> -->
 
 </head>
 
@@ -162,6 +162,18 @@
     <!-- jQuery -->
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
+
+        <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
+        <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
 
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
