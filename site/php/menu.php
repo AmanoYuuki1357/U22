@@ -102,6 +102,7 @@ require('header.php');
                     // print("<h1>");
                     // print_r($cartItemId);
                     // print("<h1>");
+                    // $itemIdNum=[];
                     for ($i = 0; $item = $items->fetch(); $i++) {
 
                         // print('<div class="row">');
@@ -124,9 +125,11 @@ require('header.php');
                         }
                         print('</div>');
 
-                        // print('</div>');
+                        // $itemIdNum[$i] = $item['f_item_id'];
                     }
+                    // print_r($itemIdNum);
                     ?>
+                    <!-- <p id="itemIdNum" style="display: none;"><?php print_r($itemIdNum) ?></p> -->
 
                 </div>
 
