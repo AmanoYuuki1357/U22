@@ -65,9 +65,9 @@ require('header.php');
 
             <h3>メニュー選択</h3>
 
-            <select name='genre'>
-                <option value='all'>すべて</option>
+            <select onChange="sort(this)" name='genre'>
                 <?php
+                    print('<option value="all">すべて</option>');
                 for ($i = 0; $genre = $genres->fetch(); $i++) {
                     print('<option value='.$genre['f_item_genre_name'].'>' . $genre['f_item_genre_name'] . '</option>');
                 }
@@ -97,7 +97,7 @@ require('header.php');
 
                     <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
-                    <div class="row">
+                    <div class="row" id="listNum">
                     <?php
                     // print("<h1>");
                     // print_r($cartItemId);
@@ -106,7 +106,10 @@ require('header.php');
 
                         // print('<div class="row">');
 
-                        print('<div class="col-sm-6 col-md-3 col-lg-2 item-box">');
+                        // print('<div class="col-sm-6 col-md-3 col-lg-2 item-box" id="'.$i+1.'">');
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-lg-2 item-box" id="<?php print($item["f_item_id"]); ?>">
+                        <?php
                         print('<a href="item_piece.php?id=' . $item['f_item_id'] . '" id="itemId' . $item['f_item_id'] . '">');
                         print('<img id="menu_img" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
                         print('<p class="item-info">' . $item['f_item_name'] . '</p>');
