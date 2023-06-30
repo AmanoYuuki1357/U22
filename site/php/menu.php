@@ -69,7 +69,7 @@ require('header.php');
                 <option value='all'>すべて</option>
                 <?php
                 for ($i = 0; $genre = $genres->fetch(); $i++) {
-                    print('<option value={$i}>' . $genre['f_item_genre_name'] . '</option>');
+                    print('<option value='.$genre['f_item_genre_name'].'>' . $genre['f_item_genre_name'] . '</option>');
                 }
                 ?>
             </select>
@@ -78,7 +78,7 @@ require('header.php');
                 <option value='filter'>食材フィルタ</option>
                 <?php
                 for ($i = 0; $i != count($allergens); $i++) {
-                    print('<option value={$i}>' . $allergens[$i] . '</option>');
+                    print('<option value='.$allergens[$i].'>' . $allergens[$i] . '</option>');
                 }
                 ?>
             </select>
@@ -87,7 +87,7 @@ require('header.php');
                 <option value='filter'>ソート</option>
                 <?php
                 for ($i = 0; $i != count($sorts); $i++) {
-                    print('<option value={$i}>' . $sorts[$i] . '</option>');
+                    print('<option value='.$sorts[$i].'>' . $sorts[$i] . '</option>');
                 }
                 ?>
             </select>
