@@ -106,7 +106,6 @@
         exit();
     }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -133,155 +132,213 @@
     <?php require('header.php'); ?>
 
     <main>
+        <div class="container">
 
-        <div style="padding: 30px; padding-top: 0;">
-            <h1 class="h3 mb-3 fw-normal">ユーザー情報の閲覧・変更</h1>
+            <div class="row">
+                <h1 style="padding-bottom: 30px;">ユーザー情報の閲覧・変更</h1>
+            </div>
 
-            <hr>
+            <!-- <hr> -->
 
             <form class="h-adr" action="" method="post">
-            <div class="row g-3">
 
-                <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-2">
                     <p>お客様名</p>
+                </div>
+                <div class="col" aria-describedby="user_name">
                     <p><?php print $user["f_user_name"] ?>様</p>
                 </div>
+                <div id="user_name" class="form-text">
+                    Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                </div>
+            </div>
 
-                <div class="col-md-4">
-                    <label for="nick_name" class="form-label">ニックネーム</label>
-                    <p><input
+            <div class="row">
+                <div class="col-md-2">
+                    <p>メールアドレス</p>
+                </div>
+                <div class="col">
+                    <p><?php print $user["email"] ?></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>パスワード</p>
+                </div>
+                <div class="col">
+                    <p>[表示しません]</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="nick_name" class="form-label"><p>ニックネーム</p></label>
+                </div>
+                <div class="col">
+                    <input
                         type="text"
                         id="nick_name"
                         name="nick_name"
                         value="<?php print $user["f_user_nick_name"] ?>"
                         placeholder="ニックネームを入力してください"
-                        require />様</p>
+                        require />様
                 </div>
+            </div>
 
-                <div class="col-12">
-                    <p>メールアドレス</p>
-                    <p><?php print $user["email"] ?></p>
+            <!-- 郵便番号による住所の自動入力 -->
+            <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+            <span class="p-country-name" style="display:none;">Japan</span>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <p>住所</p>
                 </div>
-
-                <div class="col-12">
-                    <p>パスワード</p>
-                    <p>[表示しません]</p>
+                <div class="col-md-2">
+                    <!-- <p>郵便番号</p> -->
+                    <p>〒<input
+                            type="text"
+                            name="postal-code"
+                            class="p-postal-code"
+                            size="8"
+                            maxlength="8"
+                            placeholder="郵便番号" /></p>
                 </div>
-
-                <p>住所</p>
-                <!-- <input type="text" name="address" value="<?php // print $user["address"]?>" placeholder="住所を入力してください" /> -->
-                <p><?php print $user["address"] ?></p>
-
-                <!-- 郵便番号による住所の自動入力 -->
-                <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
-
-                <span class="p-country-name" style="display:none;">Japan</span>
-                <table>
-                    <tr>
-                        <th>郵便番号</th>
-                        <td>
-                            〒<input
-                                type="text"
-                                name="postal-code"
-                                class="p-postal-code"
-                                size="8"
-                                maxlength="8"
-                                placeholder="郵便番号" />
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>都道府県</th>
-                        <td>
-                            <input type="text" name="region" class="p-region" placeholder="都道府県" readonly style="background-color: #eee;" />
-                        </td>
-                        <td>
-                            <?php
-                                if ( isset($error['region']) && $error['region'] == 'blank') {
-                                    print '<p style="color: red;">正しい郵便番号を入力してください</p>';
-                                }
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>市区町村</th>
-                        <td>
-                            <input type="text" name="locality" class="p-locality" placeholder="市区町村" readonly style="background-color: #eee;" />
-                        </td>
-                        <td>
-                            <?php
-                                if (isset($error['locality']) && $error['locality'] == 'blank') {
-                                    print '<p style="color: red;">正しい郵便番号を入力してください</p>';
-                                }
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>町名番地</th>
-                        <td>
-                            <input type="text" name="street-address" class="p-street-address p-extended-address" placeholder="町名番地" />
-                        </td>
-                        <td>
-                            <?php
-                                if (isset($error['street-address']) && $error['street-address'] == 'blank') {
-                                    print '<p style="color: red;">入力がありません</p>';
-                                }
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>マンション名ほか</th>
-                        <td>
-                            <input type="text" name="others" placeholder="マンション名ほか" />
-                        </td>
-                    </tr>
-                </table>
-
-                <p>性別</p>
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input
-                        type="radio"
-                        class="btn-check"
-                        name="gender"
-                        id="other"
-                        value="9"
-                        autocomplete="off"
-                        checked>
-                    <label class="btn btn-outline-primary" for="other">そのほか</label>
-
-                    <input type="radio" class="btn-check" name="gender" id="male" value="0" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="male">男性</label>
-
-                    <input type="radio" class="btn-check" name="gender" id="female" value="1" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="female">女性</label>
+                <div class="col">
+                    <!-- <p>都道府県</p> -->
+                    <p><input
+                            type="text"
+                            name="region"
+                            class="p-region"
+                            placeholder="都道府県"
+                            readonly
+                            style="background-color: #eee;" /></p>
+                    <!-- <p>市区町村</p> -->
+                    <p><input
+                            type="text"
+                            name="locality"
+                            class="p-locality"
+                            placeholder="市区町村"
+                            readonly
+                            style="background-color: #eee;" /></p>
+                    <!-- <p>町名番地</p> -->
+                    <p><input
+                            type="text"
+                            name="street-address"
+                            class="p-street-address p-extended-address"
+                            placeholder="町名番地" /></p>
+                    <!-- <p>マンション名ほか</p> -->
+                    <p><input type="text" name="others" placeholder="マンション名ほか" /></p>
                 </div>
+            </div>
 
-                <p>年齢</p>
-                <input type="text" name="age" value="<?php print $user["age"]?>" placeholder="年齢を入力してください" />
-                
-                <!-- TODO: ポイント付与機能がないのでコメントアウト化 -->
+            <div class="row">
+                <?php
+                    if ( isset($error['region']) && $error['region'] == 'blank') {
+                        print '<p style="color: red;">正しい郵便番号を入力してください</p>';
+                    }
+                    if (isset($error['locality']) && $error['locality'] == 'blank') {
+                        print '<p style="color: red;">正しい郵便番号を入力してください</p>';
+                    }
+                    if (isset($error['street-address']) && $error['street-address'] == 'blank') {
+                        print '<p style="color: red;">入力がありません</p>';
+                    }
+                ?>
+            </div>
+                    
+            <div class="row">
+                <div class="col-md-2">
+                    <p>性別</p>
+                </div>
+                <div class="col">
+                    <!-- FIXME: DB登録状態を反映する -->
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input
+                            type="radio"
+                            class="btn-check"
+                            name="gender"
+                            id="other"
+                            value="9"
+                            autocomplete="off"
+                            checked>
+                        <label class="btn btn-outline-primary" for="other">そのほか</label>
+
+                        <input
+                            type="radio"
+                            class="btn-check"
+                            name="gender"
+                            id="male"
+                            value="0"
+                            autocomplete="off">
+                        <label class="btn btn-outline-primary" for="male">男性</label>
+
+                        <input
+                            type="radio"
+                            class="btn-check"
+                            name="gender"
+                            id="female"
+                            value="1"
+                            autocomplete="off">
+                        <label class="btn btn-outline-primary" for="female">女性</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>年齢</p>
+                </div>
+                <div class="col">
+                    <input type="text" name="age" value="<?php print $user["age"]?>" placeholder="年齢を入力してください" />歳
+                </div>
+            </div>
+
+            <!-- TODO: ポイント付与機能がないのでコメントアウト化 -->
+            <!-- <div class="row"> -->
                 <!-- <p>ポイント</p> -->
                 <!-- <p><?php // print $user["f_user_point"] ?>点</p> -->
-
-                <p>職業</p>
-                <input type="text" name="job" value="<?php print $user["job"]?>" placeholder="職業を入力してください" />
-
-                <p>身長</p>
-                <p><input type="text" name="height" value="<?php print $user["height"]?>" placeholder="身長を入力してください" />cm</p>
-
-                <p>体重</p>
-                <p><input type="text" name="weight" value="<?php print $user["weight"]?>" placeholder="体重を入力してください" />kg</p>
-
+            <!-- </div> -->
+                    
+            <div class="row">
+                <div class="col-md-2">
+                    <p>職業</p>
+                </div>
+                <div class="col">
+                    <input type="text" name="job" value="<?php print $user["job"]?>" placeholder="職業を入力してください" />
+                </div>
             </div>
 
-            <div>
-                <input type="submit" class="btn btn-secondary" name="reset" value="登録の内容に戻す" />
-                <input type="submit" class="btn btn-primary" name="update" value="更新する" />
+            <div class="row">
+                <div class="col-md-2">
+                    <p>身長</p>
+                </div>
+                <div class="col">
+                    <input type="text" name="height" value="<?php print $user["height"]?>" placeholder="身長を入力してください" />cm
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>体重</p>
+                </div>
+                <div class="col">
+                    <input type="text" name="weight" value="<?php print $user["weight"]?>" placeholder="体重を入力してください" />kg
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-secondary" name="reset" value="登録の内容に戻す" />
+                </div>
+                <div class="col">
+                    <input type="submit" class="btn btn-primary" name="update" value="更新する" />
+                </div>
+            </div>
+
             </form>
-
         </div>
+
     </main>
 
     <footer>
@@ -298,5 +355,18 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
+
+<style>
+    main {
+        padding-bottom: 30px;
+    }
+    footer {
+        position: fixed;
+    }
+
+    div + div {
+        padding-bottom: 10px;
+    }
+</style>
 
 </html>
