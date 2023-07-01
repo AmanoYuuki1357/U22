@@ -37,7 +37,7 @@
                             <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
                             <!-- 一時的にここに置く -->
-                            <li><a class="dropdown-item" href="./index.php">インデックス</a></li>
+                            <!-- <li><a class="dropdown-item" href="./index.php">インデックス</a></li> -->
                             <li><a class="dropdown-item" href="./menu.php">メニュー一覧</a></li>
                             <li>
                                 <hr class="dropdown-divider">

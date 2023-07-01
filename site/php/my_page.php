@@ -131,6 +131,17 @@ error_reporting(E_ALL & ~E_NOTICE);
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
+        <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
+        <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
 
 
     <!-- bootstrap CDN -->
