@@ -9,7 +9,8 @@ error_reporting(E_ALL & ~E_NOTICE);
         SELECT
             f_user_id,
             f_user_name,
-            f_user_nick_name
+            f_user_nick_name,
+            SUBSTRING(f_user_credit_number, 13)    AS number
         FROM
             t_users
         WHERE
@@ -40,7 +41,8 @@ error_reporting(E_ALL & ~E_NOTICE);
             ?,
             ?,
             ?,
-            ?
+            ?,
+            "配送準備中"
         );';
 
     $sqldelete = '
@@ -152,27 +154,54 @@ error_reporting(E_ALL & ~E_NOTICE);
             </ol>
         </div>
 
-        <div>
-            <h2>お支払内容確認</h2>
+        <div class="container">
+            <div class="row">
+                <h2>お支払内容確認</h2>
+            </div>
 
             <hr>
 
-            <div>
+            <div class="row">
+                <h3>お受取情報</h3>
+            </div>
 
-                <p>お受取情報</p>
+            <div class="row">
+                <div class="col-md-2">
+                    <p>お名前</p>
+                </div>
+                <div class="col">
+                    <p><?php print(h($user["f_user_name"] . " 様")) ?></p>
+                </div>
+            </div>
 
-                <p>お名前</p>
-                <p><?php print(h($user["f_user_name"] . " 様")) ?></p>
-                <p>宛先</p>
-                <p><?php print(h($_SESSION['buy']['address'])) ?></p>
+            <div class="row">
+                <div class="col-md-2">
+                    <p>宛先</p>
+                </div>
+                <div class="col">
+                    <p><?php print(h($_SESSION['buy']['address'])) ?></p>
+                </div>
+            </div>
 
-                <p>購入商品</p>
-                <table>
+            <div class="row mb-4">
+                <div class="col-md-2">
+                    <p>クレジットカード番号</p>
+                </div>
+                <div class="col">
+                    <p><?php print(h( '**** **** **** ' . $user["number"] )); ?></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <h3>購入商品</h3>
+            </div>
+                    
+                <table class="table">
                     <tr>
-                        <th>商品名</th>
-                        <th>価格</th>
-                        <th>個数</th>
-                        <th>小計</th>
+                        <th scope="col">商品名</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">個数</th>
+                        <th scope="col">小計</th>
                     </tr>
                     <?php
                         $sum = 0;
@@ -187,29 +216,38 @@ error_reporting(E_ALL & ~E_NOTICE);
                         }
                     ?>
                     <tr>
-                        <th>合計</th>
-                        <td colspan="2"><?php print h($sum) . "円" ?></td>
+                        <th colspan="3" scope="row">合計</th>
+                        <td><?php print h($sum) . "円" ?></td>
                     </tr>
                 </table>
-            </div>
+
         </div>
 
-        <div>
-            <!-- <a href="buy_complete.php">次へ</a> -->
+        <div class="d-md-flex justify-content-center">
+            <a href="buy_pay.php" class="btn btn-secondary me-md-2">戻る</a>
             <form action="" method="post">
                 <input type="hidden" name="settlement" value="settlement" />
-                <input type="submit" value="以上の内容で購入する" />
+                <input type="submit" class="btn btn-primary" value="以上の内容で購入する" />
             </form>
         </div>
 
-        <div class="back">
-            <a href="buy_pay.php">戻る</a>
-        </div>
+
 
     </main>
 
     <!-- フッター部分 -->
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->

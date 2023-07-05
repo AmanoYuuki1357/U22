@@ -158,109 +158,143 @@ error_reporting(E_ALL & ~E_NOTICE);
             </ol>
         </div>
 
-        <div>
-            <h2>クレジットカード情報の登録</h2>
+        <div class="container">
+            <div class="row">
+                <h2>クレジットカード情報の登録</h2>
+            </div>
 
             <hr>
 
             <form action="" method="post">
-            <div>
-                <p>カード番号</p>
-                <input
-                    type="text"
-                    name="number"
-                    value="<?php if(isset($_POST["update"])){ print $_POST["number"]; }?>"
-                    placeholder="カード番号(16桁)を入力してください"
-                    require />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="number" class="form-label">
+                        <p>カード番号</p>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <input
+                        type="text"
+                        id="number"
+                        name="number"
+                        class="form-control"
+                        maxlength="16"
+                        value="<?php isset($_POST["update"]) && print $_POST["number"]; ?>"
+                        placeholder="カード番号(16桁)を入力してください"
+                        required />
+                </div>
+                <div class="col">
                 <?php
                     // エラーメッセージ
                     if(isset($error["number"])){
+                        print "<p style='color: red;'>";
                         switch($error["number"]){
-                            case "blank":
-                                print "<p style='color: red;'>入力がありません</p>";
-                                break;
-                            case "digits":
-                                print "<p style='color: red;'>16桁で入力してください</p>";
-                                break;
-                            default:
-                                break;
+                            case "blank":   print "入力がありません"; break;
+                            case "digits":  print "16桁で入力してください"; break;
+                            default: break;
                         }
+                        print "</p>";
                     }
                 ?>
+                </div>
+            </div>
 
-                <p>カード名義人</p>
-                <input
-                    type="text"
-                    name="name"
-                    value="<?php if(isset($_POST["update"])){ print $_POST["name"]; } ?>"
-                    placeholder="カード名義人を入力してください" />
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="name" class="form-label">
+                        <p>カード名義人</p>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        value="<?php isset($_POST["update"]) && print $_POST["name"]; ?>"
+                        placeholder="カード名義人を入力してください" />
+                </div>
+                <div class="col">
                 <?php
                     // エラーメッセージ
-                    if(isset($error['name'])){
-                        if ($error['name'] == 'blank') {
-                            print '<p style="color: red;">入力がありません</p>';
-                        }
-                    }
+                    isset($error['name'])
+                    && $error['name'] == 'blank'
+                    && print '<p style="color: red;">入力がありません</p>';
                 ?>
+                </div>
+            </div>
 
-                <p>有効期限(月/年)</p>
-                <input
-                    type="month"
-                    name="expiry"
-                    value="<?php if(isset($_POST["update"])){ print $_POST["expiry"]; } ?>"
-                    placeholder="有効期限(yyyy-mm)を入力してください" />
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="expiry" class="form-label">
+                        <p>有効期限(月/年)</p>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <input
+                        type="month"
+                        id="expiry"
+                        name="expiry"
+                        class="form-control"
+                        value="<?php if(isset($_POST["update"])){ print $_POST["expiry"]; } ?>"
+                        placeholder="有効期限(yyyy-mm)を入力してください" />
+                </div>
+                <div class="col">
                 <?php
                     // エラーメッセージ
                     if(isset($error["expiry"])){
+                        print "<p style='color: red;'>";
                         switch($error["expiry"]){
-                            case "blank":
-                                print "<p style='color: red;'>入力がありません</p>";
-                                break;
-                            case "expired":
-                                print "<p style='color: red;'>入力値が不正です</p>";
-                                break;
-                            default:
-                                break;
+                            case "blank":   print "入力がありません"; break;
+                            case "expired": print "入力値が不正です"; break;
+                            default: break;
                         }
+                        print "</p>";
                     }
                 ?>
+                </div>
+            </div>
 
-                <p>セキュリティコード</p>
-                <input
-                    type="password"
-                    name="code"
-                    value=""
-                    placeholder="セキュリティコード(3~4桁)を入力してください"/>
-                
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="code" class="form-label">
+                        <p>セキュリティコード</p>
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    <input
+                        type="password"
+                        id="code"
+                        name="code"
+                        class="form-control"
+                        value=""
+                        maxlength="4"
+                        placeholder="セキュリティコード(3~4桁)を入力してください" />
+                </div>
+                <div class="col">
                 <?php
                     // エラーメッセージ
                     if(isset($error['code'])){
+                        print "<p style='color: red;'>";
                         switch($error['code']){
-                            case "blank":
-                                print "<p style='color: red;'>入力がありません</p>";
-                                break;
-                            case "digits":
-                                print "<p style='color: red;'>3または4桁で入力してください</p>";
-                                break;
-                            default:
-                                break;
+                            case "blank":   print "入力がありません"; break;
+                            case "digits":  print "3または4桁で入力してください"; break;
+                            default: break;
                         }
+                        print "</p>";
                     }
                 ?>
-
+                </div>
             </div>
 
-            <div>
-                <!-- <a href="buy_pay.php">更新する</a> -->
-                <input type="submit" name="update" value="更新する" />
+            <div class="d-md-flex justify-content-center">
+                <a href="buy_pay.php" class="btn btn-secondary me-md-2">戻る</a>
+                <input type="submit" name="update" class="btn btn-primary" value="クレジットカード情報を更新する" />
             </div>
 
             </form>
 
-        </div>
-
-        <div class="back">
-            <a href="buy_pay.php">戻る</a>
         </div>
 
     </main>
@@ -287,6 +321,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+    <script src="../js/validation.js"></script>
 
 </body>
 

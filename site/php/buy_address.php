@@ -227,7 +227,7 @@ if (!empty($_POST)) {
                             // エラーメッセージ
                             isset($error['postal-code'])
                             && $error['postal-code'] == 'blank'
-                            && print '<p style="color: red;">郵便番号の入力がありません。</p>';
+                            && print '<p style="color: red;">郵便番号の入力がありません</p>';
                         ?>
                     </div>
                 </div>
@@ -327,13 +327,13 @@ if (!empty($_POST)) {
                             placeholder="マンション名ほか" />
                     </div>
                 </div>
-                <div>
+                <div class="mb-4">
                     <input id="fin" type='submit' class="btn btn-primary" value="お届け先を変更する">
                 </div>
             </form>
 
             <div class="d-md-flex justify-content-center">
-                <a href="cart.php" class="btn btn-secondary px-4 me-md-2">カートへ戻る</a>
+                <a href="cart.php" class="btn btn-secondary me-md-2">戻る</a>
                 <?php
                     // 住所が取得できた時だけ次のページへのリンクを表示
                     !empty($_SESSION['buy']['address'])
@@ -359,7 +359,6 @@ if (!empty($_POST)) {
         }
     </script>
 
-
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
@@ -368,6 +367,8 @@ if (!empty($_POST)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="../js/validation.js"></script>
+
 </body>
 
 </html>

@@ -144,14 +144,14 @@ error_reporting(E_ALL & ~E_NOTICE);
                 </div> 
             </div>
 
-            <div>
+            <div class="mb-4">
                 <a href="buy_pay_upd.php" class="btn btn-primary">クレジットカード情報を編集する</a>
             </div>
 
         </div>
 
         <div class="d-md-flex justify-content-center">
-            <a href="buy_address.php" class="btn btn-secondary me-md-2">お届け先確認へ戻る</a>
+            <a href="buy_address.php" class="btn btn-secondary me-md-2">戻る</a>
         <?php
             // カード情報に抜けがなければ
              !empty($user["number"])
@@ -186,6 +186,8 @@ error_reporting(E_ALL & ~E_NOTICE);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script src="../js/validation.js"></script>
+
 </body>
 <style>
     .stepbar-row {

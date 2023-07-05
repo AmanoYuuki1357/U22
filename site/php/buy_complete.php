@@ -101,7 +101,10 @@
             </ol>
         </div>
 
-        <h2>お支払内容確認</h2>
+        <div class="container">
+        <div class="row">
+            <h2>お支払内容確認</h2>
+        </div>
 
         <hr>
 
@@ -109,10 +112,22 @@
         <p>ありがとうございました</p>
 
         <div class="back"><a href="my_page.php">マイページへ</a></div>
+        </div>
 
     </main>
 
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
