@@ -11,6 +11,7 @@ $sql = '
             f_user_name,
             f_user_nick_name,
             f_user_gender,
+            f_user_gender   AS gender,
             f_user_age      AS age,
             f_user_address  AS address,
             f_user_job      AS job,
@@ -58,8 +59,14 @@ if (isset($_POST["update"])) {
     $exist["height"]    = false;
     $exist["weight"]    = false;
 
+    // 名前
+    // TODO: 必須チェック
+
     // ニックネーム
+    // TODO: 必須チェック
+
     // 性別
+
     // 年齢
     if ($_POST["age"] !== "") {
         $exist["age"] = true;
@@ -68,12 +75,23 @@ if (isset($_POST["update"])) {
     // 住所
     if ($_POST["postal-code"] !== "") {
         $exist["address"] = true;
-        $address = '〒' . $_POST['postal-code'] . ' ' . $_POST['region'] . $_POST['locality'] . $_POST['street-address'] . $_POST['others'];
+        $address = '〒' . $_POST['postal-code'] . ' ' . $_POST['address'];
     }
 
     // 職業
+    if ($_POST["job"] !== "") {
+        $exist["job"] = true;
+    }
+
     // 身長
+    if ($_POST["height"] !== "") {
+        $exist["height"] = true;
+    }
+
     // 体重
+    if ($_POST["weight"] !== "") {
+        $exist["weight"] = true;
+    }
 
     if (empty($error)) {
         // -------------------------------------------------------------------------------
@@ -82,35 +100,14 @@ if (isset($_POST["update"])) {
         $test->debug("登録処理開始");
 
         $contents = $db->prepare($sqlupdate);
-        $contents->bindparam(1, $_POST["name"],         PDO::PARAM_STR);
-        $contents->bindparam(2, $_POST["nick_name"],    PDO::PARAM_STR);
-        $contents->bindparam(3, $_POST["gender"],       PDO::PARAM_INT);
-
-        if ($_POST["age"] === "") {
-            $contents->bindparam(4, $_POST["age"],      PDO::PARAM_NULL);
-        } else {
-            $contents->bindparam(4, $_POST["age"],      PDO::PARAM_INT);
-        }
-
-        $contents->bindparam(5, $address,           $exist["address"] ? PDO::PARAM_STR : PDO::PARAM_NULL);
-
-        if ($_POST["job"] === "") {
-            $contents->bindparam(6, $_POST["job"],      PDO::PARAM_NULL);
-        } else {
-            $contents->bindparam(6, $_POST["job"],      PDO::PARAM_STR);
-        }
-
-        if ($_POST["height"] === "") {
-            $contents->bindparam(7, $_POST["height"],   PDO::PARAM_NULL);
-        } else {
-            $contents->bindparam(7, $_POST["height"],   PDO::PARAM_STR);
-        }
-        if ($_POST["height"] === "") {
-            $contents->bindparam(8, $_POST["weight"],   PDO::PARAM_NULL);
-        } else {
-            $contents->bindparam(8, $_POST["weight"],   PDO::PARAM_STR);
-        }
-
+        $contents->bindparam(1, $_POST["name"],      PDO::PARAM_STR);
+        $contents->bindparam(2, $_POST["nick_name"], PDO::PARAM_STR);
+        $contents->bindparam(3, $_POST["gender"],    PDO::PARAM_INT);
+        $contents->bindparam(4, $_POST["age"],       $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
+        $contents->bindparam(5, $address,            $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(6, $_POST["job"],       $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(7, $_POST["height"],    $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(8, $_POST["weight"],    $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
         $contents->bindparam(9, $_SESSION["id"],     PDO::PARAM_INT);
         $updateUser = $contents->execute();
 
@@ -165,7 +162,6 @@ if (isset($_SESSION["id"])) {
 <body>
     <!-- ヘッダー部分 -->
     <?php require('header.php'); ?>
-
     <main>
         <div class="container">
 
@@ -181,10 +177,10 @@ if (isset($_SESSION["id"])) {
                 <div class="row">
                     <div class="col-md-2">
                         <label for="name" class="form-label">
-                            <p>お客様名</p>
+                            <p><span class="attention">*</span>お客様名</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_name">
+                    <div class="col-md-6" aria-describedby="caption_name">
                         <input type="text" id="name" name="name" value="<?php print $user["f_user_name"] ?>" placeholder="お名前を入力してください" require />様
                     </div>
                     <div id="caption_name" class="col form-text">
@@ -195,9 +191,9 @@ if (isset($_SESSION["id"])) {
                 <!-- メールアドレス -->
                 <div class="row">
                     <div class="col-md-2">
-                        <p>メールアドレス</p>
+                        <p><span class="attention">*</span>メールアドレス</p>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_email">
+                    <div class="col-md-6" aria-describedby="caption_email">
                         <p><?php print $user["email"] ?></p>
                     </div>
                     <div id="caption_email" class="col form-text">
@@ -208,9 +204,9 @@ if (isset($_SESSION["id"])) {
                 <!-- パスワード -->
                 <div class="row">
                     <div class="col-md-2">
-                        <p>パスワード</p>
+                        <p><span class="attention">*</span>パスワード</p>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_password">
+                    <div class="col-md-6" aria-describedby="caption_password">
                         <p>[表示しません]</p>
                     </div>
                     <div id="caption_password" class="col form-text">
@@ -222,10 +218,10 @@ if (isset($_SESSION["id"])) {
                 <div class="row">
                     <div class="col-md-2">
                         <label for="nick_name" class="form-label">
-                            <p>ニックネーム</p>
+                            <p><span class="attention">*</span>ニックネーム</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_nick_name">
+                    <div class="col-md-6" aria-describedby="caption_nick_name">
                         <input type="text" id="nick_name" name="nick_name" value="<?php print $user["f_user_nick_name"] ?>" placeholder="ニックネームを入力してください" require />様
                     </div>
                     <div id="caption_nick_name" class="col form-text">
@@ -244,36 +240,71 @@ if (isset($_SESSION["id"])) {
                             <p>住所</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_address">
-                        <!-- <p>郵便番号</p> -->
-                        <p>〒<input type="text" id="address" name="postal-code" class="p-postal-code" size="8" maxlength="8" placeholder="郵便番号" /></p>
-                        <!-- <p>都道府県</p> -->
-                        <p><input type="text" name="region" class="p-region" placeholder="都道府県" readonly style="background-color: #eee;" /></p>
-                        <!-- <p>市区町村</p> -->
-                        <p><input type="text" name="locality" class="p-locality" placeholder="市区町村" readonly style="background-color: #eee;" /></p>
-                        <!-- <p>町名番地</p> -->
-                        <p><input type="text" name="street-address" class="p-street-address p-extended-address" placeholder="町名番地" /></p>
-                        <!-- <p>マンション名ほか</p> -->
-                        <p><input type="text" name="others" placeholder="マンション名ほか" /></p>
+                    <div class="col-md-6" aria-describedby="caption_address">
+                        <div class="row">
+                            <!-- 郵便番号 -->
+                            <p>〒<input
+                                type="text"
+                                id="address"
+                                name="postal-code"
+                                class="p-postal-code"
+                                size="8"
+                                maxlength="8"
+                                value="<?php print mb_substr($user["address"], 1, 8); ?>"
+                                placeholder="郵便番号" /></p>
+                        </div>
+                        <div class="row">
+                            <!-- 住所 -->
+                            <p><input
+                                type="text"
+                                name="address"
+                                class="p-region p-locality p-street-address p-extended-address"
+                                value="<?php print mb_substr($user["address"], 10); ?>"
+                                placeholder="住所を入力してください"
+                                style="width: 90%" /></p>
+                        </div>
                     </div>
                     <div id="caption_address" class="col form-text">
                         お客様の住所です。デフォルトのお届け先として使用されます。
                     </div>
+
                 </div>
 
+                <!-- 性別 -->
                 <div class="row">
                     <div class="col-md-2">
                         <p>性別</p>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_gender">
+                    <div class="col-md-6" aria-describedby="caption_gender">
+                        <?php
+                        $checked_male   = false;    // 男性
+                        $checked_female = false;    // 女性
+                        $checked_other  = false;    // そのほか
+
+                        // 初期チェック状態の取得
+                        switch ($user["gender"]) {
+                            case 0:
+                                // 男性
+                                $checked_male = true;
+                                break;
+                            case 1:
+                                // 女性
+                                $checked_female = true;
+                                break;
+                            default:
+                                // そのほか
+                                $checked_other = true;
+                                break;
+                        }
+                        ?>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input - type="radio" - class="btn-check" - name="gender" - id="other" - value="9" - autocomplete="off" - checked>
+                            <input - type="radio" class="btn-check" name="gender" id="other" value="9" autocomplete="off" <?php $checked_other && print "checked"; ?>>
                             <label class="btn btn-outline-primary" for="other">そのほか</label>
 
-                            <input type="radio" class="btn-check" name="gender" id="male" value="0" autocomplete="off">
+                            <input type="radio" class="btn-check" name="gender" id="male" value="0" autocomplete="off" <?php $checked_male && print "checked"; ?>>
                             <label class="btn btn-outline-primary" for="male">男性</label>
 
-                            <input type="radio" class="btn-check" name="gender" id="female" value="1" autocomplete="off">
+                            <input type="radio" class="btn-check" name="gender" id="female" value="1" autocomplete="off" <?php $checked_female && print "checked"; ?>>
                             <label class="btn btn-outline-primary" for="female">女性</label>
                         </div>
                     </div>
@@ -289,7 +320,7 @@ if (isset($_SESSION["id"])) {
                             <p>年齢</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_age">
+                    <div class="col-md-6" aria-describedby="caption_age">
                         <input type="text" id="age" name="age" value="<?php print $user["age"] ?>" placeholder="年齢を入力してください" />歳
                     </div>
                     <div id="caption_age" class="col form-text">
@@ -309,7 +340,7 @@ if (isset($_SESSION["id"])) {
                             <p>職業</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_job">
+                    <div class="col-md-6" aria-describedby="caption_job">
                         <input type="text" id="job" name="job" value="<?php print $user["job"] ?>" placeholder="職業を入力してください" />
                     </div>
                     <div id="caption_job" class="col form-text">
@@ -324,7 +355,7 @@ if (isset($_SESSION["id"])) {
                             <p>身長</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_height">
+                    <div class="col-md-6" aria-describedby="caption_height">
                         <input type="text" id="height" name="height" value="<?php print $user["height"] ?>" placeholder="身長を入力してください" />cm
                     </div>
                     <div id="caption_height" class="col form-text">
@@ -339,7 +370,7 @@ if (isset($_SESSION["id"])) {
                             <p>体重</p>
                         </label>
                     </div>
-                    <div class="col-md-4" aria-describedby="caption_weight">
+                    <div class="col-md-6" aria-describedby="caption_weight">
                         <input type="text" id="weight" name="weight" value="<?php print $user["weight"] ?>" placeholder="体重を入力してください" />kg
                     </div>
                     <div id="caption_weight" class="col form-text">
@@ -348,7 +379,7 @@ if (isset($_SESSION["id"])) {
                 </div>
 
                 <div>
-                    <input type="submit" class="btn btn-secondary" name="reset" value="クリア" />
+                    <input type="submit" class="btn btn-secondary" name="reset" value="現在の情報に戻す" />
                     <input type="submit" class="btn btn-primary" name="update" value="更新する" />
                 </div>
             </form>
