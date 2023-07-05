@@ -193,6 +193,9 @@ if (isset($_SESSION["id"])) {
                                 placeholder="お名前を入力してください"
                                 required />
                             <div class="input-group-text">様</div>
+                            <div class="invalid-feedback">
+                                必須項目です。お名前を入力してください
+                            </div>
                         </div>
                     </div>
                     <div id="caption_name" class="col form-text">
@@ -234,7 +237,7 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_nick_name">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <input
                                 type="text"
                                 id="nick_name"
@@ -244,6 +247,9 @@ if (isset($_SESSION["id"])) {
                                 placeholder="ニックネームを入力してください"
                                 required />
                             <div class="input-group-text">様</div>
+                            <div class="invalid-feedback">
+                                必須項目です。ニックネームを入力してください
+                            </div>
                         </div>
                     </div>
                     <div id="caption_nick_name" class="col form-text">
