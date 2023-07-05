@@ -29,8 +29,9 @@ $test = new test();
 
 // ユーザーID取得
 if (isset($_SESSION['id'])) {
-    // ログインユーザーのIDを取得
-    $userId = $_SESSION['id'];
+
+    $userId = $_SESSION['id'];          // ログインユーザーのIDを取得
+    // $_SESSION['buy']['address'] = "";   // お届け先初期化
 
     // ===================================================================================
     // DB検索
@@ -125,163 +126,229 @@ if (!empty($_POST)) {
 
 <body>
 
-<!-- ヘッダー部分 -->
-<?php
-require('header.php');
-?>
+    <!-- ヘッダー部分 -->
+    <?php require('header.php'); ?>
 
-        <main>
-            <!-- 進行度バー -->
-            <div class="stepbar-row">
-                <ol class="stepbar">
-                    <li class="done"><span></span><br />お届け先</li>
-                    <li><span></span><br />お支払方法</li>
-                    <li><span></span><br />完了</li>
-                </ol>
-            </div>
+    <main>
+        <!-- 進行度バー -->
+        <div class="stepbar-row">
+            <ol class="stepbar">
+                <li class="done"><span></span><br />お届け先</li>
+                <li><span></span><br />お支払方法</li>
+                <li><span></span><br />完了</li>
+            </ol>
+        </div>
 
 
-            <!-- https://coliss.com/articles/build-websites/operation/css/pure-css-progress-bar.html
+        <!-- https://coliss.com/articles/build-websites/operation/css/pure-css-progress-bar.html
         ここ参考に進める予定 -->
 
 
-            <!-- <div class="step-bar">
-  <div class="step">
-    ステップ1
-  </div>
-  <div class="step">
-    ステップ2
-  </div>
-  <div class="step">
-    ステップ3
-  </div>
-</div>
+        <!-- <div class="step-bar">
+        <div class="step">
+            ステップ1
+        </div>
+        <div class="step">
+            ステップ2
+        </div>
+        <div class="step">
+            ステップ3
+        </div>
+        </div>
 
 
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemax="3"></div>
-</div>
+        <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="2" aria-valuemax="3"></div>
+        </div>
 
+        <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 33.33%;" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100">お届け先</div>
 
+        </div>
 
-<div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: 33.33%;" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100">お届け先</div>
+        <div class="progress">
 
-</div>
+        <div class="progress-bar" role="progressbar" style="width: 66.66%;" aria-valuenow="66.66" aria-valuemin="0" aria-valuemax="100">お支払い</div>
+        </div> -->
 
-<div class="progress">
-
-  <div class="progress-bar" role="progressbar" style="width: 66.66%;" aria-valuenow="66.66" aria-valuemin="0" aria-valuemax="100">お支払い</div>
-</div> -->
-
-
-
-            <div id="box">
+        <div class="container">
+            <div class="row">
                 <h2>お届け情報</h2>
-
-                <hr>
-
-                <!-- デフォルトはユーザの住所 -->
-                <h3>お届け先</h3>
-                <?php
-                if (empty($_SESSION['buy']['address'])) {
-                    // 入力なし
-                    print("<p class='address' style='color: red'>登録がありません</p>");
-                } else {
-                    // 入力あり
-                    print("<p class='address'>" . $_SESSION['buy']['address'] . "</p>");
-                }
-                ?>
-
-                <h3>新しいお届け先を登録する</h3>
-
-                <form class="h-adr" action="" method="post">
-                    <div>
-                        <!-- 郵便番号による住所の自動入力 -->
-                        <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
-
-                        <span class="p-country-name" style="display:none;">Japan</span>
-                        <table>
-                            <tr>
-                                <th>郵便番号</th>
-                                <td>
-                                    〒<input type="text" name="postal-code" class="p-postal-code" size="8" maxlength="8" placeholder="郵便番号" />
-                                </td>
-                                <td>
-                                    <?php
-                                        if (isset($error['postal-code']) && $error['postal-code'] == 'blank') {
-                                                print '<p style="color: red;">入力がありません</p>';
-                                        }
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>都道府県</th>
-                                <td>
-                                    <input type="text" name="region" class="p-region" placeholder="都道府県" readonly style="background-color: #eee;" />
-                                </td>
-                                <td>
-                                    <?php
-                                        if ( isset($error['region']) && $error['region'] == 'blank' ) {
-                                            print '<p style="color: red;">正しい郵便番号を入力してください</p>';
-                                        }
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>市区町村</th>
-                                <td>
-                                    <input type="text" name="locality" class="p-locality" placeholder="市区町村" readonly style="background-color: #eee;" />
-                                </td>
-                                <td>
-                                    <?php
-                                        if ( isset($error['locality']) && $error['locality'] == 'blank' ) {
-                                            print '<p style="color: red;">正しい郵便番号を入力してください</p>';
-                                        }
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>町名番地</th>
-                                <td>
-                                    <input type="text" name="street-address" class="p-street-address p-extended-address" placeholder="町名番地" />
-                                </td>
-                                <td>
-                                    <?php
-                                        if ( isset($error['street-address']) && $error['street-address'] == 'blank') {
-                                            print '<p style="color: red;">入力がありません</p>';
-                                        }
-                                    ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>マンション名ほか</th>
-                                <td>
-                                    <input type="text" name="others" placeholder="マンション名ほか" />
-                                </td>
-                            </tr>
-                        </table>
-                        <input id="fin" type='submit' value="変更する">
-                    </div>
-                </form>
-
-                <?php
-                if (!empty($_SESSION['buy']['address'])) {
-                    // 住所が取得できた時だけ次のページへのリンクを表示
-                    print('<div><a href="buy_pay.php">次へ:お支払方法</a></div>');
-                }
-                ?>
-                <!-- <div class="back"><a href="my_page.php">マイページへ</a></div> -->
-
             </div>
 
-        </main>
+            <hr>
 
-        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+            <!-- 現在のお届け先 -->
+            <!-- デフォルトはT_users.f_user_address -->
+            <div class="row">
+                <h3>お届け先</h3>
+            </div>
+            <div class="row" style="margin-bottom: 30px;">
+                    <p class='address' <?php empty($_SESSION['buy']['address']) && print"style='color: red'" ?> >
+                        <?php
+                            print empty($_SESSION['buy']['address'])
+                            ? "登録がありません"
+                            : $_SESSION['buy']['address']; 
+                        ?>
+                    </p>
+            </div>
+
+            <div class="row">
+                <h3>新しいお届け先を登録する</h3>
+            </div>
+
+            <form class="h-adr" action="" method="post">
+                <!-- 郵便番号による住所の自動入力 -->
+                <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+                <span class="p-country-name" style="display:none;">Japan</span>
+                
+                <!-- 郵便番号 -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="postal-code" class="form-label">
+                            <p><span class="attention">*</span>郵便番号</p>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text">〒</div>
+                            <input
+                                type="text"
+                                id="postal-code"
+                                name="postal-code"
+                                class="p-postal-code form-control"
+                                maxlength="8"
+                                value="<?php isset($_POST["postal-code"]) && print h($_POST["postal-code"]) ?>"
+                                placeholder="郵便番号" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <?php
+                            // エラーメッセージ
+                            isset($error['postal-code'])
+                            && $error['postal-code'] == 'blank'
+                            && print '<p style="color: red;">郵便番号の入力がありません。</p>';
+                        ?>
+                    </div>
+                </div>
+
+                <!-- 都道府県 -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="region" class="form-label">
+                            <p><span class="attention">*</span>都道府県</p>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input 
+                            type="text"
+                            id="region"
+                            name="region"
+                            class="p-region form-control"
+                            value="<?php isset($_POST["region"]) && print h($_POST["region"]) ?>"
+                            placeholder="都道府県"
+                            readonly />
+                    </div>
+                    <div class="col">
+                        <?php 
+                            // エラーメッセージ
+                            isset($error['region']) 
+                            && $error['region'] == 'blank'
+                            && print '<p style="color: red;">正しい郵便番号を入力してください</p>';
+                        ?>
+                    </div>
+                </div>
+
+                <!-- 市区町村 -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="locality" class="form-label">
+                            <p><span class="attention">*</span>市区町村</p>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input
+                            type="text"
+                            id="locality"
+                            name="locality"
+                            class="p-locality form-control"
+                            value="<?php isset($_POST["locality"]) && print h($_POST["locality"]) ?>"
+                            placeholder="市区町村"
+                            readonly />
+                    </div>
+                    <div class="col">
+                    <?php
+                        // エラーメッセージ
+                        isset($error['locality'])
+                        && $error['locality'] == 'blank'
+                        && print '<p style="color: red;">正しい郵便番号を入力してください</p>';
+                    ?>
+                    </div>
+                </div>
 
 
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="street-address" class="form-label">
+                            <p><span class="attention">*</span>町名番地</p>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input
+                            type="text"
+                            id="street-address"
+                            name="street-address"
+                            class="p-street-address p-extended-address form-control"
+                            value="<?php isset($_POST["street-address"]) && print h($_POST["street-address"]) ?>"
+                            placeholder="町名番地" />
+                    </div>
+                    <div class="col">
+                    <?php
+                        // エラーメッセージ
+                        isset($error['street-address'])
+                        && $error['street-address'] == 'blank'
+                        && print '<p style="color: red;">入力がありません</p>';
+                    ?>
+                    </div>
+                </div>
 
-        <script>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="others" class="form-label">
+                            <p>マンション名ほか</p>
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <input
+                            type="text"
+                            id="others"
+                            name="others"
+                            class="form-control"
+                            placeholder="マンション名ほか" />
+                    </div>
+                </div>
+                <div>
+                    <input id="fin" type='submit' class="btn btn-primary" value="お届け先を変更する">
+                </div>
+            </form>
+
+            <div class="d-md-flex justify-content-center">
+                <a href="cart.php" class="btn btn-secondary px-4 me-md-2">カートへ戻る</a>
+                <?php
+                    // 住所が取得できた時だけ次のページへのリンクを表示
+                    !empty($_SESSION['buy']['address'])
+                    && print('<a href="buy_pay.php" class="btn btn-primary">お支払方法に進む</a>');
+                ?>
+            </div>
+            <!-- <div class="back"><a href="my_page.php">マイページへ</a></div> -->
+
+        </div>
+
+    </main>
+
+    <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    <script>
         // mainタグの高さを取得する
         var mainHeight = document.querySelector('main').clientHeight;
         console.log(mainHeight);

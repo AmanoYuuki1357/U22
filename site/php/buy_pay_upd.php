@@ -268,6 +268,17 @@ error_reporting(E_ALL & ~E_NOTICE);
     <!-- フッター部分 -->
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
+    <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
+
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->

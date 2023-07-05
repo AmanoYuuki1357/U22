@@ -160,8 +160,10 @@ if (isset($_SESSION["id"])) {
 </head>
 
 <body>
+
     <!-- ヘッダー部分 -->
     <?php require('header.php'); ?>
+
     <main>
         <div class="container">
 
@@ -171,7 +173,7 @@ if (isset($_SESSION["id"])) {
 
             <!-- <hr> -->
 
-            <form class="h-adr" action="" method="post">
+            <form class="h-adr needs-validation" action="" method="post" novalidate>
 
                 <!-- 名前 -->
                 <div class="row">
@@ -181,7 +183,17 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_name">
-                        <input type="text" id="name" name="name" value="<?php print $user["f_user_name"] ?>" placeholder="お名前を入力してください" require />様
+                        <div class="input-group has-validation">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="form-control"
+                                value="<?php print $user["f_user_name"] ?>"
+                                placeholder="お名前を入力してください"
+                                required />
+                            <div class="input-group-text">様</div>
+                        </div>
                     </div>
                     <div id="caption_name" class="col form-text">
                         お客様のお名前です。配達先の宛名に使用されます。
@@ -222,7 +234,17 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_nick_name">
-                        <input type="text" id="nick_name" name="nick_name" value="<?php print $user["f_user_nick_name"] ?>" placeholder="ニックネームを入力してください" require />様
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                id="nick_name"
+                                name="nick_name"
+                                class="form-control"
+                                value="<?php print $user["f_user_nick_name"] ?>"
+                                placeholder="ニックネームを入力してください"
+                                required />
+                            <div class="input-group-text">様</div>
+                        </div>
                     </div>
                     <div id="caption_nick_name" class="col form-text">
                         お客様のニックネームです。マイページやレビュー投稿の際に使用されます。
@@ -241,33 +263,35 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_address">
-                        <div class="row">
+                        <div class="input-group">
+                            <div class="input-group-text">〒</div>
                             <!-- 郵便番号 -->
-                            <p>〒<input
+                            <input
                                 type="text"
                                 id="address"
                                 name="postal-code"
-                                class="p-postal-code"
-                                size="8"
+                                class="p-postal-code form-control"
                                 maxlength="8"
                                 value="<?php print mb_substr($user["address"], 1, 8); ?>"
-                                placeholder="郵便番号" /></p>
-                        </div>
-                        <div class="row">
-                            <!-- 住所 -->
-                            <p><input
-                                type="text"
-                                name="address"
-                                class="p-region p-locality p-street-address p-extended-address"
-                                value="<?php print mb_substr($user["address"], 10); ?>"
-                                placeholder="住所を入力してください"
-                                style="width: 90%" /></p>
+                                placeholder="郵便番号" />
                         </div>
                     </div>
                     <div id="caption_address" class="col form-text">
                         お客様の住所です。デフォルトのお届け先として使用されます。
                     </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-6" aria-describedby="caption_address">
+                        <!-- 住所 -->
+                        <input
+                                type="text"
+                                name="address"
+                                class="p-region p-locality p-street-address p-extended-address form-control"
+                                value="<?php print mb_substr($user["address"], 10); ?>"
+                                placeholder="住所を入力してください"/>
+                    </div>
                 </div>
 
                 <!-- 性別 -->
@@ -298,7 +322,7 @@ if (isset($_SESSION["id"])) {
                         }
                         ?>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input - type="radio" class="btn-check" name="gender" id="other" value="9" autocomplete="off" <?php $checked_other && print "checked"; ?>>
+                            <input type="radio" class="btn-check" name="gender" id="other" value="9" autocomplete="off" <?php $checked_other && print "checked"; ?>>
                             <label class="btn btn-outline-primary" for="other">そのほか</label>
 
                             <input type="radio" class="btn-check" name="gender" id="male" value="0" autocomplete="off" <?php $checked_male && print "checked"; ?>>
@@ -321,7 +345,16 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_age">
-                        <input type="text" id="age" name="age" value="<?php print $user["age"] ?>" placeholder="年齢を入力してください" />歳
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                id="age"
+                                name="age"
+                                class="form-control"
+                                value="<?php print $user["age"] ?>"
+                                placeholder="年齢を入力してください" />
+                            <div class="input-group-text">歳</div>
+                        </div>
                     </div>
                     <div id="caption_age" class="col form-text">
                         お客様の年齢です。
@@ -333,6 +366,43 @@ if (isset($_SESSION["id"])) {
                 <!-- <p><?php // print $user["f_user_point"] 
                         ?>点</p> -->
 
+                <!-- 身長 -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="height" class="form-label">
+                            <p>身長/体重</p>
+                        </label>
+                    </div>
+                    <div class="col-md-3" aria-describedby="caption_height">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                id="height"
+                                name="height"
+                                class="form-control"
+                                value="<?php print $user["height"] ?>"
+                                placeholder="身長を入力してください" />
+                            <div class="input-group-text">cm</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" aria-describedby="caption_height">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                id="weight"
+                                name="weight"
+                                class="form-control"
+                                value="<?php print $user["weight"] ?>"
+                                placeholder="体重を入力してください" />
+                            <div class="input-group-text">kg</div>
+                        </div>
+                    </div>
+                    <div id="caption_height" class="col form-text">
+                        お客様の身長・体重です。
+                    </div>
+                </div>
+
+
                 <!-- 職業 -->
                 <div class="row">
                     <div class="col-md-2">
@@ -341,46 +411,22 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_job">
-                        <input type="text" id="job" name="job" value="<?php print $user["job"] ?>" placeholder="職業を入力してください" />
+                        <input
+                            type="text"
+                            id="job"
+                            name="job"
+                            class="form-control"
+                            value="<?php print $user["job"] ?>"
+                            placeholder="職業を入力してください" />
                     </div>
                     <div id="caption_job" class="col form-text">
                         お客様の職業です。
                     </div>
                 </div>
 
-                <!-- 身長 -->
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="height" class="form-label">
-                            <p>身長</p>
-                        </label>
-                    </div>
-                    <div class="col-md-6" aria-describedby="caption_height">
-                        <input type="text" id="height" name="height" value="<?php print $user["height"] ?>" placeholder="身長を入力してください" />cm
-                    </div>
-                    <div id="caption_height" class="col form-text">
-                        お客様の身長です。
-                    </div>
-                </div>
-
-                <!-- 身長 -->
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="weight" class="form-label">
-                            <p>体重</p>
-                        </label>
-                    </div>
-                    <div class="col-md-6" aria-describedby="caption_weight">
-                        <input type="text" id="weight" name="weight" value="<?php print $user["weight"] ?>" placeholder="体重を入力してください" />kg
-                    </div>
-                    <div id="caption_weight" class="col form-text">
-                        お客様の体重です。
-                    </div>
-                </div>
-
-                <div>
-                    <input type="submit" class="btn btn-secondary" name="reset" value="現在の情報に戻す" />
-                    <input type="submit" class="btn btn-primary" name="update" value="更新する" />
+                <div class="d-md-flex justify-content-center">
+                    <input type="submit" class="btn btn-secondary me-md-2" name="reset" value="現在の情報に戻す" />
+                    <input type="submit" class="btn btn-primary px-5" name="update" value="更新する" />
                 </div>
             </form>
         </div>
@@ -409,6 +455,8 @@ if (isset($_SESSION["id"])) {
 
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../js/validation.js"></script>
+
 </body>
 
 <style>

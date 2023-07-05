@@ -79,71 +79,104 @@ error_reporting(E_ALL & ~E_NOTICE);
             </ol>
         </div>
 
-        <div>
-            <h2>クレジットカード情報</h2>
+        <div class="container">
+            <div class="row">
+                <h2>クレジットカード情報</h2>
+            </div>
 
             <hr>
 
-            <div>
-                <p>カード番号</p>
-                <?php
-                    if(empty($user["number"])){
-                        print "<p style='color: red;'>登録されていません</p>";
-                    }
-                    else{
-                        print "<p>" . h( '**** **** **** ' . $user["number"] ) . "</p>";
-                    }
-                ?>
-                <p>カード名義人</p>
-                <?php
-                    if(empty($user["name"])){
-                        print "<p style='color: red;'>登録されていません</p>";
-                    }
-                    else{
-                        print "<p>" . h($user["name"]) . "</p>";
-                    }
-                ?>
-                <p>有効期限(年-月)</p>
-                <p>
-                <?php
-                    if(empty($user["expiry"])){
-                        print "<p style='color: red;'>登録されていません</p>";
-                    }
-                    else{
-                        $dates = str_split($user["expiry"], 4);
-                        // print_r($dates);
-                        print "<p>{$dates[0]}年{$dates[1]}月</p>" ;
-                    }
-                ?>
-                </p>
-                <p>セキュリティコード</p>
-                <p>
-                    【表示されません】
-                </p>
+            <div class="row">
+                <div class="col-md-2">
+                    <p>カード番号</p>
+                </div>
+                <div class="col">
+                    <p <?php empty($user["number"]) && print"style='color: red'" ?> >
+                    <?php 
+                        print empty($user["number"])
+                        ? "登録されていません"
+                        : h( '**** **** **** ' . $user["number"] );
+                    ?>
+                    </p>
+                </div> 
             </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>カード名義人</p>
+                </div>
+                <div class="col">
+                    <p <?php empty($user["name"]) && print"style='color: red'" ?> >
+                    <?php 
+                        print empty($user["name"])
+                        ? "登録されていません"
+                        : h( $user["name"] );
+                    ?>
+                    </p>
+                </div> 
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>有効期限</p>
+                </div>
+                <div class="col">
+                    <p <?php empty($user["expiry"]) && print"style='color: red'" ?> >
+                    <?php 
+                        if (empty($user["expiry"])){
+                            print "登録されていません";
+                        }
+                        else{
+                            $dates = str_split($user["expiry"], 4);
+                            print $dates[0] . "年" . $dates[1] . "月" ;
+                        }
+                    ?>
+                    </p>
+                </div> 
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>セキュリティコード</p>
+                </div>
+                <div class="col">
+                    <p>【表示されません】</p>
+                </div> 
+            </div>
+
             <div>
-                <a href="buy_pay_upd.php">クレジットカード情報を編集する</a>
+                <a href="buy_pay_upd.php" class="btn btn-primary">クレジットカード情報を編集する</a>
             </div>
 
         </div>
 
+        <div class="d-md-flex justify-content-center">
+            <a href="buy_address.php" class="btn btn-secondary me-md-2">お届け先確認へ戻る</a>
         <?php
             // カード情報に抜けがなければ
-            if( !empty($user["number"])
-                && !empty($user["name"])
-                && !empty($user["expiry"])
-                && !empty($user["code"])){
-                print "<div><a href='buy_check.php'>次へ</a></div>";
-            }
+             !empty($user["number"])
+            && !empty($user["name"])
+            && !empty($user["expiry"])
+            && !empty($user["code"])
+            && print "<a href='buy_check.php' class='btn btn-primary px-4'>購入確認へ進む</a>";
         ?>
-
-        <div class="back">
-            <a href="buy_address.php">戻る</a>
         </div>
+
 
     </main>
 
     <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
+
+    <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
 
     <!-- jQuery -->
     <!-- <script src="js/JQuery.js"></script> -->
