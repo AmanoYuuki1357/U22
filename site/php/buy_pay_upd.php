@@ -165,15 +165,15 @@ error_reporting(E_ALL & ~E_NOTICE);
 
             <hr>
 
-            <form action="" method="post">
+            <form class="needs-validation" action="" method="post" novalidate>
 
             <div class="row">
                 <div class="col-md-2">
                     <label for="number" class="form-label">
-                        <p>カード番号</p>
+                        <p><span class="attention">*</span>カード番号</p>
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 has-validation">
                     <input
                         type="text"
                         id="number"
@@ -183,6 +183,9 @@ error_reporting(E_ALL & ~E_NOTICE);
                         value="<?php isset($_POST["update"]) && print $_POST["number"]; ?>"
                         placeholder="カード番号(16桁)を入力してください"
                         required />
+                    <div class="invalid-feedback">
+                            必須項目です。カード番号を入力してください
+                    </div>
                 </div>
                 <div class="col">
                 <?php
@@ -203,17 +206,21 @@ error_reporting(E_ALL & ~E_NOTICE);
             <div class="row">
                 <div class="col-md-2">
                     <label for="name" class="form-label">
-                        <p>カード名義人</p>
+                        <p><span class="attention">*</span>カード名義人</p>
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 has-validation">
                     <input
                         type="text"
                         id="name"
                         name="name"
                         class="form-control"
                         value="<?php isset($_POST["update"]) && print $_POST["name"]; ?>"
-                        placeholder="カード名義人を入力してください" />
+                        placeholder="カード名義人を入力してください"
+                        required />
+                    <div class="invalid-feedback">
+                        必須項目です。カード名義人を入力してください
+                    </div>
                 </div>
                 <div class="col">
                 <?php
@@ -228,17 +235,21 @@ error_reporting(E_ALL & ~E_NOTICE);
             <div class="row">
                 <div class="col-md-2">
                     <label for="expiry" class="form-label">
-                        <p>有効期限(月/年)</p>
+                        <p><span class="attention">*</span>有効期限(月/年)</p>
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 has-validation">
                     <input
                         type="month"
                         id="expiry"
                         name="expiry"
                         class="form-control"
                         value="<?php if(isset($_POST["update"])){ print $_POST["expiry"]; } ?>"
-                        placeholder="有効期限(yyyy-mm)を入力してください" />
+                        placeholder="有効期限(yyyy-mm)を入力してください"
+                        required />
+                    <div class="invalid-feedback">
+                        必須項目です。有効期限を入力してください
+                    </div>
                 </div>
                 <div class="col">
                 <?php
@@ -259,10 +270,10 @@ error_reporting(E_ALL & ~E_NOTICE);
             <div class="row">
                 <div class="col-md-2">
                     <label for="code" class="form-label">
-                        <p>セキュリティコード</p>
+                        <p><span class="attention">*</span>セキュリティコード</p>
                     </label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 has-validation">
                     <input
                         type="password"
                         id="code"
@@ -270,7 +281,12 @@ error_reporting(E_ALL & ~E_NOTICE);
                         class="form-control"
                         value=""
                         maxlength="4"
-                        placeholder="セキュリティコード(3~4桁)を入力してください" />
+                        minlength="3"
+                        placeholder="セキュリティコード(3~4桁)を入力してください"
+                        required />
+                    <div class="invalid-feedback">
+                        必須項目です。セキュリティコードを入力してください
+                    </div>
                 </div>
                 <div class="col">
                 <?php
