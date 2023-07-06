@@ -25,7 +25,8 @@
         $i++;
     }
 
-    print_r($list);
+    $list_json = json_encode($list);
+    print($list_json);
 
     // print("ajax");
 

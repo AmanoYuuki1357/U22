@@ -40,7 +40,12 @@ $sqlupdate = '
         WHERE
             f_user_id = ? ;';
 
-$test = new test();
+
+// ===================================================================================
+// 変数
+// ===================================================================================
+    $test = new test();         // テスト出力クラス
+
 // ===================================================================================
 // 更新するボタン押下時のイベント
 // ===================================================================================
@@ -52,7 +57,6 @@ if (isset($_POST["update"])) {
     // -------------------------------------------------------------------------------
     // 入力チェック
     // -------------------------------------------------------------------------------
-    // TODO: 入力チェック作る
     $exist["age"]       = false;
     $exist["address"]   = false;
     $exist["job"]       = false;
@@ -60,17 +64,8 @@ if (isset($_POST["update"])) {
     $exist["weight"]    = false;
 
     // 名前
-    // TODO: 必須チェック
-
     // ニックネーム
-    // TODO: 必須チェック
-
     // 性別
-
-    // 年齢
-    if ($_POST["age"] !== "") {
-        $exist["age"] = true;
-    }
 
     // 住所
     if ($_POST["postal-code"] !== "") {
@@ -78,20 +73,10 @@ if (isset($_POST["update"])) {
         $address = '〒' . $_POST['postal-code'] . ' ' . $_POST['address'];
     }
 
-    // 職業
-    if ($_POST["job"] !== "") {
-        $exist["job"] = true;
-    }
-
-    // 身長
-    if ($_POST["height"] !== "") {
-        $exist["height"] = true;
-    }
-
-    // 体重
-    if ($_POST["weight"] !== "") {
-        $exist["weight"] = true;
-    }
+    if ($_POST["age"] !== "") { $exist["age"] = true; }         // 年齢
+    if ($_POST["job"] !== "") { $exist["job"] = true; }         // 仕事
+    if ($_POST["height"] !== "") { $exist["height"] = true; }   // 身長
+    if ($_POST["weight"] !== "") { $exist["weight"] = true; }   // 体重
 
     if (empty($error)) {
         // -------------------------------------------------------------------------------
@@ -173,7 +158,7 @@ if (isset($_SESSION["id"])) {
 
             <!-- <hr> -->
 
-            <form class="h-adr needs-validation" action="" method="post" novalidate>
+            <form id="myForm" class="h-adr needs-validation" action="" method="post" novalidate>
 
                 <!-- 名前 -->
                 <div class="row">
@@ -193,6 +178,9 @@ if (isset($_SESSION["id"])) {
                                 placeholder="お名前を入力してください"
                                 required />
                             <div class="input-group-text">様</div>
+                            <div id="error_name"  class="invalid-feedback">
+                                必須項目です。お名前を入力してください
+                            </div>
                         </div>
                     </div>
                     <div id="caption_name" class="col form-text">
@@ -234,7 +222,7 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_nick_name">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <input
                                 type="text"
                                 id="nick_name"
@@ -244,6 +232,9 @@ if (isset($_SESSION["id"])) {
                                 placeholder="ニックネームを入力してください"
                                 required />
                             <div class="input-group-text">様</div>
+                            <div id="error_nick_name" class="invalid-feedback">
+                                必須項目です。ニックネームを入力してください
+                            </div>
                         </div>
                     </div>
                     <div id="caption_nick_name" class="col form-text">
@@ -258,22 +249,25 @@ if (isset($_SESSION["id"])) {
                 <!-- 住所 -->
                 <div class="row">
                     <div class="col-md-2">
-                        <label for="address" class="form-label">
+                        <label for="postal-code" class="form-label">
                             <p>住所</p>
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_address">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <div class="input-group-text">〒</div>
                             <!-- 郵便番号 -->
                             <input
                                 type="text"
-                                id="address"
+                                id="postal-code"
                                 name="postal-code"
                                 class="p-postal-code form-control"
                                 maxlength="8"
                                 value="<?php print mb_substr($user["address"], 1, 8); ?>"
                                 placeholder="郵便番号" />
+                            <div id="error_postal-code" class="invalid-feedback">
+                                <!-- ここにエラーメッセージ -->
+                            </div>
                         </div>
                     </div>
                     <div id="caption_address" class="col form-text">
@@ -283,14 +277,18 @@ if (isset($_SESSION["id"])) {
 
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <div class="col-md-6" aria-describedby="caption_address">
+                    <div class="col-md-6 has-validation" aria-describedby="caption_address">
                         <!-- 住所 -->
                         <input
-                                type="text"
-                                name="address"
-                                class="p-region p-locality p-street-address p-extended-address form-control"
-                                value="<?php print mb_substr($user["address"], 10); ?>"
-                                placeholder="住所を入力してください"/>
+                            type="text"
+                            id="address"
+                            name="address"
+                            class="p-region p-locality p-street-address p-extended-address form-control"
+                            value="<?php print mb_substr($user["address"], 10); ?>"
+                            placeholder="住所を入力してください"/>
+                        <div id="error_address" class="invalid-feedback">
+                            <!-- ここにエラーメッセージ -->
+                        </div>
                     </div>
                 </div>
 
@@ -301,25 +299,16 @@ if (isset($_SESSION["id"])) {
                     </div>
                     <div class="col-md-6" aria-describedby="caption_gender">
                         <?php
-                        $checked_male   = false;    // 男性
-                        $checked_female = false;    // 女性
-                        $checked_other  = false;    // そのほか
+                            $checked_male   = false;    // 男性
+                            $checked_female = false;    // 女性
+                            $checked_other  = false;    // そのほか
 
-                        // 初期チェック状態の取得
-                        switch ($user["gender"]) {
-                            case 0:
-                                // 男性
-                                $checked_male = true;
-                                break;
-                            case 1:
-                                // 女性
-                                $checked_female = true;
-                                break;
-                            default:
-                                // そのほか
-                                $checked_other = true;
-                                break;
-                        }
+                            // 初期チェック状態の取得
+                            switch ($user["gender"]) {
+                                case 0: $checked_male = true; break;
+                                case 1: $checked_female = true; break;
+                                default: $checked_other = true; break;
+                            }
                         ?>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" class="btn-check" name="gender" id="other" value="9" autocomplete="off" <?php $checked_other && print "checked"; ?>>
@@ -345,7 +334,7 @@ if (isset($_SESSION["id"])) {
                         </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_age">
-                        <div class="input-group">
+                        <div class="input-group has-validation">
                             <input
                                 type="text"
                                 id="age"
@@ -354,6 +343,9 @@ if (isset($_SESSION["id"])) {
                                 value="<?php print $user["age"] ?>"
                                 placeholder="年齢を入力してください" />
                             <div class="input-group-text">歳</div>
+                            <div id="error_age" class="invalid-feedback">
+                                <!-- ここにエラーメッセージ -->
+                            </div>
                         </div>
                     </div>
                     <div id="caption_age" class="col form-text">
@@ -383,6 +375,9 @@ if (isset($_SESSION["id"])) {
                                 value="<?php print $user["height"] ?>"
                                 placeholder="身長を入力してください" />
                             <div class="input-group-text">cm</div>
+                            <div id="error_height" class="invalid-feedback">
+                                <!-- ここにエラーメッセージ -->
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3" aria-describedby="caption_height">
@@ -395,6 +390,9 @@ if (isset($_SESSION["id"])) {
                                 value="<?php print $user["weight"] ?>"
                                 placeholder="体重を入力してください" />
                             <div class="input-group-text">kg</div>
+                            <div id="error_weight" class="invalid-feedback">
+                                <!-- ここにエラーメッセージ -->
+                            </div>
                         </div>
                     </div>
                     <div id="caption_height" class="col form-text">
@@ -456,6 +454,7 @@ if (isset($_SESSION["id"])) {
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../js/validation.js"></script>
+    <script src="../js/user_upd.js"></script>
 
 </body>
 
