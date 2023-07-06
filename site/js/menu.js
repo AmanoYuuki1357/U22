@@ -1,11 +1,10 @@
 let userId = document.getElementById("userId");
 userId = parseInt(userId.innerHTML);
-// let itemIdNum = document.getElementById("itemIdNum").innerHTML;
-// console.log(itemIdNum);
 
 
-
-// const aaa = document.getElementById("listNum").childElementCount;
+// 子要素の数を取得
+const aa = document.getElementById("listNum");
+const aaa = aa.childElementCount;
 // console.log(aaa);
 
 // for (let i = 0; i < aaa; i++) {
@@ -49,6 +48,7 @@ function inCart(e){
 function sort(e){
     const genre = e.value;
     console.log(genre);
+    idList = [];
 
     $.ajax({
         type: "POST",
@@ -62,17 +62,29 @@ function sort(e){
 
         //成功したとき
         success: function (data) {
+            data.replace("\"","");
             console.log(data);
-            // for (let i = 0; i < data.length; i++) {
-            //     console.log(data[i]);
-            // }
+            // console.log(idList);
         }
 
     })
 
-
-    // for (let i = 0; i < aaa; i++) {
-    //     let itemId = document.getElementById("itemId");
+    // let itemId=[];
+    // for (let i = 1; i < aaa+1; i++) {
+    //     // itemId[i] = document.getElementById(i);
+    //     // console.log(itemId[i]);
+    //     if(i==1){
+    //         aaaa = aa.firstElementChild;
+    //         aaaaa = aaaa.id;
+    //     }else{
+    //         aaaa = aaaa.nextElementSibling;
+    //         aaaaa = aaaa.id;
+    //     }
+    //     if(data.includes(aaaaa)){
+    //         console.log("ある");
+    //     }else{
+    //         console.log("ない");
+    //     }
     // }
 
 }
