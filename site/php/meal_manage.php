@@ -1,22 +1,22 @@
 <?php
-// require('common.php');
-// error_reporting(E_ALL & ~E_NOTICE);
-// if (!isset($_SESSION)) {
-//     session_start();
-// }
+require('common.php');
+error_reporting(E_ALL & ~E_NOTICE);
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 
-// if (isset($_SESSION["id"])) {
-//     $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
-//     $users->execute(array($_SESSION["id"]));
-//     $user = $users->fetch();
-// } else {
-//     header('Location: login.php');
-//     exit();
-// }
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare('SELECT * FROM t_users WHERE f_user_id=?');
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
-// $intakes = $db->prepare('SELECT * FROM t_intakes WHERE f_user_id=?');
-// $intakes->execute(array($_SESSION["id"]));
+$intakes = $db->prepare('SELECT * FROM t_intakes WHERE f_user_id=? ORDER BY f_intake_date DESC');
+$intakes->execute(array($_SESSION["id"]));
 
 ?>
 
@@ -72,20 +72,18 @@
             <a href="my_page.php">＜マイページ</a>
         </div>
         <main>
-            <div id="graph">
-                <h2>グラフ</h2>
-            </div>
 
             <div id="record">
                 <h2>一覧</h2>
                 <div>
-                    <p>日付</p>
-                    <p>・食べたもの</p>
 
                     <?php
                     while ($intake = $intakes->fetch()) {
                     ?>
+                    <p>日付</p>
                         <p><?php print($intake["f_intake_date"]); ?></p>
+                    <p>・食べたもの</p>
+                        <p><?php print($intake["f_intake_name"]); ?></p>
                     <?php
                     }
                     ?>

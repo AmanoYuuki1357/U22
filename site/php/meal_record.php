@@ -48,7 +48,6 @@ if (isset($_SESSION["id"])) {
     </div>
     <main>
 
-        
 
             <!-- 検索する場所 -->
             <div id="meal" class="row">
