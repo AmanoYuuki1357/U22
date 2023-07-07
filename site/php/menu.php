@@ -66,8 +66,8 @@ require('header.php');
             <h3>メニュー選択</h3>
 
             <select onChange="sort(this)" name='genre'>
+                <option value="genre">ジャンル</option>
                 <?php
-                    print('<option value="all">すべて</option>');
                 for ($i = 0; $genre = $genres->fetch(); $i++) {
                     print('<option value='.$genre['f_item_genre_name'].'>' . $genre['f_item_genre_name'] . '</option>');
                 }
@@ -78,13 +78,13 @@ require('header.php');
                 <option value='filter'>食材フィルタ</option>
                 <?php
                 for ($i = 0; $i != count($allergens); $i++) {
-                    print('<option value='.$allergens[$i].'>' . $allergens[$i] . '</option>');
+                    print('<option value='.$allergensEng[$i].'>' . $allergens[$i] . '</option>');
                 }
                 ?>
             </select>
 
             <select onChange="sort3(this)" name='allergen'>
-                <option value='filter'>ソート</option>
+                <option value='sort'>ソート</option>
                 <?php
                 for ($i = 0; $i != count($sorts); $i++) {
                     print('<option value='.$sorts[$i].'>' . $sorts[$i] . '</option>');

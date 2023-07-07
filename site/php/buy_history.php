@@ -87,15 +87,6 @@ $item = $items->fetchAll();
         //     }
 
 
-
-
-
-
-
-
-
-
-
         $cccOld = "";
         $cccNew = "";
         for ($i = 0; $i < count($item); $i++) {
@@ -110,7 +101,6 @@ $item = $items->fetchAll();
                 // 一つ目の要素が出てくる
                 print("<li>" . $item[$i]['f_item_name'] . "×" . $item[$i]['f_buy_history_num'] . "</li>");
 
-
                 $count = 1;
                 for ($j = $i + 1; $j < count($item); $j++) {
                     if ($cccNew == $item[$j]['f_buy_history_date']) {
@@ -123,14 +113,6 @@ $item = $items->fetchAll();
 
                 print("</ul>");
                 print("</div>");
-
-
-
-                
-            
-
-
-
                 print("</ul>");
                 print("<p>配送予定：" . $item[$i]['f_buy_history_delivery_situation'] . "</p>");
                 print("<p>配達場所：" . $item[$i]['f_buy_history_delivery_place'] . "</p>");
