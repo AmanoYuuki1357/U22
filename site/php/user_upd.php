@@ -49,7 +49,7 @@ $sqlupdate = '
 // ===================================================================================
 // 更新するボタン押下時のイベント
 // ===================================================================================
-if (isset($_POST["update"])) {
+if (isset($_POST) && count($_POST) != 0) {
     // REVIEW: 
     $test->debug("入力チェック開始");
     $test->debug($_POST);
@@ -57,26 +57,17 @@ if (isset($_POST["update"])) {
     // -------------------------------------------------------------------------------
     // 入力チェック
     // -------------------------------------------------------------------------------
-    $exist["age"]       = false;
-    $exist["address"]   = false;
-    $exist["job"]       = false;
-    $exist["height"]    = false;
-    $exist["weight"]    = false;
+    $exist["age"]       = $_POST["age"] !== "";             // 年齢
+    $exist["address"]   = $_POST["postal-code"] !== "";     // 住所
+    $exist["job"]       = $_POST["job"] !== "";             // 職業
+    $exist["height"]    = $_POST["height"] !== "";          // 身長
+    $exist["weight"]    = $_POST["weight"] !== "";          // 体重
+    
+    $name       = trimSpaces($_POST["name"]);               // 名前
+    $nick_name  = trimSpaces($_POST["nick_name"]);          // ニックネーム
 
-    // 名前
-    // ニックネーム
-    // 性別
-
-    // 住所
-    if ($_POST["postal-code"] !== "") {
-        $exist["address"] = true;
-        $address = '〒' . $_POST['postal-code'] . ' ' . $_POST['address'];
-    }
-
-    if ($_POST["age"] !== "") { $exist["age"] = true; }         // 年齢
-    if ($_POST["job"] !== "") { $exist["job"] = true; }         // 仕事
-    if ($_POST["height"] !== "") { $exist["height"] = true; }   // 身長
-    if ($_POST["weight"] !== "") { $exist["weight"] = true; }   // 体重
+    if ($exist["age"])      { $age = mb_convert_kana($_POST["age"], 'n', 'UTF-8'); }
+    if ($exist["address"])  { $address  = '〒' . $_POST['postal-code'] . ' ' . $_POST['address']; }
 
     if (empty($error)) {
         // -------------------------------------------------------------------------------
@@ -85,15 +76,15 @@ if (isset($_POST["update"])) {
         $test->debug("登録処理開始");
 
         $contents = $db->prepare($sqlupdate);
-        $contents->bindparam(1, $_POST["name"],      PDO::PARAM_STR);
-        $contents->bindparam(2, $_POST["nick_name"], PDO::PARAM_STR);
-        $contents->bindparam(3, $_POST["gender"],    PDO::PARAM_INT);
-        $contents->bindparam(4, $_POST["age"],       $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
-        $contents->bindparam(5, $address,            $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(6, $_POST["job"],       $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(7, $_POST["height"],    $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(8, $_POST["weight"],    $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(9, $_SESSION["id"],     PDO::PARAM_INT);
+        $contents->bindparam(1, $name,              PDO::PARAM_STR);
+        $contents->bindparam(2, $nick_name,         PDO::PARAM_STR);
+        $contents->bindparam(3, $_POST["gender"],   PDO::PARAM_INT);
+        $contents->bindparam(4, $age,               $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
+        $contents->bindparam(5, $address,           $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(6, $_POST["job"],      $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(7, $_POST["height"],   $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(8, $_POST["weight"],   $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $contents->bindparam(9, $_SESSION["id"],    PDO::PARAM_INT);
         $updateUser = $contents->execute();
 
         // 更新失敗した場合
@@ -107,6 +98,7 @@ if (isset($_POST["update"])) {
         exit;
     }
 }
+
 // ===================================================================================
 // セッション開始
 // ===================================================================================
@@ -116,12 +108,20 @@ if (!isset($_SESSION)) {
 
 // ユーザー情報取得   
 if (isset($_SESSION["id"])) {
+    // -------------------------------------------------------------------------------
+    // ユーザー情報の取得
+    // -------------------------------------------------------------------------------
     $users = $db->prepare($sql);
     $users->execute(array($_SESSION["id"]));
     $user = $users->fetch();
-} else {
+}
+else {
     header('Location: login.php');
     exit();
+}
+
+function trimSpaces($str){
+    return preg_replace('/\A[\x00\s]++|[\x00\s]++\z/u', '', $str);
 }
 
 ?>
@@ -153,12 +153,12 @@ if (isset($_SESSION["id"])) {
         <div class="container">
 
             <div class="row">
-                <h1 style="padding-bottom: 30px;">ユーザー情報の閲覧・変更</h1>
+                <h1 class="mb-5">ユーザー情報の閲覧・変更</h1>
             </div>
 
             <!-- <hr> -->
 
-            <form id="myForm" class="h-adr needs-validation" action="" method="post" novalidate>
+            <form id="myForm" class="h-adr" action="" method="post">
 
                 <!-- 名前 -->
                 <div class="row">
@@ -175,8 +175,7 @@ if (isset($_SESSION["id"])) {
                                 name="name"
                                 class="form-control"
                                 value="<?php print $user["f_user_name"] ?>"
-                                placeholder="お名前を入力してください"
-                                required />
+                                placeholder="お名前を入力してください"/>
                             <div class="input-group-text">様</div>
                             <div id="error_name"  class="invalid-feedback">
                                 必須項目です。お名前を入力してください
@@ -229,8 +228,7 @@ if (isset($_SESSION["id"])) {
                                 name="nick_name"
                                 class="form-control"
                                 value="<?php print $user["f_user_nick_name"] ?>"
-                                placeholder="ニックネームを入力してください"
-                                required />
+                                placeholder="ニックネームを入力してください" />
                             <div class="input-group-text">様</div>
                             <div id="error_nick_name" class="invalid-feedback">
                                 必須項目です。ニックネームを入力してください
@@ -295,7 +293,9 @@ if (isset($_SESSION["id"])) {
                 <!-- 性別 -->
                 <div class="row">
                     <div class="col-md-2">
-                        <p>性別</p>
+                        <label for="other" class="form-label">
+                            <p>性別</p>
+                        </label>
                     </div>
                     <div class="col-md-6" aria-describedby="caption_gender">
                         <?php
@@ -304,10 +304,15 @@ if (isset($_SESSION["id"])) {
                             $checked_other  = false;    // そのほか
 
                             // 初期チェック状態の取得
-                            switch ($user["gender"]) {
-                                case 0: $checked_male = true; break;
-                                case 1: $checked_female = true; break;
-                                default: $checked_other = true; break;
+                            if(empty($user["gender"])){
+                                $checked_other = true;
+                            }
+                            else{
+                                switch ($user["gender"]) {
+                                    case 0: $checked_male = true; break;
+                                    case 1: $checked_female = true; break;
+                                    default: $checked_other = true; break;
+                                }
                             }
                         ?>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -340,6 +345,7 @@ if (isset($_SESSION["id"])) {
                                 id="age"
                                 name="age"
                                 class="form-control"
+                                maxlength="3"
                                 value="<?php print $user["age"] ?>"
                                 placeholder="年齢を入力してください" />
                             <div class="input-group-text">歳</div>
@@ -372,6 +378,7 @@ if (isset($_SESSION["id"])) {
                                 id="height"
                                 name="height"
                                 class="form-control"
+                                maxlength="5"
                                 value="<?php print $user["height"] ?>"
                                 placeholder="身長を入力してください" />
                             <div class="input-group-text">cm</div>
@@ -387,6 +394,7 @@ if (isset($_SESSION["id"])) {
                                 id="weight"
                                 name="weight"
                                 class="form-control"
+                                maxlength="5"
                                 value="<?php print $user["weight"] ?>"
                                 placeholder="体重を入力してください" />
                             <div class="input-group-text">kg</div>
@@ -416,6 +424,9 @@ if (isset($_SESSION["id"])) {
                             class="form-control"
                             value="<?php print $user["job"] ?>"
                             placeholder="職業を入力してください" />
+                        <div id="error_job" class="invalid-feedback">
+                            <!-- ここにエラーメッセージ -->
+                        </div>
                     </div>
                     <div id="caption_job" class="col form-text">
                         お客様の職業です。
@@ -423,7 +434,7 @@ if (isset($_SESSION["id"])) {
                 </div>
 
                 <div class="d-md-flex justify-content-center">
-                    <input type="submit" class="btn btn-secondary me-md-2" name="reset" value="現在の情報に戻す" />
+                    <a href="user_upd.php" class="btn btn-secondary me-md-2">現在の情報に戻す</a>
                     <input type="submit" class="btn btn-primary px-5" name="update" value="更新する" />
                 </div>
             </form>
@@ -453,6 +464,8 @@ if (isset($_SESSION["id"])) {
 
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- バリデーション -->
     <script src="../js/validation.js"></script>
     <script src="../js/user_upd.js"></script>
 
