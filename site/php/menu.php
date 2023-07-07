@@ -74,7 +74,7 @@ require('header.php');
                 ?>
             </select>
 
-            <select name='allergen'>
+            <select onChange="sort2(this)" name='allergen'>
                 <option value='filter'>食材フィルタ</option>
                 <?php
                 for ($i = 0; $i != count($allergens); $i++) {
@@ -83,7 +83,7 @@ require('header.php');
                 ?>
             </select>
 
-            <select name='allergen'>
+            <select onChange="sort3(this)" name='allergen'>
                 <option value='filter'>ソート</option>
                 <?php
                 for ($i = 0; $i != count($sorts); $i++) {

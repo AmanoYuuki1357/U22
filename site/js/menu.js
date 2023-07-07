@@ -3,8 +3,8 @@ userId = parseInt(userId.innerHTML);
 
 
 // 子要素の数を取得
-const aa = document.getElementById("listNum");
-const aaa = aa.childElementCount;
+const childAll = document.getElementById("listNum");
+const childNum = childAll.childElementCount;
 // console.log(aaa);
 
 // for (let i = 0; i < aaa; i++) {
@@ -44,7 +44,7 @@ function inCart(e){
 
 }
 
-
+let tmp2=[];
 function sort(e){
     const genre = e.value;
     console.log(genre);
@@ -62,29 +62,44 @@ function sort(e){
 
         //成功したとき
         success: function (data) {
-            data.replace("\"","");
-            console.log(data);
-            // console.log(idList);
+            // console.log(data);
+            idList = JSON.parse(data);
+            tmp2= idList.map(e=> parseInt(e));
+            // console.log(typeof idList);
+            // console.log(tmp2);
+
+            let itemId=[];
+            for (let i = 1; i < childNum+1; i++) {
+                // console.log(i);
+                if(i==1){
+                    NowFocus = childAll.firstElementChild;
+                    FocusId = Number(NowFocus.id);
+                }else{
+                    NowFocus = NowFocus.nextElementSibling;
+                    FocusId = Number(NowFocus.id);
+                }
+                // console.log(FocusId);
+
+                // console.log(tmp2);
+                const result = tmp2.includes(FocusId);
+                if(result){
+                    console.log("ある");
+                    if(!NowFocus.classList.contains("show")){
+                        NowFocus.classList.add("show")
+                    }
+                    if(NowFocus.classList.contains("hide")){
+                        NowFocus.classList.remove("hide")
+                    }
+                }else{
+                    console.log("ない");
+                    if(!NowFocus.classList.contains("hide")){
+                        NowFocus.classList.add("hide")
+                    }
+                    if(NowFocus.classList.contains("show")){
+                        NowFocus.classList.remove("show")
+                    }
+                }
+            }
         }
-
     })
-
-    // let itemId=[];
-    // for (let i = 1; i < aaa+1; i++) {
-    //     // itemId[i] = document.getElementById(i);
-    //     // console.log(itemId[i]);
-    //     if(i==1){
-    //         aaaa = aa.firstElementChild;
-    //         aaaaa = aaaa.id;
-    //     }else{
-    //         aaaa = aaaa.nextElementSibling;
-    //         aaaaa = aaaa.id;
-    //     }
-    //     if(data.includes(aaaaa)){
-    //         console.log("ある");
-    //     }else{
-    //         console.log("ない");
-    //     }
-    // }
-
 }
