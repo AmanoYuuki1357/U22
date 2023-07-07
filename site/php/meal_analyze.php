@@ -70,6 +70,12 @@ if (isset($_SESSION["id"])) {
                             $fiber += $advice["f_intake_dietary_fiber_vol"];
                             $salt += $advice["f_intake_salt_vol"];
                         }
+                        print("カロリーは" . $calorie . "kcalです<br>");
+                        print("タンパク質は" . $protein . "gです<br>");
+                        print("糖質は" . $sugar . "gです<br>");
+                        print("脂質は" . $lipid . "gです<br>");
+                        print("食物繊維は" . $fiber . "gです<br>");
+                        print("塩分は" . $salt . "gです<br>");
 
                     }else{
                         print("アドバイスはありません");
@@ -80,9 +86,6 @@ if (isset($_SESSION["id"])) {
 
             <div id="recommend">
                 <p>おすすめ商品</p>
-                <a href="item_piece.html">鮭の塩焼き</a>
-                <a href="item_piece.html">鮭の塩焼き</a>
-                <a href="item_piece.html">鮭の塩焼き</a>
             </div>
         </main>
 
