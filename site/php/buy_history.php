@@ -103,7 +103,7 @@ $item = $items->fetchAll();
             if ($cccOld != $cccNew) {
                 $cccOld = $cccNew;
                 print("<div class='situation'>");
-                print("<p>購入日：" . $item[$i]['f_buy_history_date'] . "</p>");
+                print("<p>購入日：" . $cccNew . "</p>");
                 print("<div class='info'>");
                 print("<p>商品名</p>");
                 print("<ul>");
@@ -112,6 +112,7 @@ $item = $items->fetchAll();
                     if ($cccNew == $item[$j]['f_buy_history_date']) {
                         print("<li>" . $item[$j]['f_item_name'] . "×" . $item[$j]['f_buy_history_num'] . "</li>");
                     } else {
+                        $i = $j - 1;
                         break;
                     }
                 }
@@ -122,7 +123,6 @@ $item = $items->fetchAll();
 
                 print("</div>");
             }
-            $cccOld = $item[$i]['f_buy_history_date'];
         }
         ?>
 
