@@ -15,6 +15,7 @@ if (isset($_SESSION["id"])) {
     exit();
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +75,20 @@ if (isset($_SESSION["id"])) {
             <div>
                 <h2>アドバイス</h2>
                 <div id="advice">
-                    <p>食事の記録がありません</p>
+                    <?php
+                    $advices = $db->prepare("SELECT * FROM t_intakes WHERE f_intake_date LIKE '%'?'%' AND f_user_id=?");
+                    $advices->execute(array(date("Y-m-d"),$_SESSION["id"]));
+                    // print(date("Y-m-d"));
+
+                    if(!isset($user["f_user_gender"],$user["f_user_age"],$user["f_user_height"],$user["f_user_weight"])){
+                        print("プロフィールを登録してください");
+                    }else if (isset($advices) ){
+                        while($advice= $advices->fetch()){
+                        }
+                    }else{
+                        print("アドバイスはありません");
+                    }
+                    ?>
                 </div>
             </div>
 

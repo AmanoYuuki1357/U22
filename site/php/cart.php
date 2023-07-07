@@ -62,15 +62,15 @@ $carts->execute(array($user['f_user_id']));
 
 <body>
 
-<!-- ヘッダー部分 -->
-<?php
-require('header.php');
-?>
+    <!-- ヘッダー部分 -->
+    <?php
+    require('header.php');
+    ?>
 
     <main class="d-flex">
 
 
-    <!-- ショッピングカート -->
+        <!-- ショッピングカート -->
         <div id="cart" class="container">
             <h3>ショッピングカート</h3>
 
@@ -113,7 +113,14 @@ require('header.php');
                 <?php print('<p id="buySum">' . number_format($sum) . '円</p>'); ?>
             </div>
             <div id="button" class="button">
-                <a href="buy_address.php">レジに進む</a>
+                <?php
+                // カートに商品が入っている場合のみ遷移可
+                if ($sum > 0) {
+                    print '<a href="buy_address.php">レジに進む</a>';
+                } else {
+                    print '<span>カートに商品を追加してください</span>';
+                }
+                ?>
                 <!-- ここはformのinputのbutton -->
             </div>
 
