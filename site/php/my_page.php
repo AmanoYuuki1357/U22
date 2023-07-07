@@ -76,15 +76,11 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="outline">
-                <a href="buy_history.php">あなたの購入履歴></a>
+                <a href="buy_history.php">あなたの購入履歴</a>
             </div>
 
             <div class="outline">
-                <a href="delivery_situation.php">あなたの配送状況></a>
-            </div>
-
-            <div class="outline">
-                <a href="user_upd.php">ユーザー情報></a>
+                <a href="user_upd.php">ユーザー情報</a>
             </div>
 
 
