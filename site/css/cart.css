@@ -52,9 +52,10 @@ header nav{
 
 
 /* レジに進むボタン */
-.button{
-    /* background-color: #b5d4c2dd;
-    padding: 10px; */
+.button a{
+    background-color: #b5d4c2dd;
+    padding: 10px;
+
 
     border-radius: 5px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
@@ -71,9 +72,10 @@ header nav{
 }
 .button a{
     color: #efefef;
+    /* padding: 10%; */
     
 }
-.button:hover {
+.button a:hover {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
     background-color: #06ce74;
     color: #5e5e5e;
