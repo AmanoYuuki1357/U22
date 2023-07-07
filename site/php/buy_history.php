@@ -120,7 +120,6 @@ $item = $items->fetchAll();
                 print("</div>");
                 print("<p>配送予定：" . $item[$i]['f_buy_history_delivery_situation'] . "</p>");
                 print("<p>配達場所：" . $item[$i]['f_buy_history_delivery_place'] . "</p>");
-
                 print("</div>");
             }
         }
