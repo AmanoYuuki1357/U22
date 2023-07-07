@@ -1,11 +1,10 @@
 let userId = document.getElementById("userId");
 userId = parseInt(userId.innerHTML);
-// let itemIdNum = document.getElementById("itemIdNum").innerHTML;
-// console.log(itemIdNum);
 
 
-
-// const aaa = document.getElementById("listNum").childElementCount;
+// 子要素の数を取得
+const childAll = document.getElementById("listNum");
+const childNum = childAll.childElementCount;
 // console.log(aaa);
 
 // for (let i = 0; i < aaa; i++) {
@@ -45,10 +44,11 @@ function inCart(e){
 
 }
 
-
+let tmp2=[];
 function sort(e){
     const genre = e.value;
     console.log(genre);
+    idList = [];
 
     $.ajax({
         type: "POST",
@@ -62,17 +62,44 @@ function sort(e){
 
         //成功したとき
         success: function (data) {
-            console.log(data);
-            // for (let i = 0; i < data.length; i++) {
-            //     console.log(data[i]);
-            // }
+            // console.log(data);
+            idList = JSON.parse(data);
+            tmp2= idList.map(e=> parseInt(e));
+            // console.log(typeof idList);
+            // console.log(tmp2);
+
+            let itemId=[];
+            for (let i = 1; i < childNum+1; i++) {
+                // console.log(i);
+                if(i==1){
+                    NowFocus = childAll.firstElementChild;
+                    FocusId = Number(NowFocus.id);
+                }else{
+                    NowFocus = NowFocus.nextElementSibling;
+                    FocusId = Number(NowFocus.id);
+                }
+                // console.log(FocusId);
+
+                // console.log(tmp2);
+                const result = tmp2.includes(FocusId);
+                if(result){
+                    console.log("ある");
+                    if(!NowFocus.classList.contains("show")){
+                        NowFocus.classList.add("show")
+                    }
+                    if(NowFocus.classList.contains("hide")){
+                        NowFocus.classList.remove("hide")
+                    }
+                }else{
+                    console.log("ない");
+                    if(!NowFocus.classList.contains("hide")){
+                        NowFocus.classList.add("hide")
+                    }
+                    if(NowFocus.classList.contains("show")){
+                        NowFocus.classList.remove("show")
+                    }
+                }
+            }
         }
-
     })
-
-
-    // for (let i = 0; i < aaa; i++) {
-    //     let itemId = document.getElementById("itemId");
-    // }
-
 }

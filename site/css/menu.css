@@ -82,3 +82,15 @@
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
   background-color: #d0d0d0;
 }
+
+
+
+
+
+/* ソート機能 */
+.show{
+  display: block;
+}
+.hide{
+  display: none;
+}

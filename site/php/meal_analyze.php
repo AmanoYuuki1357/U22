@@ -15,6 +15,7 @@ if (isset($_SESSION["id"])) {
     exit();
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -38,33 +39,9 @@ if (isset($_SESSION["id"])) {
 
 <body>
     <div id="wrap">
-        <header>
-
-            <h2>
-                ミールフレンド
-            </h2>
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-
-            <div id="header-right">
-                <?php
-                if (!isset($_SESSION["id"])) {
-                ?>
-                    <a href="login.php">ログイン/会員登録</a>
-                <?php
-                } else {
-                ?>
-                    <div>
-                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
-                    </div>
-                <?php
-                }
-                ?>
-            </div>
-
-        </header>
+        <?php
+            require('header.php');
+        ?>
 
         <div id="gomypage">
             <!-- パンクズ -->
@@ -74,15 +51,41 @@ if (isset($_SESSION["id"])) {
             <div>
                 <h2>アドバイス</h2>
                 <div id="advice">
-                    <p>食事の記録がありません</p>
+                    <?php
+                    $advices = $db->prepare("SELECT * FROM t_intakes WHERE f_intake_date LIKE ? AND f_user_id = ?");
+                    $searchDate = '%' . date("Y-m-d") . '%';
+                    $advices->execute(array($searchDate, $_SESSION["id"]));
+
+                    // if(!isset($user["f_user_gender"],$user["f_user_age"],$user["f_user_height"],$user["f_user_weight"])){
+                        // print("<a href='user_upd.php'>プロフィールを登録してください</a>");
+                    // }else
+
+
+                    if (isset($advices) ){
+                        while($advice= $advices->fetch()){
+                            $calorie = $calorie + $advice["f_intake_calorie"];
+                            $protein += $advice["f_intake_protein_vol"];
+                            $sugar += $advice["f_intake_augar_vol"];
+                            $lipid += $advice["f_intake_lipid_vol"];
+                            $fiber += $advice["f_intake_dietary_fiber_vol"];
+                            $salt += $advice["f_intake_salt_vol"];
+                        }
+                        print("カロリーは" . $calorie . "kcalです<br>");
+                        print("タンパク質は" . $protein . "gです<br>");
+                        print("糖質は" . $sugar . "gです<br>");
+                        print("脂質は" . $lipid . "gです<br>");
+                        print("食物繊維は" . $fiber . "gです<br>");
+                        print("塩分は" . $salt . "gです<br>");
+
+                    }else{
+                        print("アドバイスはありません");
+                    }
+                    ?>
                 </div>
             </div>
 
             <div id="recommend">
                 <p>おすすめ商品</p>
-                <a href="item_piece.html">鮭の塩焼き</a>
-                <a href="item_piece.html">鮭の塩焼き</a>
-                <a href="item_piece.html">鮭の塩焼き</a>
             </div>
         </main>
 
