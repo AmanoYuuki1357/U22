@@ -33,7 +33,6 @@ $item = $items->fetchAll();
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/buy_history.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/delivery_situation.css"> -->
 
 </head>
 
@@ -45,7 +44,7 @@ $item = $items->fetchAll();
 
     <main>
 
-        <h2>購入履歴</h2>
+        <h1>購入履歴</h1>
 
         <?php
         // $cccOld = "";
@@ -94,9 +93,9 @@ $item = $items->fetchAll();
             if ($cccOld != $cccNew) {
                 $cccOld = $cccNew;
                 print("<div class='situation'>");
-                print("<p>購入日：" . $cccNew . "</p>");
+                print("<h2>購入日：" . $cccNew . "</h2>");
                 print("<div class='info'>");
-                print("<p>商品名</p>");
+                print("<h2>商品名</h2>");
                 print("<ul>");
                 // 一つ目の要素が出てくる
                 for ($j = $i; $j < count($item); $j++) {
@@ -109,8 +108,8 @@ $item = $items->fetchAll();
                 }
                 print("</ul>");
                 print("</div>");
-                print("<p>配送予定：" . $item[$i]['f_buy_history_delivery_situation'] . "</p>");
-                print("<p>配達場所：" . $item[$i]['f_buy_history_delivery_place'] . "</p>");
+                print("<h2>配送予定：</h2>" ."<p>". $item[$i]['f_buy_history_delivery_situation'] . "</p>");
+                print("<h2>配達場所：</h2>" ."<p>". $item[$i]['f_buy_history_delivery_place'] . "</p>");
                 print("</div>");
             }
         }

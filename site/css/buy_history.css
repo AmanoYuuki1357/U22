@@ -14,7 +14,14 @@ main {
   
   .situation {
     border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 10px;
+    margin-bottom: 20px;
+    /* 外側に影を付ける */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    /* ニューモーフィズム */
+    background-color: #f8f8f8;
+    
   }
   
   .info {

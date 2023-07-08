@@ -1,27 +1,27 @@
 <?php
 require('common.php');
 error_reporting(E_ALL & ~E_NOTICE);
-    // ===================================================================================
-    // SQL
-    // ===================================================================================
-    $sql = 'SELECT * FROM t_users WHERE f_user_id=?;';
+// ===================================================================================
+// SQL
+// ===================================================================================
+$sql = 'SELECT * FROM t_users WHERE f_user_id=?;';
 
-    // ===================================================================================
-    // セッション開始
-    // ===================================================================================
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+// ===================================================================================
+// セッション開始
+// ===================================================================================
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-    // ユーザーID取得
-    if (isset($_SESSION["id"])) {
-        $users = $db->prepare($sql);
-        $users->execute(array($_SESSION["id"]));
-        $user = $users->fetch();
-    } else {
-        header('Location: login.php');
-        exit();
-    }
+// ユーザーID取得
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare($sql);
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
 ?>
 
@@ -36,8 +36,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     <title>マイページ</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
@@ -52,72 +51,81 @@ error_reporting(E_ALL & ~E_NOTICE);
 
     <main>
 
-        <div>
+        <div id="box" class="container">
 
-            <div id="box">
-                <div>
+            <div class="row">
+
+                <div class="col record">
                     <a href="meal_record.php">
-                        <img alt="食事記録pic">
-                        <p>食事記録</p>
+
+                        <img class="menuImg" src="../images/record.jpg" alt="食事記録pic">
+                        <p class="menuChar">食事記録</p>
                     </a>
                 </div>
-                <div>
+
+                <div class="col manage">
                     <a href="meal_manage.php">
-                        <img alt="食事管理pic">
-                        <p>食事管理</p>
+                        <img class="menuImg" src="../images/management.jpg" alt="食事管理pic">
+
+                        <p class="menuChar">食事管理</p>
                     </a>
                 </div>
-                <div>
+
+                <div class="col analysis">
                     <a href="meal_analyze.php">
-                        <img alt="食事分析pic">
-                        <p>食事分析</p>
+                        <img class="menuImg" src="../images/analyse.jpg" alt="食事分析pic">
+
+                        <p class="menuChar">食事分析</p>
                     </a>
                 </div>
+
             </div>
 
-            <div class="outline">
-                <a href="buy_history.php">あなたの購入履歴</a>
+            <div class="row">
+                <div class="outline">
+                    <a href="buy_history.php">あなたの購入履歴</a>
+                </div>
+
+                <div class="outline">
+                    <a href="user_upd.php">ユーザー情報</a>
+                </div>
             </div>
+        </div>
 
-            <div class="outline">
-                <a href="user_upd.php">ユーザー情報</a>
-            </div>
+        <!-- <?php
+                $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
+                $cs->execute(array($_SESSION['id']));
+                $c = $cs->fetch();
+                if ($c[0] != 0) {
+                    print('<p class="sl">あなたの投稿はこちら</p>');
+                ?> -->
 
+        <!-- <table> -->
+        <!-- <?php
 
-            <!-- <?php
-                    $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
-                    $cs->execute(array($_SESSION['id']));
-                    $c = $cs->fetch();
-                    if ($c[0] != 0) {
-                        print('<p class="sl">あなたの投稿はこちら</p>');
-                    ?> -->
+                    $posts = $db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
+                    $posts->execute(array($_SESSION['id']));
 
-            <!-- <table> -->
-            <!-- <?php
-
-                        $posts = $db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
-                        $posts->execute(array($_SESSION['id']));
-
-                        for ($i = 0; $post = $posts->fetch(); $i++) {
-                            if ($i == 0) {
-                                print("<tr>");
-                            }
-                            if ($i == 5) {
-                                print("</tr>");
-                                $i = 0;
-                            }
-                    ?> -->
-
-            <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
-
-            <!-- <?php
+                    for ($i = 0; $post = $posts->fetch(); $i++) {
+                        if ($i == 0) {
+                            print("<tr>");
                         }
-                    } else {
-                        print('<p class="sl">あなたの投稿作品はまだありません</p>
-                        <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
+                        if ($i == 5) {
+                            print("</tr>");
+                            $i = 0;
+                        }
+                ?> -->
+
+        <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
+
+        <!-- <?php
                     }
-                    ?> -->
-            <!-- </table> -->
+                } else {
+                    print('<p class="sl">あなたの投稿作品はまだありません</p>
+                        <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
+                }
+                ?> -->
+        <!-- </table> -->
         </div>
     </main>
 
@@ -127,8 +135,8 @@ error_reporting(E_ALL & ~E_NOTICE);
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-        <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
-        <script>
+    <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
+    <script>
         // mainタグの高さを取得する
         var mainHeight = document.querySelector('main').clientHeight;
         console.log(mainHeight);
@@ -141,9 +149,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
     <!-- bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
