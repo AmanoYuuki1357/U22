@@ -307,7 +307,7 @@ function trimSpaces($str){
                             $checked_other  = false;    // そのほか
 
                             // 初期チェック状態の取得
-                            if(empty($user["gender"])){
+                            if($user["gender"] == ""){
                                 $checked_other = true;
                             }
                             else{
