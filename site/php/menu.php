@@ -51,10 +51,10 @@ while ($cart = $carts->fetch()) {
 
 <body>
 
-<!-- ヘッダー部分 -->
-<?php
-require('header.php');
-?>
+    <!-- ヘッダー部分 -->
+    <?php
+    require('header.php');
+    ?>
 
 
 
@@ -69,7 +69,7 @@ require('header.php');
                 <option value="all">ジャンル</option>
                 <?php
                 for ($i = 0; $genre = $genres->fetch(); $i++) {
-                    print('<option value='.$genre['f_item_genre_name'].'>' . $genre['f_item_genre_name'] . '</option>');
+                    print('<option value=' . $genre['f_item_genre_name'] . '>' . $genre['f_item_genre_name'] . '</option>');
                 }
                 ?>
             </select>
@@ -82,7 +82,7 @@ require('header.php');
                 // }
                 ?>
             </select> -->
-            <button type="button" class="review-btn" data-bs-toggle="modal" data-bs-target="#reviewModal" data-bs-whatever="@getbootstrap">食材フィルタ</button>
+            <button type="button" class="itemFilter" data-bs-toggle="modal" data-bs-target="#reviewModal" data-bs-whatever="@getbootstrap">食材フィルタ</button>
 
             <!-- <select onChange="sort3(this)" name='allergen'>
                 <option value='def'>ソート(多い順)</option>
@@ -108,7 +108,7 @@ require('header.php');
                             // print('<div class="row">');
 
                             // print('<div class="col-sm-6 col-md-3 col-lg-2 item-box" id="'.$i+1.'">');
-                            ?>
+                        ?>
                             <div class="col-sm-6 col-md-3 col-lg-2 item-box" id="<?php print($item["f_item_id"]); ?>">
                             <?php
                             print('<a href="item_piece.php?id=' . $item['f_item_id'] . '" id="itemId' . $item['f_item_id'] . '">');
@@ -125,14 +125,14 @@ require('header.php');
                             }
                             print('</div>');
                         }
-                        ?>
+                            ?>
+                            </div>
+
                     </div>
 
                 </div>
 
             </div>
-
-        </div>
 
     </main>
 
@@ -142,33 +142,42 @@ require('header.php');
     </footer>
 
     <!-- 食材フィルタ記入ウィンドウ -->
-    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade " id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
 
-            <div class="modal-content">
+            <div class="modal-content allergensModal">
                 <!-- ヘッダー -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">避けたい食材を選択してください</h5>
+                    <h3 class="modal-title" id="exampleModalLabel">避けたい食材を選択してください</h3>
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
 
                 <form action="" method="post">
                     <div class="modal-body" id="filter">
-                        <?php
-                        for ($i = 0; $i != count($allergens); $i++) {
-                            print('<label><input type="checkbox" value='.$allergensEng[$i].' />' . $allergens[$i] . '</label>');
-                        }
-                        ?>
+
+                        <div class="container">
+
+                            <div class="row">
+                                <?php
+                                for ($i = 0; $i != count($allergens); $i++) {
+                                    print('<div class="allergenContents col-lg-2 col-md-3 col-sm-6">
+                                    <label>
+                                    <input type="checkbox" value=' . $allergensEng[$i] . ' />' . $allergens[$i]
+                                        . '</label>
+                                        </div>');
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <p>食事の好みを設定することで、苦手食材以外からメニューを選択できます。</p>
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button> -->
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="filter()">反映<button>
-                        <!-- <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="post_review" onclick="filter()" value="閉じる" /> -->
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="filter()">反映</button>
                     </div>
                 </form>
 
+            </div>
         </div>
     </div>
 
