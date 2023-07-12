@@ -27,12 +27,16 @@
     // 点数を☆に変換
     function strNumToStar($point)
     {
-        $strStars = "☆☆☆☆☆";
-        for ($i = 0; $i < $point; $i++) {
-            $strStars = "★" . $strStars;
-        }
+        $result = "<span class='star'>";
 
-        return mb_substr($strStars, 0, 5);
+        $i = 0;
+        while($point > $i){ $result .= "★"; $i++; }
+
+        $result .= "</span>";
+
+        while( 5 > $i ) { $result .= "★"; $i++; }
+
+        return $result;
     }
 
 ?>

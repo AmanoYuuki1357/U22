@@ -316,7 +316,7 @@ $test->get(empty($user), "ユーザーTBL");
                                             <dt>投稿者名</dt>
                                                 <dd>" . h($review['nick_name']) . "</dd>
                                             <dt>評価</dt>
-                                                <dd>" . strNumToStar($review['point']) . "</dd>
+                                                <dd class='blank'>" . strNumToStar($review['point']) . "</dd>
                                             <dt>コメント</dt>
                                                 <dd>" . h($review['review']) . "</dd>
                                         </dl>
@@ -366,9 +366,6 @@ $test->get(empty($user), "ユーザーTBL");
                             print "<li>" . h($key) . "</li>";
                         }
                     }
-
-
-
                     ?>
                 </ul>
 
@@ -392,17 +389,17 @@ $test->get(empty($user), "ユーザーTBL");
                 </table>
 
                 <dl>
-                    <dt>原材料</dt>
+                    <dt class="Subheading">原材料</dt>
                     <dd><?php print h($item['materials']); ?></dd>
                 </dl>
 
                 <dl>
-                    <dt>保存方法</dt>
+                    <dt class="Subheading">保存方法</dt>
                     <dd><?php print h($item['save_way']); ?></dd>
                 </dl>
 
                 <dl>
-                    <dt>賞味期限</dt>
+                    <dt class="Subheading">賞味期限</dt>
                     <dd><?php print h($item['use_by_date']); ?></dd>
                 </dl>
 
@@ -449,14 +446,14 @@ $test->get(empty($user), "ユーザーTBL");
                         </figure>
                         <div class="col">
                             <h3><?php print $item['name'] ?></h3>
-                            <p>価格</p>
+                            <p class="Subheading">価格</p>
                             <p><?php print $item['price'] ?>円</p>
-                            <p>商品説明</p>
+                            <p class="Subheading">商品説明</p>
                             <p><?php print $item['ex'] ?></p>
                         </div>
                     </div>
 
-                    <p>ニックネーム</p>
+                    <p class="Subheading mb-0">ニックネーム</p>
                     <p><?php print $user['f_user_nick_name'] ?>さん</p>
 
                     <!-- レビュー入力 -->
@@ -466,13 +463,29 @@ $test->get(empty($user), "ユーザーTBL");
 
                         <!-- レビュー点数 -->
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">点数</label>
-                            <input type="number" class="form-control" name="review_point" maxlength="5">
+                            <label for="recipient-name" class="col-form-label"><p class="Subheading mb-0">点数</p></label>
+                            <!-- <input type="number" class="form-control" name="review_point" maxlength="5"> -->
+                            <div class="rate-form mb-2">
+                                <input id="star5" type="radio" name="review_point" value="5">
+                                <label for="star5">★</label>
+                                <input id="star4" type="radio" name="review_point" value="4">
+                                <label for="star4">★</label>
+                                <input id="star3" type="radio" name="review_point" value="3">
+                                <label for="star3">★</label>
+                                <input id="star2" type="radio" name="review_point" value="2">
+                                <label for="star2">★</label>
+                                <input id="star1" type="radio" name="review_point" value="1">
+                                <label for="star1">★</label>
+                                <input id="star0" type="radio" name="review_point" value="0" checked>
+                            </div>
+                            <div>
+                                <label for="star0" class="btn btn-primary">★をリセットする</label>
+                            </div>
                         </div>
 
                         <!-- レビュー内容 -->
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">コメント</label>
+                            <label for="message-text" class="col-form-label"><p class="Subheading mb-0">コメント</p></label>
                             <textarea class="form-control" name="review_comment"></textarea>
                         </div>
                 </div>
@@ -501,12 +514,39 @@ $test->get(empty($user), "ユーザーTBL");
         }
     </script>
 
-
     <script src="../js/jQuery.js"></script>
     <script src="../js/item_piece.js"></script>
 
     <!-- bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
+<style>
+    .rate-form {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+    .rate-form input[type=radio] {
+        display: none;
+    }
+    .rate-form label {
+        position: relative;
+        padding: 0 5px;
+        color: #ccc;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .rate-form label:hover,
+    .rate-form label:hover ~ label,
+    .rate-form input[type=radio]:checked ~ label,
+    .star {
+        color: #ffcc00;
+    }
+
+    .blank {
+        color: #ccc;
+    }
+
+</style>
 
 </html>
