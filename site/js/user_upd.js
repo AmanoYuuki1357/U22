@@ -13,14 +13,22 @@ document.getElementById("myForm").addEventListener(
 // バリデーション
 // =========================================================================
 function validate(){
+        checkName       = validateName();       // 名前
+        checkNickName   = validateNickName();   // ニックネーム
+        checkAddress    = validateAddress();    // 住所
+        checkAge        = validateAge();        // 年齢
+        checkHeight     = validateHeight();     // 身長
+        checkWeight     = validateWeight();     // 体重
+        checkJob        = validateJob();        // 職業
+
     return (
-        validateName()              // 名前
-        && validateNickName()       // ニックネーム
-        && validateAddress()        // 住所
-        && validateAge()            // 年齢
-        && validateHeight()         // 身長
-        && validateWeight()         // 体重
-        && validateJob()            // 職業
+        checkName           // 名前
+        && checkNickName    // ニックネーム
+        && checkAddress     // 住所
+        && checkAge         // 年齢
+        && checkHeight      // 身長
+        && checkWeight      // 体重
+        && checkJob         // 職業
     );
 }
 
@@ -50,7 +58,7 @@ function validateName(){
 }
 
 // ニックネーム
-function validateNickName(input, error){
+function validateNickName(){
     var input   = document.getElementById("nick_name");
     var error   = document.getElementById("error_nick_name");
 
@@ -62,7 +70,7 @@ function validateNickName(input, error){
     }
 
     // 文字長チェック
-    if(isMaxLength(input, 31)){
+    if(isOverMaxLength(input, 31)){
         setClass(input, false);
         setError(input, "ニックネームは31文字以内で入力してください");
         return false;
@@ -81,7 +89,9 @@ function validateAddress(){
     var inputAddress= document.getElementById("address");
     var errorAdderss= document.getElementById("error_address");
 
+    // 郵便番号に入力がある場合のみチェック
     if(!isEmpty(inputCode)){
+
         // 必須チェック
         if(isEmpty(inputAddress)){
             setClass(inputCode, false);
@@ -89,6 +99,7 @@ function validateAddress(){
             setError(errorAdderss, "住所の入力がありません");
             return false;
         }
+
     }
 
     // 正常
@@ -104,6 +115,7 @@ function validateAge(input, error){
     var input   = document.getElementById("age");
     var error   = document.getElementById("error_age");
 
+    // 入力がある場合のみチェック
     if(!isEmpty(input)){
 
         // 整数値チェック
@@ -132,7 +144,9 @@ function validateHeight(){
     var input   = document.getElementById("height");
     var error   = document.getElementById("error_height");
 
+    // 入力がある場合のみチェック
     if(!isEmpty(input)){
+
         // 整数値チェック
         if(isNaN(input.value)){
             setClass(input, false);
@@ -159,7 +173,9 @@ function validateWeight(){
     var input   = document.getElementById("weight");
     var error   = document.getElementById("error_weight");
 
+    // 入力がある場合のみチェック
     if(!isEmpty(input)){
+
         // 整数値チェック
         if(isNaN(input.value)){
             setClass(input, false);
@@ -188,7 +204,7 @@ function validateJob(){
      if(!isEmpty(input)){
 
         // 文字長チェック
-        if(isMaxLength(input, 255)){
+        if(isOverMaxLength(input, 255)){
             setClass(input, false);
             setError(error, "職業は255文字以内で入力してください");
             return false;
@@ -204,7 +220,8 @@ function validateJob(){
 // 必須チェック
 function isEmpty(input){ return input.value.trim() === ""; }
 
-function isMaxLength(input, max){ return input.value.length > max; }
+// 最大長チェック
+function isOverMaxLength(input, max){ return input.value.length > max; }
 
 // class追加・削除の付与
 function setClass(input, valid){
@@ -213,10 +230,6 @@ function setClass(input, valid){
 }
 
 // エラーメッセージの付与
-function setError(error){
-    error.textContent = "";
-}
-function setError(error, message){
-    error.textContent = message;
-}
+function setError(error){ error.textContent = ""; }
+function setError(error, message){ error.textContent = message; }
 

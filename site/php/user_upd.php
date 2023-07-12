@@ -50,9 +50,15 @@ $sqlupdate = '
 // 更新するボタン押下時のイベント
 // ===================================================================================
 if (isset($_POST) && count($_POST) != 0) {
+
     // REVIEW: 
     $test->debug("入力チェック開始");
     $test->debug($_POST);
+
+    // -------------------------------------------------------------------------------
+    // バリデーション
+    // -------------------------------------------------------------------------------
+    // 処理なし:JS側で実装
 
     // -------------------------------------------------------------------------------
     // 入力チェック
@@ -63,40 +69,41 @@ if (isset($_POST) && count($_POST) != 0) {
     $exist["height"]    = $_POST["height"] !== "";          // 身長
     $exist["weight"]    = $_POST["weight"] !== "";          // 体重
     
+    // -------------------------------------------------------------------------------
+    // 登録値の整形
+    // -------------------------------------------------------------------------------
     $name       = trimSpaces($_POST["name"]);               // 名前
     $nick_name  = trimSpaces($_POST["nick_name"]);          // ニックネーム
 
     if ($exist["age"])      { $age = mb_convert_kana($_POST["age"], 'n', 'UTF-8'); }
     if ($exist["address"])  { $address  = '〒' . $_POST['postal-code'] . ' ' . $_POST['address']; }
 
-    if (empty($error)) {
-        // -------------------------------------------------------------------------------
-        // ユーザー情報の更新
-        // -------------------------------------------------------------------------------
-        $test->debug("登録処理開始");
+    // -------------------------------------------------------------------------------
+    // ユーザー情報の更新
+    // -------------------------------------------------------------------------------
+    $test->debug("登録処理開始");
 
-        $contents = $db->prepare($sqlupdate);
-        $contents->bindparam(1, $name,              PDO::PARAM_STR);
-        $contents->bindparam(2, $nick_name,         PDO::PARAM_STR);
-        $contents->bindparam(3, $_POST["gender"],   PDO::PARAM_INT);
-        $contents->bindparam(4, $age,               $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
-        $contents->bindparam(5, $address,           $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(6, $_POST["job"],      $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(7, $_POST["height"],   $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(8, $_POST["weight"],   $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(9, $_SESSION["id"],    PDO::PARAM_INT);
-        $updateUser = $contents->execute();
+    $contents = $db->prepare($sqlupdate);
+    $contents->bindparam(1, $name,              PDO::PARAM_STR);
+    $contents->bindparam(2, $nick_name,         PDO::PARAM_STR);
+    $contents->bindparam(3, $_POST["gender"],   PDO::PARAM_INT);
+    $contents->bindparam(4, $age,               $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
+    $contents->bindparam(5, $address,           $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(6, $_POST["job"],      $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(7, $_POST["height"],   $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(8, $_POST["weight"],   $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(9, $_SESSION["id"],    PDO::PARAM_INT);
+    $updateUser = $contents->execute();
 
-        // 更新失敗した場合
-        if ($updateUser != 1) {
-            // TODO: 更新失敗時の動作を考える
-            $test->error("登録処理失敗");
-        }
-
-        // 更新成功
-        header('Location: user_upd.php');
-        exit;
+    // 更新失敗した場合
+    if ($updateUser != 1) {
+        // TODO: 更新失敗時の動作を考える
+        $test->error("登録処理失敗");
     }
+
+    // 更新成功
+    header('Location: user_upd.php');
+    exit;
 }
 
 // ===================================================================================
