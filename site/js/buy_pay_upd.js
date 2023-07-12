@@ -13,21 +13,23 @@ document.getElementById("myForm").addEventListener(
 // バリデーション
 // =========================================================================
 function validate(){
+    checkCardNum    = validateCardNum();    // カード番号
+    checkName       = validateName();       // カード名義人
+    checkExpiry     = validateExpiry();     // 有効期間
+    checkCode       = validateCode();       // セキュリティコード
+
     return (
-        validateName()              // 名前
-        && validateNickName()       // ニックネーム
-        && validateAddress()        // 住所
-        && validateAge()            // 年齢
-        && validateHeight()         // 身長
-        && validateWeight()         // 体重
-        && validateJob()            // 職業
+        checkCardNum    // カード番号
+        && checkName    // カード名義人
+        && checkExpiry  // 有効期限
+        && checkCode    // セキュリティコード
     );
 }
 
-// 名前
-function validateName(){
-    var input   = document.getElementById("name");
-    var error   = document.getElementById("error_name");
+// カード番号
+function validateCardNum(){
+    var input   = document.getElementById("number");
+    var error   = document.getElementById("error_number");
 
     // 必須チェック
     if(isEmpty(input)){
@@ -36,10 +38,17 @@ function validateName(){
         return false;
     }
 
-    // 文字長チェック
-    if(isMaxLength(input, 31)){
+    // 整数値チェック
+    if(isNaN(input.value)){
         setClass(input, false);
-        setError(error, "お名前は31文字以内で入力してください");
+        setError(error, "数値を入力してください");
+        return false;
+    }
+
+    // 文字長チェック
+    if(!isLength(input, 16)){
+        setClass(input, false);
+        setError(error, "16桁のカード番号を入力してください");
         return false;
     }
 
@@ -49,22 +58,23 @@ function validateName(){
     return true;
 }
 
-// ニックネーム
-function validateNickName(input, error){
-    var input   = document.getElementById("nick_name");
-    var error   = document.getElementById("error_nick_name");
+// カード名義人
+function validateName(){
+    var input   = document.getElementById("name");
+    var error   = document.getElementById("error_name");
 
     // 必須チェック
     if(isEmpty(input)){
         setClass(input, false);
-        setError(error, "必須項目です。ニックネームを入力してください");
+        setError(error, "必須項目です。カードの名義人を入力してください");
         return false;
     }
 
-    // 文字長チェック
-    if(isMaxLength(input, 31)){
+    // 書式チェック 
+    var regex = new RegExp(/^[A-Z]+ [A-Z]+$/);          // 正規表現パターン(A-Z A-Z)
+    if (!regex.test(input.value)) {
         setClass(input, false);
-        setError(input, "ニックネームは31文字以内で入力してください");
+        setError(error, "書式に問題があります。性と名の間に半角スペースを空け、全角のアルファベットで入力してください");
         return false;
     }
 
@@ -74,51 +84,47 @@ function validateNickName(input, error){
     return true;
 }
 
-// 住所
-function validateAddress(){
-    var inputCode   = document.getElementById("postal-code");
-    var errorCode   = document.getElementById("error_postal-code");
-    var inputAddress= document.getElementById("address");
-    var errorAdderss= document.getElementById("error_address");
+// 有効期限
+function validateExpiry(){
+    var input   = document.getElementById("expiry");
+    var error   = document.getElementById("error_expiry");
 
-    if(!isEmpty(inputCode)){
-        // 必須チェック
-        if(isEmpty(inputAddress)){
-            setClass(inputCode, false);
-            setClass(inputAddress, false);
-            setError(errorAdderss, "住所の入力がありません");
-            return false;
-        }
+    // 必須チェック
+    if(isEmpty(input)){
+        setClass(input, false);
+        setError(error, "必須項目です。有効期限の入力がありません");
+        return false;
     }
 
-    // 正常
-    setClass(inputCode, true);
-    setClass(inputAddress, true);
-    setError(errorCode);
-    setError(errorAdderss);
-    return true;
-}
+    console.debug(input.value);
 
-// 年齢
-function validateAge(input, error){
-    var input   = document.getElementById("age");
-    var error   = document.getElementById("error_age");
+    // 書式チェック(形式が "yyyy-mm" であるか)
+    var regex   = new RegExp(/^[0-9]{4}-[0-9]{2}$/);    // 正規表現パターン(yyyy-mm)
+    if (!regex.test(input.value)){
+        setClass(input, false);
+        setError(error, "書式に問題があります。年(4桁)-月(2桁)で入力してください");
+        return false;
+    }
 
-    if(!isEmpty(input)){
+    let expiry = input.value.split("-");                // 入力された有効期限([0]:年,[1]:月)
 
-        // 整数値チェック
-        if(isNaN(input.value)){
-            setClass(input, false);
-            setError(error, "数値を入力してください");
-            return false;
-        }
+    // 書式チェック(入力された月が1~12の範囲であるか)
+    if(expiry[1] < 1 || expiry[1] > 12){
+        setClass(input, false);
+        setError(error, "書式に問題があります。01月から12月を入力してください");
+        return false;
+    }
 
-        // 範囲チェック
-        if(input.value < 0 || input.value > 120){
-            setClass(input, false);
-            setError(error, "0から120までの数値を入力してください");
-            return false;
-        }
+    var today = new Date();                             // 日付(本日)
+    var todayYear   = today.getFullYear();              // 年(本日)
+    var todayMonth  = today.getMonth()+1;               // 月(本日)
+
+    // 整合性チェック
+    // 有効期限が切れていないか
+    if(expiry[0] < todayYear || ( expiry[0] == todayYear &&  expiry[1] < todayMonth)){
+        setClass(input, false);
+        setError(error, "クレジットカードの有効期限が切れています");
+        return false;
     }
 
     // 正常
@@ -127,72 +133,30 @@ function validateAge(input, error){
     return true;
 }
 
-// 身長
-function validateHeight(){
-    var input   = document.getElementById("height");
-    var error   = document.getElementById("error_height");
+// セキュリティコード
+function validateCode(){
+    var input   = document.getElementById("code");
+    var error   = document.getElementById("error_code");
 
-    if(!isEmpty(input)){
-        // 整数値チェック
-        if(isNaN(input.value)){
-            setClass(input, false);
-            setError(error, "数値を入力してください");
-            return false;
-        }
-
-        // 範囲チェック
-        if(input.value < 0 || input.value > 999.9){
-            setClass(input, false);
-            setError(error, "0.0から999.9までの数値を入力してください");
-            return false;
-        }
+    // 必須チェック
+    if(isEmpty(input)){
+        setClass(input, false);
+        setError(error, "必須項目です。セキュリティコードを入力してください");
+        return false;
     }
 
-    setClass(input, true);
-    setError(error);
-    return true;
-}
-
-// 体重
-function validateWeight(){
-    // 体重
-    var input   = document.getElementById("weight");
-    var error   = document.getElementById("error_weight");
-
-    if(!isEmpty(input)){
-        // 整数値チェック
-        if(isNaN(input.value)){
-            setClass(input, false);
-            setError(error, "数値を入力してください");
-            return false;
-        }
-
-        // 範囲チェック
-        if(input.value < 0 || input.value > 999.9){
-            setClass(input, false);
-            setError(error, "0.0から999.9までの数値を入力してください");
-            return false;
-        }
+    // 整数値チェック
+    if(isNaN(input.value)){
+        setClass(input, false);
+        setError(error, "数値を入力してください");
+        return false;
     }
 
-    setClass(input, true);
-    setError(error);
-    return true;
-}
-
-// 職業
-function validateJob(){
-    var input   = document.getElementById("job");
-    var error   = document.getElementById("error_job");
-
-     if(!isEmpty(input)){
-
-        // 文字長チェック
-        if(isMaxLength(input, 255)){
-            setClass(input, false);
-            setError(error, "職業は255文字以内で入力してください");
-            return false;
-        }
+    // 範囲チェック
+    if(input.value.length != 3 && input.value.length != 4){
+        setClass(input, false);
+        setError(error, "3桁または4桁の数値を入力してください");
+        return false;
     }
 
     // 正常
@@ -204,7 +168,8 @@ function validateJob(){
 // 必須チェック
 function isEmpty(input){ return input.value.trim() === ""; }
 
-function isMaxLength(input, max){ return input.value.length > max; }
+// 文字長チェック
+function isLength(input, len){ return input.value.length == len; }
 
 // class追加・削除の付与
 function setClass(input, valid){
@@ -213,10 +178,6 @@ function setClass(input, valid){
 }
 
 // エラーメッセージの付与
-function setError(error){
-    error.textContent = "";
-}
-function setError(error, message){
-    error.textContent = message;
-}
+function setError(error){ error.textContent = "";}
+function setError(error, message){ error.textContent = message; }
 

@@ -56,71 +56,29 @@ error_reporting(E_ALL & ~E_NOTICE);
     // 更新するボタン押下時のイベント
     // ===================================================================================
     if(isset($_POST) && count($_POST) != 0){
-        // -------------------------------------------------------------------------------
-        // 入力チェック
-         // -------------------------------------------------------------------------------
-        // カード番号
-        if($_POST["number"] == ""){
-            // 必須チェック
-            $error["number"] = "blank";
-        }
-        else if(mb_strlen($_POST["number"]) != 16){
-            // 桁数チェック
-            $error["number"] = "digits";
-        }
-
-        // カード名義人
-        if($_POST["name"] == ""){
-            // 必須チェック
-            $error["name"] = "blank";
-        }
-
-        // 有効期限(mm/yyyy)
-        if($_POST["expiry"] == ""){
-            // 必須チェック
-            $error["expiry"] = "blank";
-        }
-        elseif(strtotime(date("Ym")) > strtotime($_POST["expiry"])){
-            // 整合性チェック
-            $error["expiry"] = "expired";
-        }
-
-        // セキュリティコード
-        if($_POST["code"] == ""){
-            // 必須チェック
-            $error["code"] = "blank";
-        }
-        else if(mb_strlen($_POST["code"]) != 3){
-            if(mb_strlen($_POST["code"]) != 4){
-                // 桁数チェック
-                $error["code"] = "digits";
-            }
-        }
 
         // REVIEW: 取得地の確認
         // print_r($_POST);
         // print_r($error);
 
-        if(empty($error)){
-             // -------------------------------------------------------------------------------
-            // ユーザー情報更新
-             // -------------------------------------------------------------------------------
-            $contents = $db->prepare($sqlupdate);
-            $contents->bindparam(1, $_POST["number"], PDO::PARAM_INT);
-            $contents->bindparam(2, $_POST["name"], PDO::PARAM_STR);
-            $contents->bindparam(3, str_replace('-', '', $_POST["expiry"]), PDO::PARAM_INT);
-            $contents->bindparam(4, sha1($_POST["code"]), PDO::PARAM_STR);
-            $contents->bindparam(5, $userId, PDO::PARAM_INT);
-            $updateUser = $contents->execute();
+        // -------------------------------------------------------------------------------
+        // ユーザー情報更新
+        // -------------------------------------------------------------------------------
+        $contents = $db->prepare($sqlupdate);
+        $contents->bindparam(1, $_POST["number"], PDO::PARAM_INT);
+        $contents->bindparam(2, $_POST["name"], PDO::PARAM_STR);
+        $contents->bindparam(3, str_replace('-', '', $_POST["expiry"]), PDO::PARAM_INT);
+        $contents->bindparam(4, sha1($_POST["code"]), PDO::PARAM_STR);
+        $contents->bindparam(5, $userId, PDO::PARAM_INT);
+        $updateUser = $contents->execute();
 
-            // 更新失敗した場合
-            if($updateUser != 1){
-                // TODO: 更新失敗時の動作を考える
-            }
-
-            // 更新成功
-            header('Location: buy_pay.php');
+        // 更新失敗した場合
+        if($updateUser != 1){
+            // TODO: 更新失敗時の動作を考える
         }
+
+        // 更新成功
+        header('Location: buy_pay.php');
     }
 
 ?>
@@ -165,7 +123,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
             <hr>
 
-            <form class="needs-validation" action="" method="post" novalidate>
+            <form id="myForm" action="" method="post">
 
             <div class="row">
                 <div class="col-md-2">
@@ -173,7 +131,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                         <p><span class="attention">*</span>カード番号</p>
                     </label>
                 </div>
-                <div class="col-md-4 has-validation">
+                <div class="col has-validation">
                     <input
                         type="text"
                         id="number"
@@ -182,24 +140,10 @@ error_reporting(E_ALL & ~E_NOTICE);
                         maxlength="16"
                         value="<?php isset($_POST["update"]) && print $_POST["number"]; ?>"
                         placeholder="カード番号(16桁)を入力してください"
-                        required />
-                    <div class="invalid-feedback">
+                        onblur="validateCardNum()" />
+                    <div id="error_number" class="invalid-feedback">
                             必須項目です。カード番号を入力してください
                     </div>
-                </div>
-                <div class="col">
-                <?php
-                    // エラーメッセージ
-                    if(isset($error["number"])){
-                        print "<p style='color: red;'>";
-                        switch($error["number"]){
-                            case "blank":   print "入力がありません"; break;
-                            case "digits":  print "16桁で入力してください"; break;
-                            default: break;
-                        }
-                        print "</p>";
-                    }
-                ?>
                 </div>
             </div>
 
@@ -209,7 +153,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                         <p><span class="attention">*</span>カード名義人</p>
                     </label>
                 </div>
-                <div class="col-md-4 has-validation">
+                <div class="col has-validation">
                     <input
                         type="text"
                         id="name"
@@ -217,18 +161,10 @@ error_reporting(E_ALL & ~E_NOTICE);
                         class="form-control"
                         value="<?php isset($_POST["update"]) && print $_POST["name"]; ?>"
                         placeholder="カード名義人を入力してください"
-                        required />
-                    <div class="invalid-feedback">
+                        onblur="validateName()" />
+                    <div id="error_name" class="invalid-feedback">
                         必須項目です。カード名義人を入力してください
                     </div>
-                </div>
-                <div class="col">
-                <?php
-                    // エラーメッセージ
-                    isset($error['name'])
-                    && $error['name'] == 'blank'
-                    && print '<p style="color: red;">入力がありません</p>';
-                ?>
                 </div>
             </div>
 
@@ -238,7 +174,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                         <p><span class="attention">*</span>有効期限(月/年)</p>
                     </label>
                 </div>
-                <div class="col-md-4 has-validation">
+                <div class="col has-validation">
                     <input
                         type="month"
                         id="expiry"
@@ -246,24 +182,10 @@ error_reporting(E_ALL & ~E_NOTICE);
                         class="form-control"
                         value="<?php if(isset($_POST["update"])){ print $_POST["expiry"]; } ?>"
                         placeholder="有効期限(yyyy-mm)を入力してください"
-                        required />
-                    <div class="invalid-feedback">
+                        onblur="validateExpiry()" />
+                    <div id="error_expiry" class="invalid-feedback">
                         必須項目です。有効期限を入力してください
                     </div>
-                </div>
-                <div class="col">
-                <?php
-                    // エラーメッセージ
-                    if(isset($error["expiry"])){
-                        print "<p style='color: red;'>";
-                        switch($error["expiry"]){
-                            case "blank":   print "入力がありません"; break;
-                            case "expired": print "入力値が不正です"; break;
-                            default: break;
-                        }
-                        print "</p>";
-                    }
-                ?>
                 </div>
             </div>
 
@@ -273,7 +195,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                         <p><span class="attention">*</span>セキュリティコード</p>
                     </label>
                 </div>
-                <div class="col-md-4 has-validation">
+                <div class="col has-validation">
                     <input
                         type="password"
                         id="code"
@@ -283,24 +205,10 @@ error_reporting(E_ALL & ~E_NOTICE);
                         maxlength="4"
                         minlength="3"
                         placeholder="セキュリティコード(3~4桁)を入力してください"
-                        required />
-                    <div class="invalid-feedback">
+                        onblur="validateCode()" />
+                    <div id="error_code" class="invalid-feedback">
                         必須項目です。セキュリティコードを入力してください
                     </div>
-                </div>
-                <div class="col">
-                <?php
-                    // エラーメッセージ
-                    if(isset($error['code'])){
-                        print "<p style='color: red;'>";
-                        switch($error['code']){
-                            case "blank":   print "入力がありません"; break;
-                            case "digits":  print "3または4桁で入力してください"; break;
-                            default: break;
-                        }
-                        print "</p>";
-                    }
-                ?>
                 </div>
             </div>
 
@@ -337,6 +245,8 @@ error_reporting(E_ALL & ~E_NOTICE);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+
+    <!-- バリデーション -->
     <script src="../js/validation.js"></script>
     <script src="../js/buy_pay_upd.js"></script>
 
