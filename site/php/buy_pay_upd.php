@@ -55,7 +55,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     // ===================================================================================
     // 更新するボタン押下時のイベント
     // ===================================================================================
-    if(isset($_POST["update"])){
+    if(isset($_POST) && count($_POST) != 0){
         // -------------------------------------------------------------------------------
         // 入力チェック
          // -------------------------------------------------------------------------------
@@ -338,6 +338,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
     <script src="../js/validation.js"></script>
+    <script src="../js/buy_pay_upd.js"></script>
 
 </body>
 
