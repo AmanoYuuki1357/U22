@@ -175,7 +175,8 @@ function trimSpaces($str){
                                 name="name"
                                 class="form-control"
                                 value="<?php print $user["f_user_name"] ?>"
-                                placeholder="お名前を入力してください"/>
+                                placeholder="お名前を入力してください"
+                                onblur="validateName()"/>
                             <div class="input-group-text">様</div>
                             <div id="error_name"  class="invalid-feedback">
                                 必須項目です。お名前を入力してください
@@ -228,7 +229,8 @@ function trimSpaces($str){
                                 name="nick_name"
                                 class="form-control"
                                 value="<?php print $user["f_user_nick_name"] ?>"
-                                placeholder="ニックネームを入力してください" />
+                                placeholder="ニックネームを入力してください"
+                                onblur="validateNickName()" />
                             <div class="input-group-text">様</div>
                             <div id="error_nick_name" class="invalid-feedback">
                                 必須項目です。ニックネームを入力してください
@@ -283,7 +285,8 @@ function trimSpaces($str){
                             name="address"
                             class="p-region p-locality p-street-address p-extended-address form-control"
                             value="<?php print mb_substr($user["address"], 10); ?>"
-                            placeholder="住所を入力してください"/>
+                            placeholder="住所を入力してください"
+                            onblur="validateAddress()" />
                         <div id="error_address" class="invalid-feedback">
                             <!-- ここにエラーメッセージ -->
                         </div>
@@ -347,7 +350,8 @@ function trimSpaces($str){
                                 class="form-control"
                                 maxlength="3"
                                 value="<?php print $user["age"] ?>"
-                                placeholder="年齢を入力してください" />
+                                placeholder="年齢を入力してください"
+                                onblur="validateAge()" />
                             <div class="input-group-text">歳</div>
                             <div id="error_age" class="invalid-feedback">
                                 <!-- ここにエラーメッセージ -->
@@ -380,7 +384,8 @@ function trimSpaces($str){
                                 class="form-control"
                                 maxlength="5"
                                 value="<?php print $user["height"] ?>"
-                                placeholder="身長を入力してください" />
+                                placeholder="身長を入力してください"
+                                onblur="validateHeight()" />
                             <div class="input-group-text">cm</div>
                             <div id="error_height" class="invalid-feedback">
                                 <!-- ここにエラーメッセージ -->
@@ -396,7 +401,8 @@ function trimSpaces($str){
                                 class="form-control"
                                 maxlength="5"
                                 value="<?php print $user["weight"] ?>"
-                                placeholder="体重を入力してください" />
+                                placeholder="体重を入力してください"
+                                onblur="validateWeight()" />
                             <div class="input-group-text">kg</div>
                             <div id="error_weight" class="invalid-feedback">
                                 <!-- ここにエラーメッセージ -->
@@ -423,7 +429,8 @@ function trimSpaces($str){
                             name="job"
                             class="form-control"
                             value="<?php print $user["job"] ?>"
-                            placeholder="職業を入力してください" />
+                            placeholder="職業を入力してください"
+                            onblur="validateJob()" />
                         <div id="error_job" class="invalid-feedback">
                             <!-- ここにエラーメッセージ -->
                         </div>
