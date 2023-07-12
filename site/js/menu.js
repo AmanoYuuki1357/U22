@@ -43,7 +43,7 @@ function inCart(e){
 let tmp=[];
 function sort(e){
     const genre = e.value;
-    console.log(genre);
+    // console.log(genre);
     idList = [];
     if(genre!="all"){
         $.ajax({
@@ -78,7 +78,7 @@ function sort(e){
                     // console.log(tmp);
                     const result = tmp.includes(FocusId);
                     if(result){
-                        console.log("ある");
+                        // console.log("ある");
                         if(!NowFocus.classList.contains("show")){
                             NowFocus.classList.add("show")
                         }
@@ -86,7 +86,7 @@ function sort(e){
                             NowFocus.classList.remove("hide")
                         }
                     }else{
-                        console.log("ない");
+                        // console.log("ない");
                         if(!NowFocus.classList.contains("hide")){
                             NowFocus.classList.add("hide")
                         }
@@ -124,7 +124,7 @@ function filter() {
     $('input:checked').each(function () {
         selected.push($(this).val());
     });
-    console.log(selected);
+    // console.log(selected);
     $.ajax({
         type: "POST",
         dateType: "text",
@@ -137,7 +137,7 @@ function filter() {
 
         //成功したとき
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             idList = JSON.parse(data);
             tmp2= idList.map(e=> parseInt(e));
             // console.log(typeof idList);
@@ -157,7 +157,7 @@ function filter() {
                 // console.log(tmp2);
                 const result = tmp2.includes(FocusId);
                 if(result){
-                    console.log("ある");
+                    // console.log("ある");
                     if(!NowFocus.classList.contains("show")){
                         NowFocus.classList.add("show")
                     }
@@ -165,7 +165,7 @@ function filter() {
                         NowFocus.classList.remove("hide")
                     }
                 }else{
-                    console.log("ない");
+                    // console.log("ない");
                     if(!NowFocus.classList.contains("hide")){
                         NowFocus.classList.add("hide")
                     }
