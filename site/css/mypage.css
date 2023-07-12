@@ -1,52 +1,28 @@
-
-
-
-
-
-
 /* *************３つの選択*************** */
-.record{
-    width: 100%;
-    height: 100%;
-    background-image: url(../site/images/record.jpg);
-    /* site\images\record.png */
-    position: relative;
-    top: 0px;
-    left: 0px;
-    /* z-index: 1; */
-}
-.manage{
-    width: 100%;
-    height: 100%;
-    background-image: image();
-    position: relative;
-    top: 0px;
-    left: 0px;
-    /* z-index: 1; */
-}
-.analysis{
-    width: 100%;
-    height: 100%;
-    background-image: image();
-    position: relative;
-    top: 0px;
-    left: 0px;
-    /* z-index: 1; */
+.tileTitle {
+  max-width: 30vw;
+  position: relative;
+  top: 0px;
+  left: 0px;
+margin-top: 10%;
+  /* z-index: 1; */
 }
 
 /* ************************ */
 
 .menuChar {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    font-size: 80px;
-    /* opacity: 0.5; */
-  }
-  
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  font-size: 3.5vw;
+  /* 文字に影つける */
+  text-shadow: 1px 1px 5px #000;
+  color: #fffcfc;
+}
 
-  .menuImg{
-    filter: blur(5px);
-  }
+/* ぼかし */
+.menuImg {
+  /* filter: blur(5px); */
+}
