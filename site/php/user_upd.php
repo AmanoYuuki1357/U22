@@ -156,11 +156,15 @@ function trimSpaces($str){
     <!-- ヘッダー部分 -->
     <?php require('header.php'); ?>
 
+    <div id="gomypage">
+        <a href="my_page.php">＜マイページ</a>
+    </div>
+
     <main>
         <div class="container">
 
             <div class="row">
-                <h1 class="mb-5">ユーザー情報の閲覧・変更</h1>
+                <h1 class="my-5">ユーザー情報の閲覧・変更</h1>
             </div>
 
             <!-- <hr> -->

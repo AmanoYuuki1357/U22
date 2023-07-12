@@ -45,7 +45,7 @@ function validateName(){
     }
 
     // 文字長チェック
-    if(isMaxLength(input, 31)){
+    if(isOverMaxLength(input, 31)){
         setClass(input, false);
         setError(error, "お名前は31文字以内で入力してください");
         return false;
