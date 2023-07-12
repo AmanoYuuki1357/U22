@@ -126,7 +126,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             <form id="myForm" action="" method="post">
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="number" class="form-label">
                         <p><span class="attention">*</span>カード番号</p>
                     </label>
@@ -148,7 +148,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="name" class="form-label">
                         <p><span class="attention">*</span>カード名義人</p>
                     </label>
@@ -169,7 +169,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="expiry" class="form-label">
                         <p><span class="attention">*</span>有効期限(月/年)</p>
                     </label>
@@ -190,7 +190,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="code" class="form-label">
                         <p><span class="attention">*</span>セキュリティコード</p>
                     </label>
