@@ -4,8 +4,16 @@
   position: relative;
   top: 0px;
   left: 0px;
-margin-top: 6%;
+margin: 6% 6% 0 0;
   /* z-index: 1; */
+  /* ニューモーフィズム */
+    background: #e8e8e8;
+    box-shadow:  10px 10px 20px #d9d9d9,
+             -10px -10px 20px #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    /* ぼかし */
+
 }
 
 /* ************************ */
