@@ -89,3 +89,44 @@
 .hide {
   display: none;
 }
+
+
+/* ***********アレルゲンのモーダル**************** */
+.modal-lg{
+  max-width: 80vw;
+}
+
+.allergenContents{
+  margin-top: 1%;
+  font-size: larger;
+  font-weight: bold;
+  color: #363636;
+}
+
+
+
+/* 食材フィルタのボタン */
+.itemFilter {
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+  background-color: #0077b2;
+  transition: all 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #f1f1f1;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.itemFilter:hover {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+  background-color: #21dbf8e7;
+  color: #5e5e5e;
+}
+
+.itemFilter:active {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+  background-color: #d0d0d0;
+}
