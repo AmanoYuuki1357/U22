@@ -22,6 +22,7 @@
 
     // ソート情報
     $sorts=["カロリー","たんぱく質","糖質","脂質","食物繊維","塩分"];
+    $sortsEng=["calorie","protein","sugar","lipid","dietary_fiber","salt"];
 
     // 点数を☆に変換
     function strNumToStar($point)

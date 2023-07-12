@@ -4,7 +4,6 @@
 
     $genre = $_POST['val'];
 
-
     // $sql1 = 'SELECT * FROM t_carts WHERE f_user_id=? AND f_item_id=?';
     // $stmt = $db->prepare($sql1);
     // $stmt->execute(array($userId,$itemId));
@@ -15,7 +14,6 @@
     $items->execute(array($genre));
     // $item = $items->fetchAll();
     // print_r($item);
-
 
     $list[]=[];
     $i=0;
@@ -28,6 +26,5 @@
     print($list_json);
 
     // print("ajax");
-
 
 ?>

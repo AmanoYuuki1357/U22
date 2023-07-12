@@ -2,19 +2,18 @@
     error_reporting(E_ALL & ~E_NOTICE);
     require('./common.php');
 
-    $filter = "f_item_allergen_".$_POST['val'];
+    $selected = $_POST['selected'];
+    $filter = "";
+    for($i=0; $i<count($selected); $i++){
+        $filter .= "f_item_allergen_".$selected[$i]." = 0";
+        if($i!=count($selected)-1){
+            $filter .= " and ";
+        }
+    }
     // print($filter);
 
-    // $sql = 'SELECT f_item_id FROM t_item_allergens WHERE ? = 0;';
-    // $items = $db->prepare($sql);
-    // $items->execute(array($filter));
-    
-    $sql = 'SELECT f_item_id FROM t_item_allergens WHERE '.$filter.' = 0;';
+    $sql = 'SELECT f_item_id FROM t_item_allergens WHERE '.$filter.' ;';
     $items = $db->query($sql);
-
-    // print_r($items);
-    // $item = $items->fetchAll();
-    // print_r($item);
 
     $list[]=[];
     $i=0;
@@ -27,6 +26,5 @@
     print($list_json);
 
     // print("ajax");
-
 
 ?>

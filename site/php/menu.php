@@ -74,23 +74,24 @@ require('header.php');
                 ?>
             </select>
 
-            <select onChange="sort2(this)" name='allergen'>
+            <!-- <select onChange="sort2(this)" name='allergen'>
                 <option value='all'>食材フィルタ</option>
                 <?php
-                for ($i = 0; $i != count($allergens); $i++) {
-                    print('<option value='.$allergensEng[$i].'>' . $allergens[$i] . '</option>');
-                }
+                // for ($i = 0; $i != count($allergens); $i++) {
+                //     print('<option value='.$allergensEng[$i].'>' . $allergens[$i] . '</option>');
+                // }
                 ?>
-            </select>
+            </select> -->
+            <button type="button" class="review-btn" data-bs-toggle="modal" data-bs-target="#reviewModal" data-bs-whatever="@getbootstrap">食材フィルタ</button>
 
-            <select onChange="sort3(this)" name='allergen'>
-                <option value='all'>ソート</option>
+            <!-- <select onChange="sort3(this)" name='allergen'>
+                <option value='def'>ソート(多い順)</option>
                 <?php
-                for ($i = 0; $i != count($sorts); $i++) {
-                    print('<option value='.$sorts[$i].'>' . $sorts[$i] . '</option>');
-                }
+                // for ($i = 0; $i != count($sorts); $i++) {
+                //     print('<option value='.$sortsEng[$i].'>' . $sorts[$i] . '</option>');
+                // }
                 ?>
-            </select>
+            </select> -->
 
             <div>
                 <div class="container">
@@ -140,7 +141,36 @@ require('header.php');
         <small>&copy; 2023 ミールフレンド all right reserved</small>
     </footer>
 
+    <!-- 食材フィルタ記入ウィンドウ -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
 
+            <div class="modal-content">
+                <!-- ヘッダー -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">避けたい食材を選択してください</h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+
+                <form action="" method="post">
+                    <div class="modal-body" id="filter">
+                        <?php
+                        for ($i = 0; $i != count($allergens); $i++) {
+                            print('<label><input type="checkbox" value='.$allergensEng[$i].' />' . $allergens[$i] . '</label>');
+                        }
+                        ?>
+                    </div>
+
+                    <div class="modal-footer">
+                        <p>食事の好みを設定することで、苦手食材以外からメニューを選択できます。</p>
+                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">やめる</button> -->
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="filter()">反映<button>
+                        <!-- <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="post_review" onclick="filter()" value="閉じる" /> -->
+                    </div>
+                </form>
+
+        </div>
+    </div>
 
 
     <!-- jQuery -->
