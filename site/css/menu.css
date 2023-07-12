@@ -1,6 +1,6 @@
 /* メニューの囲い */
 
-.item-box{
+.item-box {
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid #ccc;
@@ -11,6 +11,7 @@
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  margin: 1% 1% 0 0;
 }
 
 #menu_img {
@@ -18,9 +19,7 @@
   padding: 5px;
 }
 
-
 /* 商品名と価格 */
-
 
 .item-info {
   color: rgb(39, 39, 39);
@@ -83,14 +82,10 @@
   background-color: #d0d0d0;
 }
 
-
-
-
-
 /* ソート機能 */
-.show{
+.show {
   display: block;
 }
-.hide{
+.hide {
   display: none;
 }

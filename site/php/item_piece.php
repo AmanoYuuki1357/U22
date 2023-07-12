@@ -280,7 +280,7 @@ $test->get(empty($user), "ユーザーTBL");
 
         <div class="row col-sm-6 col-md-12">
             <div id="meal_genre">
-                <p class="Subheading">食品ジャンル:</p>
+                <h3 class="Subheading">食品ジャンル:</h3>
                 <ul class='genre'>
                     <?php
                     if (!empty($genres)) {

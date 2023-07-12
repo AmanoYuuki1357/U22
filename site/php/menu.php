@@ -113,7 +113,7 @@ require('header.php');
                             <?php
                             print('<a href="item_piece.php?id=' . $item['f_item_id'] . '" id="itemId' . $item['f_item_id'] . '">');
                             print('<img id="menu_img" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
-                            print('<p class="item-info">' . $item['f_item_name'] . '</p>');
+                            print('<h4 class="item-info">' . $item['f_item_name'] . '</h4>');
                             print('<p class="item-info">' . $item['f_item_price'] . '円</p>');
                             print('</a>');
                             if (isset($user["f_user_id"])) {

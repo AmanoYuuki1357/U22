@@ -55,77 +55,83 @@ if (isset($_SESSION["id"])) {
 
             <div class="row">
 
-                <div class="col record">
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
                     <a href="meal_record.php">
 
-                        <img class="menuImg" src="../images/record.jpg" alt="食事記録pic">
+                        <img class="menuImg" src="../images/test1.png" alt="食事記録pic">
                         <p class="menuChar">食事記録</p>
                     </a>
                 </div>
 
-                <div class="col manage">
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
                     <a href="meal_manage.php">
-                        <img class="menuImg" src="../images/management.jpg" alt="食事管理pic">
+                        <img class="menuImg" src="../images/test2.png" alt="食事管理pic">
 
                         <p class="menuChar">食事管理</p>
                     </a>
                 </div>
 
-                <div class="col analysis">
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
                     <a href="meal_analyze.php">
-                        <img class="menuImg" src="../images/analyse.jpg" alt="食事分析pic">
+                        <img class="menuImg" src="../images/test3.png" alt="食事分析pic">
 
                         <p class="menuChar">食事分析</p>
                     </a>
                 </div>
 
-            </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
+                    <a href="buy_history.php">
 
-            <div class="row">
-                <div class="outline">
-                    <a href="buy_history.php">あなたの購入履歴</a>
+                        <img src="../images/test4.png" alt="">
+                        <p class="menuChar">購入履歴</p>
+                    </a>
                 </div>
 
-                <div class="outline">
-                    <a href="user_upd.php">ユーザー情報</a>
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
+                    <a href="user_upd.php">
+                        
+                        <img src="../images/test5.png" alt="">
+                        <p class="menuChar">ユーザー<br>情報</p>
+                    </a>
                 </div>
+
             </div>
-        </div>
 
-        <!-- <?php
-                $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
-                $cs->execute(array($_SESSION['id']));
-                $c = $cs->fetch();
-                if ($c[0] != 0) {
-                    print('<p class="sl">あなたの投稿はこちら</p>');
-                ?> -->
+            <!-- <?php
+                    $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
+                    $cs->execute(array($_SESSION['id']));
+                    $c = $cs->fetch();
+                    if ($c[0] != 0) {
+                        print('<p class="sl">あなたの投稿はこちら</p>');
+                    ?> -->
 
-        <!-- <table> -->
-        <!-- <?php
+            <!-- <table> -->
+            <!-- <?php
 
-                    $posts = $db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
-                    $posts->execute(array($_SESSION['id']));
+                        $posts = $db->prepare('SELECT * FROM works_info WHERE worksCreatedID=? ORDER BY worksCreated DESC');
+                        $posts->execute(array($_SESSION['id']));
 
-                    for ($i = 0; $post = $posts->fetch(); $i++) {
-                        if ($i == 0) {
-                            print("<tr>");
+                        for ($i = 0; $post = $posts->fetch(); $i++) {
+                            if ($i == 0) {
+                                print("<tr>");
+                            }
+                            if ($i == 5) {
+                                print("</tr>");
+                                $i = 0;
+                            }
+                    ?> -->
+
+            <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
+
+            <!-- <?php
                         }
-                        if ($i == 5) {
-                            print("</tr>");
-                            $i = 0;
-                        }
-                ?> -->
-
-        <!-- <td><a href="works.php?id=<?php print($post["worksID"]) ?>"><img class="works" src="post_images/<?php print(h($post["worksImage"])) ?>" alt="新着"></a></td> -->
-
-        <!-- <?php
-                    }
-                } else {
-                    print('<p class="sl">あなたの投稿作品はまだありません</p>
+                    } else {
+                        print('<p class="sl">あなたの投稿作品はまだありません</p>
                         <div class="sltr"><a href="post.php">投稿してみましょう</a></div>');
-                }
-                ?> -->
-        <!-- </table> -->
+                    }
+                    ?> -->
+            <!-- </table> -->
         </div>
     </main>
 
