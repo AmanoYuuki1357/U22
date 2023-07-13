@@ -1,47 +1,22 @@
-/* 
-header{
-    width: 100%;
-    position: absolute;
-    top: 0;
-} */
-/* #gomypage {
-    position: fixed;
-    left: 0;
-    top: 13vh;
-    width: 100%;
-    border-bottom: solid;
-    background-color: #fff;
-    opacity: 50%;
-    padding: 5px;
-} */
-
-/* #table{
-    padding: 20px;
-    border: 1px solid;
-}
-#meal{
-    padding: 20px;
-    border: 1px solid;
-    display: flex;
-
-} */
-
-main {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  /* flex-direction: column; */
-  /* background-color: aquamarine; */
+th {
+  display: flexbox;
+  width: 500px;
+  height: 30px;
+  border: #ccc 1px solid;
 }
 
-/* .row {
-  margin: 0 auto;
-  width: 900px;
-  height: 100%;
+th:nth-child(2) {
+  display: block;
+  width: 8vw;
 }
 
-col {
-  width: 900px;
-} */
+td:nth-child(2) {
+  display: block;
+  text-align: center;
+  width: 50px;
+  color: rgb(255, 0, 0);
+  /* ボタンデザイン */
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+}

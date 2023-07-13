@@ -70,10 +70,10 @@ if (isset($_SESSION["id"])) {
                     <label for="datetime">日時を選択してください:</label>
                     <input type="datetime-local" id="datetime" name="datetime">
                     <!-- table作成 -->
-                    <table border="1" id="menu">
+                    <table id="menu">
                         <tr>
-                            <th>メニュー</th>
-                            <th>削除</th>
+                            <th>メニュー名</th>
+                            <th>削除ボタン</th>
                         </tr>
                     </table>
                     <button>
