@@ -78,3 +78,11 @@ header{
 /* img {
     width: 50px;
 } */
+.row h5{
+    /* background-color: #ddd; */
+    border-bottom: 1px #000 solid;
+    padding: 1px;
+}
+details div h5:hover{
+    background-color: #eee;
+}
