@@ -17,6 +17,7 @@ function add(e){
 
     cell1.appendChild(newtext);
     cell2.appendChild(delet);
+    cell2.classList.add("delet");
     cell2.onclick = function(){delet_row(this);};
     cell2.addEventListener("mouseover", function() {   this.style.cursor = "pointer"; });
 }

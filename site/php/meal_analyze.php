@@ -62,24 +62,24 @@ if (isset($_SESSION["id"])) {
                     // }else
 
 
-                    if (count($advice) == 0) {
-                                print("アドバイスはありません");
+                    if ($advice == null) {
+                        print("アドバイスはありません");
                     }else{
-                        for($i=0;$i<count($advice);$i++){
-                            $calorie = $calorie + $advice["f_intake_calorie"];
-                            $protein += $advice["f_intake_protein_vol"];
-                            $sugar += $advice["f_intake_augar_vol"];
-                            $lipid += $advice["f_intake_lipid_vol"];
-                            $fiber += $advice["f_intake_dietary_fiber_vol"];
-                            $salt += $advice["f_intake_salt_vol"];
+                        while ($advice = $advices->fetch()){
+                            $calorie = $calorie + (int)$advice["f_intake_calorie"];
+                            $protein += (int)$advice["f_intake_protein_vol"];
+                            $sugar += (int)$advice["f_intake_augar_vol"];
+                            $lipid += (int)$advice["f_intake_lipid_vol"];
+                            $fiber += (int)$advice["f_intake_dietary_fiber_vol"];
+                            $salt += (int)$advice["f_intake_salt_vol"];
                         }
-                    }
                         print("カロリーは" . $calorie . "kcalです<br>");
                         print("タンパク質は" . $protein . "gです<br>");
                         print("糖質は" . $sugar . "gです<br>");
                         print("脂質は" . $lipid . "gです<br>");
                         print("食物繊維は" . $fiber . "gです<br>");
                         print("塩分は" . $salt . "gです<br>");
+                    }
 
                     ?>
                 </div>
