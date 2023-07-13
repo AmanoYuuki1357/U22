@@ -2,12 +2,14 @@ th {
   display: flexbox;
   width: 500px;
   height: 30px;
-  border: #ccc 1px solid;
+  border-bottom: #ccc 1px solid;
 }
 
 th:nth-child(2) {
   display: block;
   width: 8vw;
+  height: 30px;
+  border-left: #ccc 1px solid;
 }
 
 td:nth-child(2) {
