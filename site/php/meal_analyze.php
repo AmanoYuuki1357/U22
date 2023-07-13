@@ -33,7 +33,7 @@ if (isset($_SESSION["id"])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/meal_analize.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/meal_analize.css"> -->
 
 </head>
 
@@ -55,14 +55,17 @@ if (isset($_SESSION["id"])) {
                     $advices = $db->prepare("SELECT * FROM t_intakes WHERE f_intake_date LIKE ? AND f_user_id = ?");
                     $searchDate = '%' . date("Y-m-d") . '%';
                     $advices->execute(array($searchDate, $_SESSION["id"]));
+                    $advice = $advices->fetch();
 
                     // if(!isset($user["f_user_gender"],$user["f_user_age"],$user["f_user_height"],$user["f_user_weight"])){
                         // print("<a href='user_upd.php'>プロフィールを登録してください</a>");
                     // }else
 
 
-                    if (isset($advices) ){
-                        while($advice= $advices->fetch()){
+                    if (count($advice) == 0) {
+                                print("アドバイスはありません");
+                    }else{
+                        for($i=0;$i<count($advice);$i++){
                             $calorie = $calorie + $advice["f_intake_calorie"];
                             $protein += $advice["f_intake_protein_vol"];
                             $sugar += $advice["f_intake_augar_vol"];
@@ -70,6 +73,7 @@ if (isset($_SESSION["id"])) {
                             $fiber += $advice["f_intake_dietary_fiber_vol"];
                             $salt += $advice["f_intake_salt_vol"];
                         }
+                    }
                         print("カロリーは" . $calorie . "kcalです<br>");
                         print("タンパク質は" . $protein . "gです<br>");
                         print("糖質は" . $sugar . "gです<br>");
@@ -77,9 +81,6 @@ if (isset($_SESSION["id"])) {
                         print("食物繊維は" . $fiber . "gです<br>");
                         print("塩分は" . $salt . "gです<br>");
 
-                    }else{
-                        print("アドバイスはありません");
-                    }
                     ?>
                 </div>
             </div>
