@@ -331,11 +331,12 @@ $test->get(empty($user), "ユーザーTBL");
                     <?php
                     if (isset($_SESSION["id"])) {
                         print '<button
-                                        type="button"
-                                        class="review-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#reviewModal"
-                                        data-bs-whatever="@getbootstrap">レビューを書く</button>';
+                            type="button"
+                            class="review-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#reviewModal"
+                            data-bs-whatever="@getbootstrap">レビューを書く
+                        </button>';
                     }
                     ?>
 
@@ -415,6 +416,8 @@ $test->get(empty($user), "ユーザーTBL");
                             } else {
                                 print('<button class="into-cart" onClick="inCart(this)">カートに入れる</button>');
                             }
+                        }else{
+                            print('<a class="go-cart" href="./login.php">ログイン/サインアップして購入する</a>');
                         }
                         ?>
                     </div>

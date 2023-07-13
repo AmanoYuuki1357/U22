@@ -1,9 +1,3 @@
-<script>
-    function sign_out(){
-        window.sessionStorage.clear();
-        document.location.reload()
-    }
-</script>
 <header class="py-3 mb-3 border-bottom flex-top">
         <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
 
@@ -19,7 +13,7 @@
                 if (!isset($_SESSION["id"])) {
                 ?>
                     <a class="text-end" href="../php/login.php">
-                        <button type="button" class="btn btn-outline-primary">Login/Sign-up</button>
+                        <button type="button" class="btn btn-outline-primary">ログイン/サインアップ</button>
                     </a>
                 <?php
 
@@ -42,7 +36,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" onclick="sign_out()">Sign out</a></li>
+                            <li><a class="dropdown-item" href="logout.php">サインアウト</a></li>
                         </ul>
                     </div>
 
@@ -50,9 +44,16 @@
                 }
                 ?>
 
-                <div>
-                    <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
-                </div>
+                <!-- ログインしているときに表示 -->
+                <?php
+                if (isset($_SESSION["id"])) {
+                ?>
+                    <div>
+                        <a href="cart.php"><img class="headerimg" src="../images/cart.jpg" alt="カート"></a>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </header>
