@@ -47,7 +47,7 @@ if (isset($_SESSION["id"])) {
     <main>
 
             <!-- 検索する場所 -->
-            <div id="meal" class="row">
+            <div id="meal" class="row content">
                 <div id="tab_breakfast" class="col col-lg-6">
                     <h2>献立</h2>
                     <p>ミールフレンドの商品から食事登録する</p>
@@ -57,6 +57,8 @@ if (isset($_SESSION["id"])) {
                         <!-- 検索結果の生成スペース -->
                     </div>
 
+
+                    <h2>AI登録</h2>
                     <p>画像から食事登録する</p>
                     <!-- AI用のスペース -->
                     <input type="file">
