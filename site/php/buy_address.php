@@ -298,7 +298,7 @@ if (!empty($_POST)) {
                         </div>
                     </div>
                     <div class="mb-4">
-                        <input id="fin" type='submit' class="btn btn-primary" value="お届け先を変更する">
+                        <input id="fin" type="button" onclick="submit();" class="btn btn-primary" value="お届け先を変更する">
                     </div>
                 </form>
             </details>
