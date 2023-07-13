@@ -50,9 +50,15 @@ $sqlupdate = '
 // 更新するボタン押下時のイベント
 // ===================================================================================
 if (isset($_POST) && count($_POST) != 0) {
+
     // REVIEW: 
     $test->debug("入力チェック開始");
     $test->debug($_POST);
+
+    // -------------------------------------------------------------------------------
+    // バリデーション
+    // -------------------------------------------------------------------------------
+    // 処理なし:JS側で実装
 
     // -------------------------------------------------------------------------------
     // 入力チェック
@@ -63,40 +69,41 @@ if (isset($_POST) && count($_POST) != 0) {
     $exist["height"]    = $_POST["height"] !== "";          // 身長
     $exist["weight"]    = $_POST["weight"] !== "";          // 体重
     
+    // -------------------------------------------------------------------------------
+    // 登録値の整形
+    // -------------------------------------------------------------------------------
     $name       = trimSpaces($_POST["name"]);               // 名前
     $nick_name  = trimSpaces($_POST["nick_name"]);          // ニックネーム
 
     if ($exist["age"])      { $age = mb_convert_kana($_POST["age"], 'n', 'UTF-8'); }
     if ($exist["address"])  { $address  = '〒' . $_POST['postal-code'] . ' ' . $_POST['address']; }
 
-    if (empty($error)) {
-        // -------------------------------------------------------------------------------
-        // ユーザー情報の更新
-        // -------------------------------------------------------------------------------
-        $test->debug("登録処理開始");
+    // -------------------------------------------------------------------------------
+    // ユーザー情報の更新
+    // -------------------------------------------------------------------------------
+    $test->debug("登録処理開始");
 
-        $contents = $db->prepare($sqlupdate);
-        $contents->bindparam(1, $name,              PDO::PARAM_STR);
-        $contents->bindparam(2, $nick_name,         PDO::PARAM_STR);
-        $contents->bindparam(3, $_POST["gender"],   PDO::PARAM_INT);
-        $contents->bindparam(4, $age,               $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
-        $contents->bindparam(5, $address,           $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(6, $_POST["job"],      $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(7, $_POST["height"],   $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(8, $_POST["weight"],   $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
-        $contents->bindparam(9, $_SESSION["id"],    PDO::PARAM_INT);
-        $updateUser = $contents->execute();
+    $contents = $db->prepare($sqlupdate);
+    $contents->bindparam(1, $name,              PDO::PARAM_STR);
+    $contents->bindparam(2, $nick_name,         PDO::PARAM_STR);
+    $contents->bindparam(3, $_POST["gender"],   PDO::PARAM_INT);
+    $contents->bindparam(4, $age,               $exist["age"]      ? PDO::PARAM_INT : PDO::PARAM_NULL);
+    $contents->bindparam(5, $address,           $exist["address"]  ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(6, $_POST["job"],      $exist["job"]      ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(7, $_POST["height"],   $exist["height"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(8, $_POST["weight"],   $exist["weight"]   ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $contents->bindparam(9, $_SESSION["id"],    PDO::PARAM_INT);
+    $updateUser = $contents->execute();
 
-        // 更新失敗した場合
-        if ($updateUser != 1) {
-            // TODO: 更新失敗時の動作を考える
-            $test->error("登録処理失敗");
-        }
-
-        // 更新成功
-        header('Location: user_upd.php');
-        exit;
+    // 更新失敗した場合
+    if ($updateUser != 1) {
+        // TODO: 更新失敗時の動作を考える
+        $test->error("登録処理失敗");
     }
+
+    // 更新成功
+    header('Location: user_upd.php');
+    exit;
 }
 
 // ===================================================================================
@@ -149,11 +156,15 @@ function trimSpaces($str){
     <!-- ヘッダー部分 -->
     <?php require('header.php'); ?>
 
+    <div id="gomypage">
+        <a href="my_page.php">＜マイページ</a>
+    </div>
+
     <main>
         <div class="container">
 
             <div class="row">
-                <h1 class="mb-5">ユーザー情報の閲覧・変更</h1>
+                <h1 class="my-5">ユーザー情報の閲覧・変更</h1>
             </div>
 
             <!-- <hr> -->
@@ -175,7 +186,8 @@ function trimSpaces($str){
                                 name="name"
                                 class="form-control"
                                 value="<?php print $user["f_user_name"] ?>"
-                                placeholder="お名前を入力してください"/>
+                                placeholder="お名前を入力してください"
+                                onblur="validateName()"/>
                             <div class="input-group-text">様</div>
                             <div id="error_name"  class="invalid-feedback">
                                 必須項目です。お名前を入力してください
@@ -228,7 +240,8 @@ function trimSpaces($str){
                                 name="nick_name"
                                 class="form-control"
                                 value="<?php print $user["f_user_nick_name"] ?>"
-                                placeholder="ニックネームを入力してください" />
+                                placeholder="ニックネームを入力してください"
+                                onblur="validateNickName()" />
                             <div class="input-group-text">様</div>
                             <div id="error_nick_name" class="invalid-feedback">
                                 必須項目です。ニックネームを入力してください
@@ -283,7 +296,8 @@ function trimSpaces($str){
                             name="address"
                             class="p-region p-locality p-street-address p-extended-address form-control"
                             value="<?php print mb_substr($user["address"], 10); ?>"
-                            placeholder="住所を入力してください"/>
+                            placeholder="住所を入力してください"
+                            onblur="validateAddress()" />
                         <div id="error_address" class="invalid-feedback">
                             <!-- ここにエラーメッセージ -->
                         </div>
@@ -304,7 +318,7 @@ function trimSpaces($str){
                             $checked_other  = false;    // そのほか
 
                             // 初期チェック状態の取得
-                            if(empty($user["gender"])){
+                            if($user["gender"] == ""){
                                 $checked_other = true;
                             }
                             else{
@@ -347,7 +361,8 @@ function trimSpaces($str){
                                 class="form-control"
                                 maxlength="3"
                                 value="<?php print $user["age"] ?>"
-                                placeholder="年齢を入力してください" />
+                                placeholder="年齢を入力してください"
+                                onblur="validateAge()" />
                             <div class="input-group-text">歳</div>
                             <div id="error_age" class="invalid-feedback">
                                 <!-- ここにエラーメッセージ -->
@@ -380,7 +395,8 @@ function trimSpaces($str){
                                 class="form-control"
                                 maxlength="5"
                                 value="<?php print $user["height"] ?>"
-                                placeholder="身長を入力してください" />
+                                placeholder="身長を入力してください"
+                                onblur="validateHeight()" />
                             <div class="input-group-text">cm</div>
                             <div id="error_height" class="invalid-feedback">
                                 <!-- ここにエラーメッセージ -->
@@ -396,7 +412,8 @@ function trimSpaces($str){
                                 class="form-control"
                                 maxlength="5"
                                 value="<?php print $user["weight"] ?>"
-                                placeholder="体重を入力してください" />
+                                placeholder="体重を入力してください"
+                                onblur="validateWeight()" />
                             <div class="input-group-text">kg</div>
                             <div id="error_weight" class="invalid-feedback">
                                 <!-- ここにエラーメッセージ -->
@@ -423,7 +440,8 @@ function trimSpaces($str){
                             name="job"
                             class="form-control"
                             value="<?php print $user["job"] ?>"
-                            placeholder="職業を入力してください" />
+                            placeholder="職業を入力してください"
+                            onblur="validateJob()" />
                         <div id="error_job" class="invalid-feedback">
                             <!-- ここにエラーメッセージ -->
                         </div>

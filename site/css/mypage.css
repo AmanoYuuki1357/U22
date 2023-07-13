@@ -1,28 +1,36 @@
-*{
-    text-decoration: none;
-    color: #000;
-}
-#wrap{
-    width: 100%;
-    height: 100%;
-}
-main{
-    position: relative;
-    top: 100px;
-    height: 100%;
+/* *************３つの選択*************** */
+.tileTitle {
+  max-width: 30vw;
+  position: relative;
+  top: 0px;
+  left: 0px;
+margin: 6% 6% 0 0;
+  /* z-index: 1; */
+  /* ニューモーフィズム */
+    background: #e8e8e8;
+    box-shadow:  10px 10px 20px #d9d9d9,
+             -10px -10px 20px #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    /* ぼかし */
 
 }
-#box{
-    display: flex;
-    text-align: center;
+
+/* ************************ */
+
+.menuChar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  font-size: 3.5vw;
+  /* 文字に影つける */
+  text-shadow: 1px 1px 5px #000;
+  color: #fffcfc;
 }
-#box div{
-    margin: 15px;
-    padding: 10px;
-    background-color: #c8fac8;
-}
-.outline{
-    border-bottom: solid;
-    padding: 3px;
-    margin: 5px;
+
+/* ぼかし */
+.menuImg {
+  /* filter: blur(5px); */
 }

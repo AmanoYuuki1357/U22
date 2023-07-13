@@ -58,6 +58,14 @@ if (isset($_SESSION["id"])) {
                     <div id="food_list">
                         <!-- 検索結果の生成スペース -->
                     </div>
+
+
+                    <!-- AI用のスペース -->
+                    <input type="file">
+
+
+
+
                 </div>
 
 
@@ -76,6 +84,8 @@ if (isset($_SESSION["id"])) {
                         <a onclick="regist(<?php print $user['f_user_id'] ?>)">登録</a>
                     </button>
                 </div>
+
+
 
             </div>
 

@@ -87,7 +87,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             <hr>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <p>カード番号</p>
                 </div>
                 <div class="col">
@@ -102,7 +102,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <p>カード名義人</p>
                 </div>
                 <div class="col">
@@ -117,7 +117,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <p>有効期限</p>
                 </div>
                 <div class="col">
@@ -136,7 +136,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             </div>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <p>セキュリティコード</p>
                 </div>
                 <div class="col">

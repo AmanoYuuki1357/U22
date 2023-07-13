@@ -1,27 +1,27 @@
 <?php
 require('common.php');
 error_reporting(E_ALL & ~E_NOTICE);
-    // ===================================================================================
-    // SQL
-    // ===================================================================================
-    $sql = 'SELECT * FROM t_users WHERE f_user_id=?;';
+// ===================================================================================
+// SQL
+// ===================================================================================
+$sql = 'SELECT * FROM t_users WHERE f_user_id=?;';
 
-    // ===================================================================================
-    // セッション開始
-    // ===================================================================================
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+// ===================================================================================
+// セッション開始
+// ===================================================================================
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-    // ユーザーID取得
-    if (isset($_SESSION["id"])) {
-        $users = $db->prepare($sql);
-        $users->execute(array($_SESSION["id"]));
-        $user = $users->fetch();
-    } else {
-        header('Location: login.php');
-        exit();
-    }
+// ユーザーID取得
+if (isset($_SESSION["id"])) {
+    $users = $db->prepare($sql);
+    $users->execute(array($_SESSION["id"]));
+    $user = $users->fetch();
+} else {
+    header('Location: login.php');
+    exit();
+}
 
 ?>
 
@@ -36,8 +36,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     <title>マイページ</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/mypage.css">
@@ -52,37 +51,52 @@ error_reporting(E_ALL & ~E_NOTICE);
 
     <main>
 
-        <div>
+        <div id="box" class="container">
 
-            <div id="box">
-                <div>
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
                     <a href="meal_record.php">
-                        <img alt="食事記録pic">
-                        <p>食事記録</p>
+
+                        <img class="menuImg" src="../images/test1.png" alt="食事記録pic">
+                        <p class="menuChar">食事記録</p>
                     </a>
                 </div>
-                <div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
                     <a href="meal_manage.php">
-                        <img alt="食事管理pic">
-                        <p>食事管理</p>
+                        <img class="menuImg" src="../images/test2.png" alt="食事管理pic">
+
+                        <p class="menuChar">食事管理</p>
                     </a>
                 </div>
-                <div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
                     <a href="meal_analyze.php">
-                        <img alt="食事分析pic">
-                        <p>食事分析</p>
+                        <img class="menuImg" src="../images/test3.png" alt="食事分析pic">
+
+                        <p class="menuChar">食事分析</p>
                     </a>
                 </div>
-            </div>
 
-            <div class="outline">
-                <a href="buy_history.php">あなたの購入履歴</a>
-            </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
+                    <a href="buy_history.php">
 
-            <div class="outline">
-                <a href="user_upd.php">ユーザー情報</a>
-            </div>
+                        <img src="../images/test4.png" alt="">
+                        <p class="menuChar">購入履歴</p>
+                    </a>
+                </div>
 
+                <div class="col-lg-3 col-md-6 col-sm-12 tileTitle">
+                    <a href="user_upd.php">
+                        
+                        <img src="../images/test5.png" alt="">
+                        <p class="menuChar">ユーザー<br>情報</p>
+                    </a>
+                </div>
+
+            </div>
 
             <!-- <?php
                     $cs = $db->prepare("SELECT count(*) FROM works_info WHERE worksCreatedID=?");
@@ -127,8 +141,8 @@ error_reporting(E_ALL & ~E_NOTICE);
     <!-- <script src="js/jQuery.js"></script> -->
     <!-- <script src="js/main.js"></script> -->
 
-        <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
-        <script>
+    <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
+    <script>
         // mainタグの高さを取得する
         var mainHeight = document.querySelector('main').clientHeight;
         console.log(mainHeight);
@@ -141,9 +155,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
     <!-- bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
