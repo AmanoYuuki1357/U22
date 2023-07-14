@@ -92,9 +92,9 @@ if (isset($_SESSION["id"])) {
                 </div>
             </div>
 
-            <div id="recommend">
+            <!-- <div id="recommend">
                 <p>おすすめ商品</p>
-            </div>
+            </div> -->
         </main>
 
         <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
