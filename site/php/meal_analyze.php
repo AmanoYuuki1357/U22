@@ -79,6 +79,13 @@ if (isset($_SESSION["id"])) {
                         print("<p>脂質は" . $lipid . "gです</p>");
                         print("<p>食物繊維は" . $fiber . "gです</p>");
                         print("<p>塩分は" . $salt . "gです</p>");
+                        print("※1日の目標量には残り<br>");
+                        print("カロリーは" .  2400-$calorie. "kcalです<br>");
+                        print("タンパク質は" .  60-$protein. "gです<br>");
+                        print("糖質は" .  300-$sugar. "gです<br>");
+                        print("脂質は" .  60-$lipid. "gです<br>");
+                        print("食物繊維は" .  20-$fiber. "gです<br>");
+                        print("塩分は" .  10-$salt. "gです<br>");
                     }
 
                     ?>
