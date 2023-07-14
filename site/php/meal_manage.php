@@ -58,7 +58,6 @@ $intakes->execute(array($_SESSION["id"]));
                 while ($intake = $intakes->fetch()) {
                 ?>
                     <div class="col-2">
-               
                         <p><?php print($intake["f_intake_date"]); ?></p>
                         <h3>食べたもの</h3>
                         <p><?php print($intake["f_intake_name"]); ?></p>
@@ -72,9 +71,11 @@ $intakes->execute(array($_SESSION["id"]));
 <?php
 while ($intake = $intakes->fetch()) {
 ?><h3>日付</h3>
-   <?php echo '<p>' . $intake['f_intake_date'] . '</p>';
-    echo '<h3>食べたもの</h3>';
-    echo '<p>' . $intake['f_intake_name'] . '</p>';
+    <?php
+        if($intake['f_intake_date'] != $intake['f_intake_date'])
+        echo '<p>' . $intake['f_intake_date'] . '</p>';
+        echo '<h3>食べたもの</h3>';
+        echo '<p>' . $intake['f_intake_name'] . '</p>';
 }
 ?>
 <!-- ************************** -->
