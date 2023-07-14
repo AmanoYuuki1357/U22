@@ -53,31 +53,25 @@ $intakes->execute(array($_SESSION["id"]));
             <div class="row">
 
 
-         <h3>日付</h3>
-                <?php
-                while ($intake = $intakes->fetch()) {
-                ?>
-                    <div class="col-2">
-                        <p><?php print($intake["f_intake_date"]); ?></p>
-                        <h3>食べたもの</h3>
-                        <p><?php print($intake["f_intake_name"]); ?></p>
-                    </div>
-                <?php
-                }
-                ?>
-
-
 <!-- ************************** -->
 <?php
-while ($intake = $intakes->fetch()) {
-?><h3>日付</h3>
-    <?php
-        if($intake['f_intake_date'] != $intake['f_intake_date'])
-        echo '<p>' . $intake['f_intake_date'] . '</p>';
-        echo '<h3>食べたもの</h3>';
-        echo '<p>' . $intake['f_intake_name'] . '</p>';
-}
+    $intake = $intakes->fetchAll();
+    if(count($intake) == 0){
+        echo '<p>まだ食事を登録していません</p>';
+    }else{
+        $now = substr($intake[0]['f_intake_date'], 0,9);
+        print('<p>'.$intake[0]['f_intake_date'].'</p>');
+        for($i = 0; $i < count($intake); $i++){
+            if($now != substr($intake[$i]['f_intake_date'], 0,10)){
+            echo '<p>' . $intake[$i]['f_intake_date'] . '</p>';
+            echo '<h3>食べたもの</h3>';
+            }
+            echo '<p>' . $intake[$i]['f_intake_name'] . '</p>';
+            $now = substr($intake[$i]['f_intake_date'], 0,10);
+        }
+    }
 ?>
+
 <!-- ************************** -->
 
 
