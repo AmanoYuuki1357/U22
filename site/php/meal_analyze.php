@@ -33,7 +33,7 @@ if (isset($_SESSION["id"])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../css/meal_analize.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/meal_analize.css">
 
 </head>
 
@@ -47,10 +47,12 @@ if (isset($_SESSION["id"])) {
             <!-- パンクズ -->
             <a href="my_page.php">＜マイページ</a>
         </div>
-        <main>
+        <main class="mt-5">
             <div>
-                <h2>アドバイス</h2>
                 <div id="advice">
+
+
+
                     <?php
                     $advices = $db->prepare("SELECT * FROM t_intakes WHERE f_intake_date LIKE ? AND f_user_id = ?");
                     $searchDate = '%' . date("Y-m-d") . '%';
@@ -73,25 +75,26 @@ if (isset($_SESSION["id"])) {
                             $fiber += (int)$advice["f_intake_dietary_fiber_vol"];
                             $salt += (int)$advice["f_intake_salt_vol"];
                         }
-                        print("<p>カロリーは" . $calorie . "kcalです</p>");
+                        print("<div class='coutainer'><div class='row'><div class='col p-5 box'>
+                        <h2>アドバイス</h2><p>カロリーは" . $calorie . "kcalです</p>");
                         print("<p>タンパク質は" . $protein . "gです</p>");
                         print("<p>糖質は" . $sugar . "gです</p>");
                         print("<p>脂質は" . $lipid . "gです</p>");
                         print("<p>食物繊維は" . $fiber . "gです</p>");
-                        print("<p>塩分は" . $salt . "gです</p>");
-                        print("※1日の目標量には残り<br>");
+                        print("<p>塩分は" . $salt . "gです</p></div>");
+                        print("<div class='col p-5 box'><h2>※1日の目標量には残り</h2>");
                         $calorie = 2400-$calorie;
                         $protein = 60-$protein;
                         $sugar = 300-$sugar;
                         $lipid = 60-$lipid;
                         $fiber = 20-$fiber;
                         $salt = 10-$salt;
-                        print("カロリーは" . $calorie. "kcalです<br>");
-                        print("タンパク質は" . $protein. "gです<br>");
-                        print("糖質は" . $sugar. "gです<br>");
-                        print("脂質は" . $lipid. "gです<br>");
-                        print("食物繊維は" . $fiber. "gです<br>");
-                        print("塩分は" . $salt. "gです<br>");
+                        print("<p>カロリーは" . $calorie. "kcalです</p>");
+                        print("<p>タンパク質は" . $protein. "gです</p>");
+                        print("<p>糖質は" . $sugar. "gです</p>");
+                        print("<p>脂質は" . $lipid. "gです</p>");
+                        print("<p>食物繊維は" . $fiber. "gです</p>");
+                        print("<p>塩分は" . $salt. "gです</p></div></div></div>");
                     }
 
                     ?>
