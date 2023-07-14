@@ -66,7 +66,8 @@ $intakes->execute(array($_SESSION["id"]));
 <?php
     $intake = $intakes->fetchAll();
     if(count($intake) == 0){
-        echo '<p>まだ食事を登録していません</p>';
+        print("<p>食事記録がありません</p>");
+        print("<a href='meal_record.php'>食事記録を取る</a>");
     }else{
         $now = substr($intake[0]['f_intake_date'], 0,9);
         for($i = 0; $i < count($intake); $i++){

@@ -65,7 +65,8 @@ if (isset($_SESSION["id"])) {
 
 
                     if ($advice == null) {
-                        print("アドバイスはありません");
+                        print("<p>食事記録がありません</p>");
+                        print("<a href='meal_record.php'>食事記録を取る</a>");
                     }else{
                         while ($advice = $advices->fetch()){
                             $calorie = $calorie + (int)$advice["f_intake_calorie"];
