@@ -73,13 +73,12 @@ if (isset($_SESSION["id"])) {
                             $fiber += (int)$advice["f_intake_dietary_fiber_vol"];
                             $salt += (int)$advice["f_intake_salt_vol"];
                         }
-                        print("カロリーは" . $calorie . "kcalです<br>");
-                        print("タンパク質は" . $protein . "gです<br>");
-                        print("糖質は" . $sugar . "gです<br>");
-                        print("脂質は" . $lipid . "gです<br>");
-                        print("食物繊維は" . $fiber . "gです<br>");
-                        print("塩分は" . $salt . "gです<br>");
-                        print("<br>");
+                        print("<p>カロリーは" . $calorie . "kcalです</p>");
+                        print("<p>タンパク質は" . $protein . "gです</p>");
+                        print("<p>糖質は" . $sugar . "gです</p>");
+                        print("<p>脂質は" . $lipid . "gです</p>");
+                        print("<p>食物繊維は" . $fiber . "gです</p>");
+                        print("<p>塩分は" . $salt . "gです</p>");
                         print("※1日の目標量には残り<br>");
                         $calorie = 2400-$calorie;
                         $protein = 60-$protein;

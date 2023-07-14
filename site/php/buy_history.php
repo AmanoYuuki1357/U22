@@ -41,6 +41,9 @@ $item = $items->fetchAll();
     <?php
     require('header.php');
     ?>
+        <div id="gomypage">
+        <a href="my_page.php">＜マイページ</a>
+    </div>
 
     <main>
 
