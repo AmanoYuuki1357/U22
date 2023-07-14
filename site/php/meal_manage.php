@@ -60,7 +60,6 @@ $intakes->execute(array($_SESSION["id"]));
         echo '<p>まだ食事を登録していません</p>';
     }else{
         $now = substr($intake[0]['f_intake_date'], 0,9);
-        print('<p>'.$intake[0]['f_intake_date'].'</p>');
         for($i = 0; $i < count($intake); $i++){
             if($now != substr($intake[$i]['f_intake_date'], 0,10)){
             echo '<p>' . $intake[$i]['f_intake_date'] . '</p>';
