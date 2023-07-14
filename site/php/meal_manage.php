@@ -48,9 +48,18 @@ $intakes->execute(array($_SESSION["id"]));
 
     <main>
 
+
+
+
+
+
+
+
+
         <div id="record" class="container">
             <h1>一覧</h1>
             <div class="row">
+
 
 
 <!-- ************************** -->
@@ -62,10 +71,10 @@ $intakes->execute(array($_SESSION["id"]));
         $now = substr($intake[0]['f_intake_date'], 0,9);
         for($i = 0; $i < count($intake); $i++){
             if($now != substr($intake[$i]['f_intake_date'], 0,10)){
-            echo '<p>' . $intake[$i]['f_intake_date'] . '</p>';
+            echo '</div><div class="row box"><p>' . $intake[$i]['f_intake_date'] . '</p>';
             echo '<h3>食べたもの</h3>';
             }
-            echo '<p>' . $intake[$i]['f_intake_name'] . '</p>';
+            echo '<p class="col-2">' . $intake[$i]['f_intake_name'] . '</p>';
             $now = substr($intake[$i]['f_intake_date'], 0,10);
         }
     }

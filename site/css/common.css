@@ -49,8 +49,7 @@ footer {
 
 
 
-/* ==================================== */
-/* 全体のじゃない疑惑 */
+
 
 .attention{
   color: red;
@@ -70,3 +69,23 @@ footer {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+.box{
+  /* ニューモーフィズム */
+  background: #f7f7f7;
+  box-shadow: 4px 4px 8px #d9d9d9, -4px -4px 8px #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 5px;
+  width: 60vw;
+}
