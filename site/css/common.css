@@ -27,6 +27,7 @@ a:hover{
 
 .headerimg {
   width: 50px;
+  text-align: right;
 }
 
 .cart-img{
@@ -68,11 +69,38 @@ footer {
 }
 
 
+header{
+  border-bottom: #c0c0c0 solid 1px;
+}
+
+.header{
+  height: 10vh;
+  text-align: center;
+  padding: 2% 0;
+}
+
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoImg{
+  width: 13vw;
+  height: 4vh;
+}
 
 
 
+.hover-underline {
+  text-decoration: none;
+}
 
-
+.hover-underline:hover {
+  text-decoration: underline;
+  transition: text-decoration 0.2s;
+}
 
 
 
