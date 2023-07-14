@@ -31,8 +31,7 @@ $intakes->execute(array($_SESSION["id"]));
     <title>食事管理</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <!-- bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/meal_manage.css">
@@ -40,65 +39,67 @@ $intakes->execute(array($_SESSION["id"]));
 </head>
 
 <body>
-    <div id="wrap">
-        <header>
 
-            <h2>
-                ミールフレンド
-            </h2>
-            <div>
-                <a href="index.html"><img src="../images/logo.jpg" alt="ロゴ"></a>
-            </div>
-            <div id="header-right">
+    <?php require('header.php'); ?>
+
+    <div id="gomypage">
+        <a href="my_page.php">＜マイページ</a>
+    </div>
+
+    <main>
+
+        <div id="record" class="container">
+            <h1>一覧</h1>
+            <div class="row">
+
+
+         <h3>日付</h3>
                 <?php
-                if (!isset($_SESSION["id"])) {
+                while ($intake = $intakes->fetch()) {
                 ?>
-                    <a href="login.php">ログイン/会員登録</a>
-                <?php
-                } else {
-                ?>
-                    <div>
-                        <img class="headerimg" src="../images/icon.jpg" alt="アイコン">
-                        <a href="my_page.php"><?php print($user["f_user_name"]); ?></a>
+                    <div class="col-2">
+               
+                        <p><?php print($intake["f_intake_date"]); ?></p>
+                        <h3>食べたもの</h3>
+                        <p><?php print($intake["f_intake_name"]); ?></p>
                     </div>
                 <?php
                 }
                 ?>
+
+
+<!-- ************************** -->
+<?php
+while ($intake = $intakes->fetch()) {
+?><h3>日付</h3>
+   <?php echo '<p>' . $intake['f_intake_date'] . '</p>';
+    echo '<h3>食べたもの</h3>';
+    echo '<p>' . $intake['f_intake_name'] . '</p>';
+}
+?>
+<!-- ************************** -->
+
+
+
             </div>
-
-        </header>
-
-        <div id="gomypage">
-            <a href="my_page.php">＜マイページ</a>
         </div>
-        <main>
+    </main>
 
-            <div id="record">
-                <h2>一覧</h2>
-                <div>
+    <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
 
-                    <?php
-                    while ($intake = $intakes->fetch()) {
-                    ?>
-                    <p>日付</p>
-                        <p><?php print($intake["f_intake_date"]); ?></p>
-                    <p>・食べたもの</p>
-                        <p><?php print($intake["f_intake_name"]); ?></p>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </div>
-        </main>
-
-        <footer>Copyright 2023 mealfriend. All Rights Reserved.</footer>
-    </div>
-
-
+    <!-- コンテンツが短い時にfooterをwindow最下部に固定する -->
+    <script>
+        // mainタグの高さを取得する
+        var mainHeight = document.querySelector('main').clientHeight;
+        console.log(mainHeight);
+        // mainタグの高さが1000px未満だったら、footerを画面最下部に固定する
+        if (mainHeight < 800) {
+            document.querySelector('footer').style.position = 'fixed';
+            document.querySelector('footer').style.bottom = '0';
+        }
+    </script>
     <!-- bootstrap CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
