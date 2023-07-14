@@ -61,59 +61,34 @@ while ($cart = $carts->fetch()) {
 
     <main>
 
-        <div id="box">
 
-            <h3>メニュー選択</h3>
-
-            <select onChange="sort(this)" name='genre'>
-                <option value="all">ジャンル</option>
-                <?php
-                for ($i = 0; $genre = $genres->fetch(); $i++) {
-                    print('<option value=' . $genre['f_item_genre_name'] . '>' . $genre['f_item_genre_name'] . '</option>');
-                }
-                ?>
-            </select>
-
-            <!-- <select onChange="sort2(this)" name='allergen'>
-                <option value='all'>食材フィルタ</option>
-                <?php
-                // for ($i = 0; $i != count($allergens); $i++) {
-                //     print('<option value='.$allergensEng[$i].'>' . $allergens[$i] . '</option>');
-                // }
-                ?>
-            </select> -->
-            <button type="button" class="itemFilter" data-bs-toggle="modal" data-bs-target="#reviewModal" data-bs-whatever="@getbootstrap">食材フィルタ</button>
-
-            <!-- <select onChange="sort3(this)" name='allergen'>
-                <option value='def'>ソート(多い順)</option>
-                <?php
-                // for ($i = 0; $i != count($sorts); $i++) {
-                //     print('<option value='.$sortsEng[$i].'>' . $sorts[$i] . '</option>');
-                // }
-                ?>
-            </select> -->
-
-            <div>
                 <div class="container">
+
+                    <h3 class="section">メニュー選択</h3>
+
+                    <select onChange="sort(this)" name='genre'>
+                        <option value="all">ジャンル</option>
+                        <?php
+                        for ($i = 0; $genre = $genres->fetch(); $i++) {
+                            print('<option value=' . $genre['f_item_genre_name'] . '>' . $genre['f_item_genre_name'] . '</option>');
+                        }
+                        ?>
+                    </select>
+
+                    <button type="button" class="itemFilter" data-bs-toggle="modal" data-bs-target="#reviewModal" data-bs-whatever="@getbootstrap">食材フィルタ</button>
+
 
                     <p id="userId" style="display: none;"><?php print($user["f_user_id"]); ?></p>
 
                     <div class="row" id="listNum">
                         <?php
-                        // print("<h1>");
-                        // print_r($cartItemId);
-                        // print("<h1>");
                         for ($i = 0; $item = $items->fetch(); $i++) {
-
-                            // print('<div class="row">');
-
-                            // print('<div class="col-sm-6 col-md-3 col-lg-2 item-box" id="'.$i+1.'">');
                         ?>
                             <div class="col-sm-6 col-md-3 col-lg-2 item-box" id="<?php print($item["f_item_id"]); ?>">
                             <?php
                             print('<a href="item_piece.php?id=' . $item['f_item_id'] . '" id="itemId' . $item['f_item_id'] . '">');
-                            print('<img id="menu_img" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
-                            print('<h4 class="item-info">' . $item['f_item_name'] . '</h4>');
+                            print('<img class="menuImg" src="../images/items/' . $item['f_item_image'] . '.jpg" alt=' . $item['f_item_name'] . '>');
+                            print('<h4 class="item-info section">' . $item['f_item_name'] . '</h4>');
                             print('<p class="item-info">' . $item['f_item_price'] . '円</p>');
                             print('</a>');
                             if (isset($user["f_user_id"])) {
