@@ -50,70 +50,37 @@ $item = $items->fetchAll();
         <h1>購入履歴</h1>
 
         <?php
-        // $cccOld = "";
-        // $cccNew = "";
-        // for ($i = 0; $i < count($item); $i++) {
-        //     $cccNew = $item[$i]['f_buy_history_date'];
-        //     if ($cccOld != $item[$i]['f_buy_history_date']) {
-        //         print("<div class='situation'>");
-        //         print("<p>購入日：" . $item[$i]['f_buy_history_date'] . "</p>");
-        //         print("<div class='info'>");
-        //         print("<p>商品名</p>");
-        //         print("<ul>");
-        //         // 一つ目の要素が出てくる
-        //         print("<li>" . $item[$i]['f_item_name'] . "×" . $item[$i]['f_buy_history_num'] . "</li>");
-        //     }
 
-        //     // for($j=$i; $j<count($item); $j++){
-        //     //     if($j != $i){
-        //     //         if($cccNew == $item[$j]['f_buy_history_date']){
-        //     //             print("<li>".$item[$j]['f_item_name']."×".$item[$j]['f_buy_history_num']."</li>");
-        //     //         }
-        //     //     }
-        //     // }
-
-
-        //     // ２個目以降の表示
-        //     $count = 0;
-        //     $count-=1;
-
-        //     for ($j = $i; $j < count($item); $j++) {
-        //         if ($j != $i) {
-        //             if ($cccNew == $item[$j]['f_buy_history_date']) {
-        //                 $count++;
-        //                 print("<li>" . $item[$j]['f_item_name'] . "×" . $item[$j]['f_buy_history_num'] . "</li>");
-        //             } else {
-        //                 break;
-        //             }
-        //         }
-        //     }
-
-
-        $cccOld = "";
-        $cccNew = "";
-        for ($i = 0; $i < count($item); $i++) {
-            $cccNew = $item[$i]['f_buy_history_date'];
-            if ($cccOld != $cccNew) {
-                $cccOld = $cccNew;
-                print("<div class='situation'>");
-                print("<h2>購入日：" . $cccNew . "</h2>");
-                print("<div class='info'>");
-                print("<h2>商品名</h2>");
-                print("<ul>");
-                // 一つ目の要素が出てくる
-                for ($j = $i; $j < count($item); $j++) {
-                    if ($cccNew == $item[$j]['f_buy_history_date']) {
-                        print("<li>" . $item[$j]['f_item_name'] . "×" . $item[$j]['f_buy_history_num'] . "</li>");
-                    } else {
-                        $i = $j - 1;
-                        break;
+        if($item == null){
+            print("<p>購入履歴がありません</p>");
+            print("<a href='menu.php'>メニューを見る</a>");
+        }else{
+            $cccOld = "";
+            $cccNew = "";
+            for ($i = 0; $i < count($item); $i++) {
+                $cccNew = $item[$i]['f_buy_history_date'];
+                if ($cccOld != $cccNew) {
+                    $cccOld = $cccNew;
+                    print("<div class='situation'>");
+                    print("<h2>購入日：" . $cccNew . "</h2>");
+                    print("<div class='info'>");
+                    print("<h2>商品名</h2>");
+                    print("<ul>");
+                    // 一つ目の要素が出てくる
+                    for ($j = $i; $j < count($item); $j++) {
+                        if ($cccNew == $item[$j]['f_buy_history_date']) {
+                            print("<li>" . $item[$j]['f_item_name'] . "×" . $item[$j]['f_buy_history_num'] . "</li>");
+                        } else {
+                            $i = $j - 1;
+                            break;
+                        }
                     }
+                    print("</ul>");
+                    print("</div>");
+                    print("<h2>配送予定：</h2>" ."<p>". $item[$i]['f_buy_history_delivery_situation'] . "</p>");
+                    print("<h2>配達場所：</h2>" ."<p>". $item[$i]['f_buy_history_delivery_place'] . "</p>");
+                    print("</div>");
                 }
-                print("</ul>");
-                print("</div>");
-                print("<h2>配送予定：</h2>" ."<p>". $item[$i]['f_buy_history_delivery_situation'] . "</p>");
-                print("<h2>配達場所：</h2>" ."<p>". $item[$i]['f_buy_history_delivery_place'] . "</p>");
-                print("</div>");
             }
         }
         ?>
